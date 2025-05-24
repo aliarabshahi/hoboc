@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: hoboc_database
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - network_hoboc_project
+
+  web:
+    container_name: hoboc_web
+    image: hoboc_web:${VERSION:-latest}
+    env_file: .env
+    volumes:
+      - static_volume:/opt/hoboc/static/:ro
+      # - ./src/:/opt/bot/src/
+    command: gunicorn --config /opt/hoboc/gunicorn.py core.wsgi:application
+    restart: always
+    networks:
+      - network_hoboc_project
+
+  nginx:
+    container_name: hoboc_backend_nginx
+    build:
+      context: ./etc/nginx/
+    volumes:
+      - /var/data/hoboc/backend/django/static:/opt/hoboc/src/static/:ro
+    ports:
+      - "80:80"
+      - "443:443"
+
+    depends_on:
+      - web
+    restart: always
+    networks:
+      - network_hoboc_project
+
+
+volumes:
+  pg_data:
+  static_volume:
+
+networks:
+  network_hoboc_project:
+    name: network_hoboc_project

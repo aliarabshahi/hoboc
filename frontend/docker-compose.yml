@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: hoboc_next
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:80
+    volumes:
+      - ./src:/opt/hoboc/src
+    restart: always
+    networks:
+      - network_hoboc_project
+
+networks:
+  network_hoboc_project:
+    name: network_hoboc_project

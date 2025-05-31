@@ -179,7 +179,8 @@ WEB_URL = '/hoboc/web/'
 
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
-MEDIA_ROOT = os.getenv("MEDIA_ROOT")
+MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, "media/"))
+
 # WEB_ROOT = os.path.join(BASE_DIR, "web/")
 LOGIN_URL = '/hoboc/api-auth/login/'
 

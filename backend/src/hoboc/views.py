@@ -105,3 +105,77 @@ class SubscriberViewSet(BaseCustomGenericApiView):
         response_serializer = SubscriberSerializer(data=sample_data)
         response_serializer.is_valid(raise_exception=True)
         return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .models import (
+    PostCategory,
+    CoursesTopicModel,
+    CoursesTagModel,
+    CoursesInstructorModel,
+    CoursesLessonModel
+)
+from .serializers import (
+    PostCategorySerializer,
+    CoursesTopicSerializer,
+    CoursesTagSerializer,
+    CoursesInstructorSerializer,
+    CoursesLessonSerializer
+)
+from hoboc.views import BaseCustomGenericApiView, DashboardPagination
+
+class PostCategoryViewSet(viewsets.ModelViewSet):
+    queryset = PostCategory.objects.all()
+    serializer_class = PostCategorySerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class CoursesTopicViewSet(viewsets.ModelViewSet):
+    queryset = CoursesTopicModel.objects.filter(is_published=True)  
+    serializer_class = CoursesTopicSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class CoursesTagViewSet(viewsets.ModelViewSet):
+    queryset = CoursesTagModel.objects.all()
+    serializer_class = CoursesTagSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class CoursesInstructorViewSet(viewsets.ModelViewSet):
+    queryset = CoursesInstructorModel.objects.all()
+    serializer_class = CoursesInstructorSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class CoursesLessonViewSet(viewsets.ModelViewSet):
+    queryset = CoursesLessonModel.objects.filter(is_published=True)
+    serializer_class = CoursesLessonSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        topic_slug = self.request.query_params.get('topic')
+        is_published = self.request.query_params.get('is_published')
+        
+        if topic_slug:
+            queryset = queryset.filter(topic__slug=topic_slug)
+        if is_published:
+            queryset = queryset.filter(is_published=is_published.lower() == 'true')
+            
+        return queryset

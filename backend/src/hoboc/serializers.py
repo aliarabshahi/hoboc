@@ -51,11 +51,13 @@ class CoursesTagSerializer(serializers.ModelSerializer):
 
 class CoursesInstructorSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()  # Shows the string representation of the user
-    
+    name = serializers.SerializerMethodField()
     class Meta:
         model = CoursesInstructorModel
         fields = '__all__'
-
+    def get_name(self, obj):
+        return obj.name
+    
 class CoursesLessonSerializer(serializers.ModelSerializer):
     topic = serializers.StringRelatedField()
     instructor = CoursesInstructorSerializer(read_only=True)

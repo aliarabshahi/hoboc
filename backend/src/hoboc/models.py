@@ -29,10 +29,6 @@ class CoursesTopicModel(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
 
 class CoursesTagModel(models.Model):
     """Tag for categorizing lessons"""
@@ -46,10 +42,6 @@ class CoursesTagModel(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
 class CoursesInstructorModel(models.Model):
     """Instructor/teacher for courses"""
@@ -70,9 +62,14 @@ class CoursesInstructorModel(models.Model):
         verbose_name = "Course Instructor"
         verbose_name_plural = "Course Instructors"
 
+    @property
+    def name(self):
+        if self.user:
+            return getattr(self.user, 'name', None) or self.user.get_full_name() or self.user.username
+        return "Unknown"
+
     def __str__(self):
-        name = getattr(self.user, 'name', None)
-        return f"Instructor: {name or self.user.username}"
+        return f"Instructor: {self.name}"
 
 class CoursesLessonModel(models.Model):
     """Teaching lesson with PDF and video options"""
@@ -91,7 +88,8 @@ class CoursesLessonModel(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
     description = models.TextField()
-    
+    is_free = models.BooleanField(default=True)
+    duration = models.PositiveIntegerField(help_text="Duration in minutes")
     # PDF content
     pdf_file = models.FileField(
         upload_to='courses/lessons/pdfs/',
@@ -127,11 +125,6 @@ class CoursesLessonModel(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
 
     @property
     def has_video(self):

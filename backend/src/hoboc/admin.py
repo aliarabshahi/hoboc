@@ -26,8 +26,14 @@ class CoursesTagModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 class CoursesInstructorModelAdmin(admin.ModelAdmin):
-    list_display = ('user', 'bio')
+    list_display = ('user', 'name', 'bio')  # <-- Added custom method "name"
     search_fields = ('user__username', 'user__name')
+
+    def name(self, obj):
+        return obj.user.name or obj.user.username  # Fallback if name is empty
+
+    name.admin_order_field = 'user__name'  # allow column sorting
+    name.short_description = 'Name'        # column header
 
 class CoursesLessonModelAdmin(admin.ModelAdmin):
     list_display = ('title', 'topic', 'instructor', 'is_published', 'created_at','updated_at')

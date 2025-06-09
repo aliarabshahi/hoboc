@@ -17,10 +17,18 @@ class PostCategory(models.Model):
 class CoursesTopicModel(models.Model):
     """Teaching category that contains lessons"""
     title = models.CharField(max_length=100)
+    catchy_title = models.CharField(max_length=100, blank=True, null=True, default="")  
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='courses/topics/', blank=True, null=True)
+    image = models.ImageField(upload_to='courses/topics/images/', blank=True, null=True)
+    logo_file = models.FileField(
+        upload_to='courses/topics/logos/',
+        blank=True,
+        null=True
+    )
+    
     is_published = models.BooleanField(default=True)  # Added with default=True
+    priority = models.PositiveIntegerField(default=1)
 
     class Meta:
         verbose_name = "Course Topic"

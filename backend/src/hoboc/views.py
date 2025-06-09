@@ -141,7 +141,7 @@ class PostCategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 class CoursesTopicViewSet(viewsets.ModelViewSet):
-    queryset = CoursesTopicModel.objects.filter(is_published=True)  
+    queryset = CoursesTopicModel.objects.filter(is_published=True).order_by('priority') 
     serializer_class = CoursesTopicSerializer
     pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]

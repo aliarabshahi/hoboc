@@ -15,7 +15,7 @@ class PostCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 class CoursesTopicModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'is_published')
+    list_display = ('title','catchy_title','slug', 'priority', 'is_published')
     search_fields = ('title',)
     list_filter = ('is_published',)
     prepopulated_fields = {'slug': ('title',)}

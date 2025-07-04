@@ -37,6 +37,7 @@ services:
       context: ./etc/nginx/
     volumes:
       - static_volume:/opt/hoboc/static/:ro
+      - ./src/media:/opt/hoboc/src/media:ro
     depends_on:
       - web
     restart: always

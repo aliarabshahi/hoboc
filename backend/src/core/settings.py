@@ -86,11 +86,19 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
     "http://localhost:3002",
     "http://localhost:3003",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+    "http://127.0.0.1:3002",
+    "http://127.0.0.1:3003",
+
 ]
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_URLS_REGEX = r'^/hoboc/media/.*$'
+
 
 # Optional: If you're using cookies and credentials (e.g., login)
 CORS_ALLOW_CREDENTIALS = True
-
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 ROOT_URLCONF = 'core.urls'
 

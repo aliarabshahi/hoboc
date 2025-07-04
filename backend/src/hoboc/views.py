@@ -141,11 +141,22 @@ class PostCategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 class CoursesTopicViewSet(viewsets.ModelViewSet):
-    queryset = CoursesTopicModel.objects.filter(is_published=True).order_by('priority') 
+    queryset = CoursesTopicModel.objects.filter(is_published=True).order_by('priority')
     serializer_class = CoursesTopicSerializer
     pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        topic_slug = self.request.query_params.get('topic-slug')
+
+        if topic_slug:
+            queryset = queryset.filter(slug=topic_slug)
+
+
+        return queryset
 
 class CoursesTagViewSet(viewsets.ModelViewSet):
     queryset = CoursesTagModel.objects.all()

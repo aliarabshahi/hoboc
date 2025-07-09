@@ -29,7 +29,10 @@ from .models import (
     CoursesTopicModel,
     CoursesTagModel,
     CoursesInstructorModel,
-    CoursesLessonModel
+    CoursesLessonModel,
+    ContactUsModel,
+    ProjectOrderModel,
+    ResumeSubmissionModel
 )
 
 
@@ -65,4 +68,23 @@ class CoursesLessonSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CoursesLessonModel
+        fields = '__all__'
+
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUsModel
+        fields = '__all__'
+
+
+class ProjectOrderSerializer(serializers.ModelSerializer):  
+    class Meta:
+        model = ProjectOrderModel
+        fields = '__all__'
+
+
+class ResumeSubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResumeSubmissionModel
         fields = '__all__'

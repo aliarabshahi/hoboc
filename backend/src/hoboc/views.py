@@ -122,14 +122,20 @@ from .models import (
     CoursesTopicModel,
     CoursesTagModel,
     CoursesInstructorModel,
-    CoursesLessonModel
+    CoursesLessonModel,
+    ContactUsModel,
+    ProjectOrderModel,
+    ResumeSubmissionModel
 )
 from .serializers import (
     PostCategorySerializer,
     CoursesTopicSerializer,
     CoursesTagSerializer,
     CoursesInstructorSerializer,
-    CoursesLessonSerializer
+    CoursesLessonSerializer,
+    ContactUsSerializer,
+    ProjectOrderSerializer,
+    ResumeSubmissionSerializer
 )
 from hoboc.views import BaseCustomGenericApiView, DashboardPagination
 
@@ -197,3 +203,25 @@ class CoursesLessonViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(is_published=is_published.lower() == 'true')
 
         return queryset
+
+
+
+class ContactUsViewSet(viewsets.ModelViewSet):
+    queryset = ContactUsModel.objects.all()
+    serializer_class = ContactUsSerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class ProjectOrderViewSet(viewsets.ModelViewSet):  # renamed
+    queryset = ProjectOrderModel.objects.all()
+    serializer_class = ProjectOrderSerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class ResumeSubmissionViewSet(viewsets.ModelViewSet):
+    queryset = ResumeSubmissionModel.objects.all()
+    serializer_class = ResumeSubmissionSerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]

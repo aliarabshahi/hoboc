@@ -1,12 +1,13 @@
-
-
 from django.contrib import admin
 from .models import (
     PostCategory,
     CoursesTopicModel,
     CoursesTagModel,
     CoursesInstructorModel,
-    CoursesLessonModel
+    CoursesLessonModel,
+    ContactUsModel,
+    ProjectOrderModel,
+    ResumeSubmissionModel,
 )
 
 class PostCategoryAdmin(admin.ModelAdmin):
@@ -26,14 +27,14 @@ class CoursesTagModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 class CoursesInstructorModelAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'bio')  # <-- Added custom method "name"
+    list_display = ('user', 'name', 'bio')
     search_fields = ('user__username', 'user__name')
 
     def name(self, obj):
-        return obj.user.name or obj.user.username  # Fallback if name is empty
+        return obj.user.name or obj.user.username
 
-    name.admin_order_field = 'user__name'  # allow column sorting
-    name.short_description = 'Name'        # column header
+    name.admin_order_field = 'user__name'
+    name.short_description = 'Name'
 
 class CoursesLessonModelAdmin(admin.ModelAdmin):
     list_display = ('title', 'topic', 'instructor', 'is_published', 'created_at','updated_at')
@@ -43,8 +44,27 @@ class CoursesLessonModelAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
     readonly_fields = ('created_at', 'updated_at')
 
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'email', 'phone_number', 'created_at')
+    search_fields = ('full_name', 'email', 'phone_number')
+    readonly_fields = ('created_at',)
+
+class ProjectOrderAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'email', 'phone_number', 'budget', 'deadline', 'created_at')
+    search_fields = ('full_name', 'email', 'phone_number')
+    readonly_fields = ('created_at',)
+
+class ResumeSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'email', 'phone_number', 'linkedin_profile', 'github_profile', 'created_at')
+    search_fields = ('full_name', 'email', 'phone_number')
+    readonly_fields = ('created_at',)
+
 admin.site.register(PostCategory, PostCategoryAdmin)
 admin.site.register(CoursesTopicModel, CoursesTopicModelAdmin)
 admin.site.register(CoursesTagModel, CoursesTagModelAdmin)
 admin.site.register(CoursesInstructorModel, CoursesInstructorModelAdmin)
 admin.site.register(CoursesLessonModel, CoursesLessonModelAdmin)
+
+admin.site.register(ContactUsModel, ContactUsAdmin)
+admin.site.register(ProjectOrderModel, ProjectOrderAdmin)
+admin.site.register(ResumeSubmissionModel, ResumeSubmissionAdmin)

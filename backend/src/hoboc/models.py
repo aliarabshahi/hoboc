@@ -137,3 +137,55 @@ class CoursesLessonModel(models.Model):
     @property
     def has_video(self):
         return bool(self.video_file) or bool(self.video_url)
+    
+
+
+
+class ContactUsModel(models.Model):
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Contact Us Message"
+        verbose_name_plural = "Contact Us Messages"
+
+    def __str__(self):
+        return self.full_name
+
+
+class ProjectOrderModel(models.Model):  # renamed (removed "Special")
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    project_description = models.TextField()
+    budget = models.CharField(max_length=50, blank=True, null=True)
+    deadline = models.CharField(max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Project Order"
+        verbose_name_plural = "Project Orders"
+
+    def __str__(self):
+        return self.full_name
+
+
+class ResumeSubmissionModel(models.Model):
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    linkedin_profile = models.URLField(blank=True, null=True)
+    github_profile = models.URLField(blank=True, null=True)
+    resume_file = models.FileField(upload_to='resumes/')
+    cover_letter = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Resume Submission"
+        verbose_name_plural = "Resume Submissions"
+
+    def __str__(self):
+        return self.full_name

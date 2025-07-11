@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from .views import (
+    BlogWriterViewSet,
     PostCategoryViewSet,
     CoursesTopicViewSet,
     CoursesTagViewSet,
@@ -33,6 +34,7 @@ router.register(r'resume-submissions', ResumeSubmissionViewSet, basename='resume
 router.register('posts', BlogPostViewSet,basename='blog-posts')
 router.register('categories', BlogCategoryViewSet,basename='blog-categories')
 router.register('tags', BlogTagViewSet,basename='blog-tags')
+router.register('writers', BlogWriterViewSet,basename='blog-writers')
 
 
 urlpatterns = [

@@ -241,11 +241,26 @@ class ResumeSubmissionViewSet(viewsets.ModelViewSet):
 class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPostModel.objects.filter(is_published=True).order_by("-created_at")
     serializer_class = BlogPostSerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class BlogCategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BlogCategoryModel.objects.all()
     serializer_class = BlogCategorySerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class BlogTagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BlogTagModel.objects.all()
     serializer_class = BlogTagSerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class BlogWriterViewSet(viewsets.ModelViewSet):
+    queryset = BlogWriterModel.objects.all()
+    serializer_class = BlogWriterSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+

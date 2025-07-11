@@ -32,7 +32,11 @@ from .models import (
     CoursesLessonModel,
     ContactUsModel,
     ProjectOrderModel,
-    ResumeSubmissionModel
+    ResumeSubmissionModel,
+    BlogWriterModel,
+    BlogCategoryModel,
+    BlogTagModel,
+    BlogPostModel
 )
 
 
@@ -88,10 +92,43 @@ class ResumeSubmissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResumeSubmissionModel
         fields = '__all__'
-        
+
     def validate_resume_file(self, value):
         if value.content_type != 'application/pdf':
             raise serializers.ValidationError("فقط فایل PDF مجاز است.")
         if value.size > 5 * 1024 * 1024:
             raise serializers.ValidationError("حداکثر حجم فایل ۵ مگابایت است.")
         return value
+
+
+# Blog  Serializers
+
+
+class BlogWriterSerializer(serializers.ModelSerializer):
+    name = serializers.ReadOnlyField()
+
+    class Meta:
+        model = BlogWriterModel
+        fields = ['id', 'name', 'bio', 'profile_picture']
+
+
+class BlogCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogCategoryModel
+        fields = '__all__'
+
+
+class BlogTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogTagModel
+        fields = '__all__'
+
+
+class BlogPostSerializer(serializers.ModelSerializer):
+    writer = BlogWriterSerializer(read_only=True)
+    category = BlogCategorySerializer(read_only=True)
+    tags = BlogTagSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = BlogPostModel
+        fields = '__all__'

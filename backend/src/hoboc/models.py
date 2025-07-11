@@ -189,3 +189,76 @@ class ResumeSubmissionModel(models.Model):
 
     def __str__(self):
         return self.full_name
+    
+
+# Blog Models
+
+class BlogWriterModel(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='writer_profile'
+    )
+    bio = models.TextField(blank=True)
+    profile_picture = models.ImageField(upload_to='courses/writers/', blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Blog Writer"          
+        verbose_name_plural = "Blog Writers"   
+
+    @property
+    def name(self):
+        if self.user:
+            return getattr(self.user, 'name', None) or self.user.get_full_name() or self.user.username
+        return "Unknown"
+
+    def __str__(self):
+        return f"Writer: {self.name}"
+
+
+
+class BlogCategoryModel(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class BlogTagModel(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class BlogPostModel(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    writer = models.ForeignKey(BlogWriterModel, on_delete=models.SET_NULL, null=True, related_name="posts")
+    content = models.TextField()  # This will hold HTML content
+    cover_image = models.ImageField(upload_to='courses/blog/covers/', blank=True, null=True)
+    category = models.ForeignKey(BlogCategoryModel, on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(BlogTagModel, blank=True)
+    is_published = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title

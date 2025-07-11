@@ -125,8 +125,12 @@ from .models import (
     CoursesLessonModel,
     ContactUsModel,
     ProjectOrderModel,
-    ResumeSubmissionModel
+    ResumeSubmissionModel,
+    BlogWriterModel,
+    BlogCategoryModel,
+    BlogTagModel, BlogPostModel
 )
+
 from .serializers import (
     PostCategorySerializer,
     CoursesTopicSerializer,
@@ -135,8 +139,13 @@ from .serializers import (
     CoursesLessonSerializer,
     ContactUsSerializer,
     ProjectOrderSerializer,
-    ResumeSubmissionSerializer
+    ResumeSubmissionSerializer,
+    BlogWriterSerializer,
+    BlogCategorySerializer,
+    BlogTagSerializer,
+    BlogPostSerializer
 )
+
 from hoboc.views import BaseCustomGenericApiView, DashboardPagination
 
 class PostCategoryViewSet(viewsets.ModelViewSet):
@@ -225,3 +234,18 @@ class ResumeSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = ResumeSubmissionSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+
+# Blog ViewSet
+
+class BlogPostViewSet(viewsets.ModelViewSet):
+    queryset = BlogPostModel.objects.filter(is_published=True).order_by("-created_at")
+    serializer_class = BlogPostSerializer
+
+class BlogCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = BlogCategoryModel.objects.all()
+    serializer_class = BlogCategorySerializer
+
+class BlogTagViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = BlogTagModel.objects.all()
+    serializer_class = BlogTagSerializer

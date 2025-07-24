@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from .views import (
     BlogWriterViewSet,
+    NotificationSubscriptionViewSet,
     PostCategoryViewSet,
     CoursesTopicViewSet,
     CoursesTagViewSet,
@@ -29,6 +30,7 @@ router.register(r'course-lessons', CoursesLessonViewSet, basename='course-lesson
 router.register(r'contact-us', ContactUsViewSet, basename='contact-us')
 router.register(r'project-orders', ProjectOrderViewSet, basename='project-orders')
 router.register(r'resume-submissions', ResumeSubmissionViewSet, basename='resume-submissions')
+router.register(r'notification-subscriptions', NotificationSubscriptionViewSet, basename='notification-subscriptions')
 
 # Blog APIs
 router.register('blog-posts', BlogPostViewSet,basename='blog-posts')

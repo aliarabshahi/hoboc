@@ -128,7 +128,8 @@ from .models import (
     ResumeSubmissionModel,
     BlogWriterModel,
     BlogTopicModel,
-    BlogTagModel, BlogPostModel
+    BlogTagModel, BlogPostModel,
+    NotificationSubscription,
 )
 
 from .serializers import (
@@ -143,7 +144,8 @@ from .serializers import (
     BlogWriterSerializer,
     BlogTopicSerializer,
     BlogTagSerializer,
-    BlogPostSerializer
+    BlogPostSerializer,
+    NotificationSubscriptionSerializer,
 )
 
 from hoboc.views import BaseCustomGenericApiView, DashboardPagination
@@ -290,3 +292,34 @@ class BlogPostViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(is_published=is_published.lower() == 'true')
 
         return queryset
+
+
+
+class NotificationSubscriptionViewSet(viewsets.ModelViewSet):
+    queryset = NotificationSubscription.objects.filter(is_active=True)
+    serializer_class = NotificationSubscriptionSerializer
+    permission_classes = [IsAuthenticated] 
+
+    def perform_create(self, serializer):
+        mobile = serializer.validated_data.get('mobile')
+        new_topics = serializer.validated_data.get('topics', [])
+        
+        # Get or create subscription
+        subscription, created = NotificationSubscription.objects.get_or_create(
+            mobile=mobile,
+            defaults=serializer.validated_data
+        )
+        
+        if not created:
+            # Merge topics - add new ones without removing existing
+            existing_topics = set(subscription.topics.all())
+            new_topics_set = set(new_topics)
+            combined_topics = existing_topics.union(new_topics_set)
+            subscription.topics.set(combined_topics)
+            
+            # Update other fields if provided
+            for attr, value in serializer.validated_data.items():
+                if attr != 'topics' and value is not None:
+                    setattr(subscription, attr, value)
+            
+            subscription.save()

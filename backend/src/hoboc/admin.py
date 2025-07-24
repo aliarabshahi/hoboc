@@ -8,6 +8,7 @@ from .models import (
     ContactUsModel,
     ProjectOrderModel,
     ResumeSubmissionModel,
+    NotificationSubscription,  # Added the new model
 
     # Blog models
     BlogWriterModel,
@@ -57,7 +58,6 @@ class CoursesLessonModelAdmin(admin.ModelAdmin):
 
 
 # ---------- Blog Admin ----------
-
 class BlogTopicModelAdmin(admin.ModelAdmin):
     list_display = ('title', 'catchy_title', 'slug', 'priority', 'is_published')
     search_fields = ('title',)
@@ -90,6 +90,7 @@ class BlogPostModelAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
     readonly_fields = ('created_at', 'updated_at')
 
+
 # ---------- Contact & Resume Admin ----------
 class ContactUsAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'email', 'phone_number', 'created_at')
@@ -109,6 +110,20 @@ class ResumeSubmissionAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
 
+# ---------- Notification Subscription Admin ----------
+class NotificationSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('mobile', 'email', 'full_name', 'is_active', 'topics_list', 'created_at')
+    search_fields = ('mobile', 'email', 'full_name')
+    list_filter = ('is_active', 'topics')
+    readonly_fields = ('created_at', 'updated_at')
+    filter_horizontal = ('topics',)  # Better UI for managing many-to-many relationships
+
+    def topics_list(self, obj):
+        return ", ".join([topic.title for topic in obj.topics.all()])
+    
+    topics_list.short_description = 'Topics'
+
+
 # ---------- Register All Models ----------
 admin.site.register(PostCategory, PostCategoryAdmin)
 admin.site.register(CoursesTopicModel, CoursesTopicModelAdmin)
@@ -120,7 +135,9 @@ admin.site.register(ContactUsModel, ContactUsAdmin)
 admin.site.register(ProjectOrderModel, ProjectOrderAdmin)
 admin.site.register(ResumeSubmissionModel, ResumeSubmissionAdmin)
 
-admin.site.register(BlogWriterModel, BlogWriterModelAdmin)  # ✅ Now properly registered
+admin.site.register(BlogWriterModel, BlogWriterModelAdmin)
 admin.site.register(BlogTopicModel, BlogTopicModelAdmin)
 admin.site.register(BlogTagModel, BlogTagModelAdmin)
 admin.site.register(BlogPostModel, BlogPostModelAdmin)
+
+admin.site.register(NotificationSubscription, NotificationSubscriptionAdmin)

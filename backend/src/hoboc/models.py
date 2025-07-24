@@ -251,6 +251,7 @@ class BlogWriterModel(models.Model):
 
 
 class BlogPostModel(models.Model):
+    
     topic = models.ForeignKey(
         BlogTopicModel,
         related_name='blog_topic',
@@ -305,3 +306,21 @@ class BlogPostModel(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class NotificationSubscription(models.Model):
+    mobile = models.CharField(max_length=20)
+    email = models.EmailField(blank=True, null=True)
+    full_name = models.CharField(max_length=100, blank=True, null=True)
+    topics = models.ManyToManyField(CoursesTopicModel)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Notification Subscription"
+        verbose_name_plural = "Notification Subscriptions"
+        # Removed unique_together
+
+    def __str__(self):
+        return f"{self.mobile} - {', '.join(t.title for t in self.topics.all())}"

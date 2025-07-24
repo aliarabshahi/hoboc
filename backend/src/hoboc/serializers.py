@@ -36,7 +36,8 @@ from .models import (
     BlogWriterModel,
     BlogTopicModel,
     BlogTagModel,
-    BlogPostModel
+    BlogPostModel,
+    NotificationSubscription,
 )
 
 
@@ -137,3 +138,20 @@ class BlogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPostModel
         fields = '__all__'
+
+
+
+class NotificationSubscriptionSerializer(serializers.ModelSerializer):
+    topics = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=CoursesTopicModel.objects.filter(is_published=True),
+        required=True
+    )
+
+    class Meta:
+        model = NotificationSubscription
+        fields = '__all__'
+        extra_kwargs = {
+            'mobile': {'required': True},
+            'is_active': {'read_only': True},
+        }

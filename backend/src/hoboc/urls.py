@@ -11,7 +11,7 @@ from .views import (
     ProjectOrderViewSet,
     ResumeSubmissionViewSet,
     BlogPostViewSet,
-    BlogCategoryViewSet,
+    BlogTopicViewSet,
     BlogTagViewSet
 )
 from hoboc.views import TestViewSet, SubscriberViewSet
@@ -31,10 +31,10 @@ router.register(r'project-orders', ProjectOrderViewSet, basename='project-orders
 router.register(r'resume-submissions', ResumeSubmissionViewSet, basename='resume-submissions')
 
 # Blog APIs
-router.register('posts', BlogPostViewSet,basename='blog-posts')
-router.register('categories', BlogCategoryViewSet,basename='blog-categories')
-router.register('tags', BlogTagViewSet,basename='blog-tags')
-router.register('writers', BlogWriterViewSet,basename='blog-writers')
+router.register('blog-posts', BlogPostViewSet,basename='blog-posts')
+router.register('blog-topics', BlogTopicViewSet,basename='blog-topics')
+router.register('blog-tags', BlogTagViewSet,basename='blog-tags')
+router.register('blog-writers', BlogWriterViewSet,basename='blog-writers')
 
 
 urlpatterns = [

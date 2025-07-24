@@ -127,7 +127,7 @@ from .models import (
     ProjectOrderModel,
     ResumeSubmissionModel,
     BlogWriterModel,
-    BlogCategoryModel,
+    BlogTopicModel,
     BlogTagModel, BlogPostModel
 )
 
@@ -141,7 +141,7 @@ from .serializers import (
     ProjectOrderSerializer,
     ResumeSubmissionSerializer,
     BlogWriterSerializer,
-    BlogCategorySerializer,
+    BlogTopicSerializer,
     BlogTagSerializer,
     BlogPostSerializer
 )
@@ -237,22 +237,25 @@ class ResumeSubmissionViewSet(viewsets.ModelViewSet):
 
 
 # Blog ViewSet
-
-class BlogPostViewSet(viewsets.ModelViewSet):
-    queryset = BlogPostModel.objects.filter(is_published=True).order_by("-created_at")
-    serializer_class = BlogPostSerializer
+class BlogTopicViewSet(viewsets.ModelViewSet):
+    queryset = BlogTopicModel.objects.filter(is_published=True).order_by('priority')
+    serializer_class = BlogTopicSerializer
+    pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-class BlogCategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = BlogCategoryModel.objects.all()
-    serializer_class = BlogCategorySerializer
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        topic_slug = self.request.query_params.get('topic-slug')
+        if topic_slug:
+            queryset = queryset.filter(slug=topic_slug)
+        return queryset
 
-class BlogTagViewSet(viewsets.ReadOnlyModelViewSet):
+
+class BlogTagViewSet(viewsets.ModelViewSet):
     queryset = BlogTagModel.objects.all()
     serializer_class = BlogTagSerializer
+    pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -264,3 +267,26 @@ class BlogWriterViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+
+class BlogPostViewSet(viewsets.ModelViewSet):
+    queryset = BlogPostModel.objects.filter(is_published=True)
+    serializer_class = BlogPostSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        topic_slug = self.request.query_params.get('topic-slug')
+        post_slug = self.request.query_params.get('post-slug')
+        is_published = self.request.query_params.get('is_published')
+
+        if topic_slug:
+            queryset = queryset.filter(topic__slug=topic_slug)
+        if post_slug:
+            queryset = queryset.filter(slug=post_slug)
+        if is_published is not None:
+            queryset = queryset.filter(is_published=is_published.lower() == 'true')
+
+        return queryset

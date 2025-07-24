@@ -192,6 +192,39 @@ class ResumeSubmissionModel(models.Model):
     
 
 # Blog Models
+class BlogTopicModel(models.Model):
+    title = models.CharField(max_length=100)
+    catchy_title = models.CharField(max_length=100, blank=True, null=True, default="")  
+    slug = models.SlugField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='blogs/topics/images/', blank=True, null=True)
+    logo_file = models.FileField(
+        upload_to='blogs/topics/logos/',
+        blank=True,
+        null=True
+    )
+    
+    is_published = models.BooleanField(default=True)  
+    priority = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = "Blog Topic"
+        verbose_name_plural = "Blog Topics"
+
+
+    def __str__(self):
+        return self.title
+
+class BlogTagModel(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        verbose_name = "Blog Tag"
+        verbose_name_plural = "Blog Tags"
+
+    def __str__(self):
+        return self.name
 
 class BlogWriterModel(models.Model):
     user = models.OneToOneField(
@@ -217,48 +250,58 @@ class BlogWriterModel(models.Model):
 
 
 
-class BlogCategoryModel(models.Model):
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+class BlogPostModel(models.Model):
+    topic = models.ForeignKey(
+        BlogTopicModel,
+        related_name='blog_topic',
+        on_delete=models.CASCADE
+    )
+    writer = models.ForeignKey(
+        BlogWriterModel,
+        related_name='blog_writer',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True, null=True)
+    pdf_file = models.FileField(
+        upload_to='blogs/pdfs/',
+        blank=True,
+        null=True
+    )
+    
+    # Video content
+    video_file = models.FileField(
+        upload_to='blogs/videos/',
+        blank=True,
+        null=True
+    )
+    video_url = models.URLField(blank=True, null=True)
+    thumbnail = models.ImageField(
+        upload_to='blogs/thumbs/',
+        blank=True,
+        null=True
+    )
+    cover_image = models.ImageField(upload_to='blogs/covers/', blank=True, null=True)
+
+    tags = models.ManyToManyField(
+        BlogTagModel,
+        blank=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Blogs Post "
+        verbose_name_plural = "Blogs Posts"
+        unique_together = ('topic', 'slug')
 
     def __str__(self):
         return self.title
-
-
-class BlogTagModel(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(unique=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
-class BlogPostModel(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
-    writer = models.ForeignKey(BlogWriterModel, on_delete=models.SET_NULL, null=True, related_name="posts")
-    content = models.TextField()  # This will hold HTML content
-    cover_image = models.ImageField(upload_to='courses/blog/covers/', blank=True, null=True)
-    category = models.ForeignKey(BlogCategoryModel, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(BlogTagModel, blank=True)
-    is_published = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # def save(self, *args, **kwargs):
-    #     if not self.slug:
-    #         self.slug = slugify(self.title)
-    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

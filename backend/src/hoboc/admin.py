@@ -11,7 +11,7 @@ from .models import (
 
     # Blog models
     BlogWriterModel,
-    BlogCategoryModel,
+    BlogTopicModel,
     BlogTagModel,
     BlogPostModel,
 )
@@ -57,36 +57,38 @@ class CoursesLessonModelAdmin(admin.ModelAdmin):
 
 
 # ---------- Blog Admin ----------
-class BlogWriterAdmin(admin.ModelAdmin):
+
+class BlogTopicModelAdmin(admin.ModelAdmin):
+    list_display = ('title', 'catchy_title', 'slug', 'priority', 'is_published')
+    search_fields = ('title',)
+    list_filter = ('is_published',)
+    prepopulated_fields = {'slug': ('title',)}
+
+
+class BlogTagModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+    prepopulated_fields = {'slug': ('name',)}
+
+
+class BlogWriterModelAdmin(admin.ModelAdmin):
     list_display = ('user', 'name', 'bio')
     search_fields = ('user__username', 'user__name')
 
     def name(self, obj):
         return obj.name
 
+    name.admin_order_field = 'user__name'
     name.short_description = 'Name'
 
 
-class BlogCategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug')
-    search_fields = ('title',)
-    prepopulated_fields = {'slug': ('title',)}
-
-
-class BlogTagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    search_fields = ('name',)
-    prepopulated_fields = {'slug': ('name',)}
-
-
-class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'writer', 'category', 'is_published', 'created_at')
-    search_fields = ('title', 'content')
-    list_filter = ('is_published', 'category', 'tags')
+class BlogPostModelAdmin(admin.ModelAdmin):
+    list_display = ('title', 'topic', 'writer', 'is_published', 'created_at', 'updated_at')
+    search_fields = ('title', 'description')
+    list_filter = ('is_published', 'topic')
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('tags',)
     readonly_fields = ('created_at', 'updated_at')
-
 
 # ---------- Contact & Resume Admin ----------
 class ContactUsAdmin(admin.ModelAdmin):
@@ -118,7 +120,7 @@ admin.site.register(ContactUsModel, ContactUsAdmin)
 admin.site.register(ProjectOrderModel, ProjectOrderAdmin)
 admin.site.register(ResumeSubmissionModel, ResumeSubmissionAdmin)
 
-admin.site.register(BlogWriterModel, BlogWriterAdmin)  # ✅ Now properly registered
-admin.site.register(BlogCategoryModel, BlogCategoryAdmin)
-admin.site.register(BlogTagModel, BlogTagAdmin)
-admin.site.register(BlogPostModel, BlogPostAdmin)
+admin.site.register(BlogWriterModel, BlogWriterModelAdmin)  # ✅ Now properly registered
+admin.site.register(BlogTopicModel, BlogTopicModelAdmin)
+admin.site.register(BlogTagModel, BlogTagModelAdmin)
+admin.site.register(BlogPostModel, BlogPostModelAdmin)

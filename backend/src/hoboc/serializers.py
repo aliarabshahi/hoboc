@@ -34,7 +34,7 @@ from .models import (
     ProjectOrderModel,
     ResumeSubmissionModel,
     BlogWriterModel,
-    BlogCategoryModel,
+    BlogTopicModel,
     BlogTagModel,
     BlogPostModel
 )
@@ -104,17 +104,10 @@ class ResumeSubmissionSerializer(serializers.ModelSerializer):
 # Blog  Serializers
 
 
-class BlogWriterSerializer(serializers.ModelSerializer):
-    name = serializers.ReadOnlyField()
 
+class BlogTopicSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BlogWriterModel
-        fields = ['id', 'name', 'bio', 'profile_picture']
-
-
-class BlogCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BlogCategoryModel
+        model = BlogTopicModel
         fields = '__all__'
 
 
@@ -124,9 +117,21 @@ class BlogTagSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class BlogWriterSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = BlogWriterModel
+        fields = '__all__'
+
+    def get_name(self, obj):
+        return obj.name
+
+
 class BlogPostSerializer(serializers.ModelSerializer):
+    topic = serializers.StringRelatedField()
     writer = BlogWriterSerializer(read_only=True)
-    category = BlogCategorySerializer(read_only=True)
     tags = BlogTagSerializer(many=True, read_only=True)
 
     class Meta:

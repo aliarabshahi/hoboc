@@ -3,6 +3,7 @@ from django.utils import timezone  # Correct import
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings  # For custom user model
+from django.utils.translation import gettext_lazy as _
 
 def project_files_upload_path(instance, filename):
     # Get current time
@@ -370,3 +371,59 @@ class NotificationSubscription(models.Model):
 
     def __str__(self):
         return f"{self.mobile} - {', '.join(t.title for t in self.topics.all())}"
+    
+class RoadmapItem(models.Model):
+    class Level(models.TextChoices):
+        BEGINNER = 'مبتدی', _('مبتدی')
+        INTERMEDIATE = 'متوسط', _('متوسط')
+        ADVANCED = 'پیشرفته', _('پیشرفته')
+
+    class Status(models.TextChoices):
+        NOT_STARTED = 'شروع‌نشده', _('شروع‌نشده')
+        IN_PROGRESS = 'در حال یادگیری', _('در حال یادگیری')
+        COMPLETED = 'تکمیل شده', _('تکمیل شده')
+
+    title = models.CharField(_('عنوان'), max_length=200)
+    description = models.TextField(_('توضیحات'))
+    level = models.CharField(
+        _('سطح'), 
+        max_length=20, 
+        choices=Level.choices,
+        default=Level.BEGINNER
+    )
+    status = models.CharField(
+        _('وضعیت'), 
+        max_length=20, 
+        choices=Status.choices,
+        default=Status.NOT_STARTED
+    )
+    order = models.PositiveIntegerField(_('ترتیب'), default=0)
+    created_at = models.DateTimeField(_('تاریخ ایجاد'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('تاریخ بروزرسانی'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('Roadmap Item')
+        verbose_name_plural = _('Roadmap Items')
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+class RoadmapResource(models.Model):
+    roadmap_item = models.ForeignKey(
+        RoadmapItem,
+        related_name='resources',
+        on_delete=models.CASCADE,
+        verbose_name=_('آیتم نقشه راه')
+    )
+    title = models.CharField(_('عنوان'), max_length=200)
+    url = models.URLField(_('لینک'))
+    order = models.PositiveIntegerField(_('ترتیب'), default=0)
+
+    class Meta:
+        verbose_name = _('Roadmap Item Source')
+        verbose_name_plural = _('Roadmap Item Sources')
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title

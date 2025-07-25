@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import TestSerializer
+from .serializers import RoadmapItemSerializer, TestSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import GenericAPIView
 from datetime import datetime
@@ -130,6 +130,7 @@ from .models import (
     BlogTopicModel,
     BlogTagModel, BlogPostModel,
     NotificationSubscription,
+    RoadmapItem,
 )
 
 from .serializers import (
@@ -327,3 +328,25 @@ class NotificationSubscriptionViewSet(viewsets.ModelViewSet):
                     setattr(subscription, attr, value)
             
             subscription.save()
+
+
+
+class RoadmapItemViewSet(viewsets.ModelViewSet):
+    queryset = RoadmapItem.objects.all().prefetch_related('resources').order_by('order')
+    serializer_class = RoadmapItemSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Add any filters you need
+        status = self.request.query_params.get('status')
+        level = self.request.query_params.get('level')
+        
+        if status:
+            queryset = queryset.filter(status=status)
+        if level:
+            queryset = queryset.filter(level=level)
+            
+        return queryset

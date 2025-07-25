@@ -7,15 +7,17 @@ from .models import (
     CoursesLessonModel,
     ContactUsModel,
     ProjectOrderModel,
-    ProjectFile,  # New model for project files
+    ProjectFile,
     ResumeSubmissionModel,
     NotificationSubscription,
 
-    # Blog models
     BlogWriterModel,
     BlogTopicModel,
     BlogTagModel,
     BlogPostModel,
+
+    RoadmapItem,
+    RoadmapResource,
 )
 
 # ---------- Inline Admin Classes ----------
@@ -25,6 +27,11 @@ class ProjectFileInline(admin.TabularInline):
     readonly_fields = ('uploaded_at',)
     fields = ('file', 'uploaded_at')
     can_delete = False
+
+class RoadmapResourceInline(admin.TabularInline):
+    model = RoadmapResource
+    extra = 1
+
 
 # ---------- Courses Admin ----------
 class PostCategoryAdmin(admin.ModelAdmin):
@@ -115,7 +122,7 @@ class ProjectOrderAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     inlines = [ProjectFileInline]
     list_per_page = 20
-    
+
     def files_count(self, obj):
         return obj.files.count()
     files_count.short_description = 'Files'
@@ -143,6 +150,15 @@ class NotificationSubscriptionAdmin(admin.ModelAdmin):
     topics_list.short_description = 'Topics'
 
 
+# ---------- Roadmap Admin ----------
+class RoadmapItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'level', 'status', 'order')
+    list_filter = ('level', 'status')
+    search_fields = ('title', 'description')
+    inlines = [RoadmapResourceInline]
+    ordering = ('order',)
+
+
 # ---------- Register All Models ----------
 admin.site.register(PostCategory, PostCategoryAdmin)
 admin.site.register(CoursesTopicModel, CoursesTopicModelAdmin)
@@ -160,3 +176,5 @@ admin.site.register(BlogTagModel, BlogTagModelAdmin)
 admin.site.register(BlogPostModel, BlogPostModelAdmin)
 
 admin.site.register(NotificationSubscription, NotificationSubscriptionAdmin)
+
+admin.site.register(RoadmapItem, RoadmapItemAdmin)

@@ -39,6 +39,8 @@ from .models import (
     BlogTagModel,
     BlogPostModel,
     NotificationSubscription,
+    RoadmapItem,
+    RoadmapResource,
 )
 
 
@@ -171,3 +173,16 @@ class NotificationSubscriptionSerializer(serializers.ModelSerializer):
             'mobile': {'required': True},
             'is_active': {'read_only': True},
         }
+
+
+class RoadmapResourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoadmapResource
+        fields = ['id', 'title', 'url', 'order']
+
+class RoadmapItemSerializer(serializers.ModelSerializer):
+    resources = RoadmapResourceSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = RoadmapItem
+        fields = ['id', 'title', 'description', 'level', 'status', 'order', 'resources']

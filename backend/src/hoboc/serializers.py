@@ -113,10 +113,11 @@ class ResumeSubmissionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate_resume_file(self, value):
-        if value.content_type != 'application/pdf':
-            raise serializers.ValidationError("فقط فایل PDF مجاز است.")
-        if value.size > 5 * 1024 * 1024:
-            raise serializers.ValidationError("حداکثر حجم فایل ۵ مگابایت است.")
+        if value:
+            if value.content_type != 'application/pdf':
+                raise serializers.ValidationError("فقط فایل PDF مجاز است.")
+            if value.size > 5 * 1024 * 1024:
+                raise serializers.ValidationError("حداکثر حجم فایل ۵ مگابایت است.")
         return value
 
 

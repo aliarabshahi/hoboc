@@ -309,26 +309,29 @@ class NotificationSubscriptionViewSet(viewsets.ModelViewSet):
         mobile = serializer.validated_data.get('mobile')
         new_topics = serializer.validated_data.get('topics', [])
         
-        # Get or create subscription
+        # Get or create the subscription (without topics first)
         subscription, created = NotificationSubscription.objects.get_or_create(
             mobile=mobile,
-            defaults=serializer.validated_data
+            defaults={
+                'email': serializer.validated_data.get('email'),
+                'full_name': serializer.validated_data.get('full_name'),
+            }
         )
         
+        # If subscription already exists, update email/full_name if provided
         if not created:
-            # Merge topics - add new ones without removing existing
-            existing_topics = set(subscription.topics.all())
-            new_topics_set = set(new_topics)
-            combined_topics = existing_topics.union(new_topics_set)
-            subscription.topics.set(combined_topics)
-            
-            # Update other fields if provided
-            for attr, value in serializer.validated_data.items():
-                if attr != 'topics' and value is not None:
-                    setattr(subscription, attr, value)
-            
+            if 'email' in serializer.validated_data:
+                subscription.email = serializer.validated_data['email']
+            if 'full_name' in serializer.validated_data:
+                subscription.full_name = serializer.validated_data['full_name']
             subscription.save()
-
+        
+        # Get existing topics and merge with new ones (avoid duplicates)
+        existing_topics = subscription.topics.all()
+        combined_topics = list(set(existing_topics) | set(new_topics))
+        
+        # Update topics (add new ones without removing existing)
+        subscription.topics.set(combined_topics)
 
 
 class RoadmapItemViewSet(viewsets.ModelViewSet):

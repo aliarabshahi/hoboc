@@ -1,6 +1,45 @@
+import os
+from django.utils import timezone  # Correct import
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings  # For custom user model
+
+def project_files_upload_path(instance, filename):
+    # Get current time
+    now = timezone.now()
+    
+    # Create folder name in format: 2025_07_25_1222_alimail
+    date_str = now.strftime("%Y_%m_%d_%H%M")  # 2025_07_25_1222
+    email_prefix = instance.project.email.split('@')[0]
+    sanitized_email = slugify(email_prefix)
+    folder_name = f"{date_str}_{sanitized_email}"
+    
+    # Get just the base filename without any path
+    original_name = os.path.basename(filename)
+    
+    # New filename format: alimail_RvuTMEe.pdf
+    new_filename = f"{sanitized_email}_{original_name}"
+    
+    # Return full path without modifying the filename again
+    return os.path.join('project_orders', folder_name, new_filename)
+def resume_files_upload_path(instance, filename):
+    """Custom upload path for resume files"""
+    now = timezone.now()
+    
+    # Create folder name: 2025_07_25_1222_emailprefix
+    date_str = now.strftime("%Y_%m_%d_%H%M")
+    email_prefix = instance.email.split('@')[0]
+    sanitized_email = slugify(email_prefix)
+    folder_name = f"{date_str}_{sanitized_email}"
+    
+    # Get original filename and extension
+    original_name = os.path.basename(filename)
+    name, ext = os.path.splitext(original_name)
+    
+    # New filename format: emailprefix_resume.ext
+    new_filename = f"{sanitized_email}_resume{ext.lower()}"
+    
+    return os.path.join('resumes', folder_name, new_filename)
 
 
 # temp
@@ -173,11 +212,12 @@ class ProjectOrderModel(models.Model):
 
 class ProjectFile(models.Model):
     project = models.ForeignKey(ProjectOrderModel, related_name='files', on_delete=models.CASCADE)
-    file = models.FileField(upload_to='project_files/')
+    file = models.FileField(upload_to=project_files_upload_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"File for {self.project.full_name}"
+    def save(self, *args, **kwargs):
+        # Remove the manual filename assignment to prevent duplication
+        super().save(*args, **kwargs)
 
 class ResumeSubmissionModel(models.Model):
     full_name = models.CharField(max_length=100)
@@ -185,7 +225,7 @@ class ResumeSubmissionModel(models.Model):
     phone_number = models.CharField(max_length=20)
     linkedin_profile = models.URLField(blank=True, null=True)
     github_profile = models.URLField(blank=True, null=True)
-    resume_file = models.FileField(upload_to='resumes/')
+    resume_file = models.FileField(upload_to=resume_files_upload_path)  
     cover_letter = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

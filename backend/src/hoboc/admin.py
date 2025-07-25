@@ -7,8 +7,9 @@ from .models import (
     CoursesLessonModel,
     ContactUsModel,
     ProjectOrderModel,
+    ProjectFile,  # New model for project files
     ResumeSubmissionModel,
-    NotificationSubscription,  # Added the new model
+    NotificationSubscription,
 
     # Blog models
     BlogWriterModel,
@@ -16,6 +17,14 @@ from .models import (
     BlogTagModel,
     BlogPostModel,
 )
+
+# ---------- Inline Admin Classes ----------
+class ProjectFileInline(admin.TabularInline):
+    model = ProjectFile
+    extra = 0
+    readonly_fields = ('uploaded_at',)
+    fields = ('file', 'uploaded_at')
+    can_delete = False
 
 # ---------- Courses Admin ----------
 class PostCategoryAdmin(admin.ModelAdmin):
@@ -96,18 +105,27 @@ class ContactUsAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'email', 'phone_number', 'created_at')
     search_fields = ('full_name', 'email', 'phone_number')
     readonly_fields = ('created_at',)
+    list_per_page = 20
 
 
 class ProjectOrderAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'email', 'phone_number', 'budget', 'deadline', 'created_at')
+    list_display = ('full_name', 'email', 'phone_number', 'budget', 'deadline', 'created_at', 'files_count')
     search_fields = ('full_name', 'email', 'phone_number')
     readonly_fields = ('created_at',)
+    list_filter = ('created_at',)
+    inlines = [ProjectFileInline]
+    list_per_page = 20
+    
+    def files_count(self, obj):
+        return obj.files.count()
+    files_count.short_description = 'Files'
 
 
 class ResumeSubmissionAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'email', 'phone_number', 'linkedin_profile', 'github_profile', 'created_at')
     search_fields = ('full_name', 'email', 'phone_number')
     readonly_fields = ('created_at',)
+    list_per_page = 20
 
 
 # ---------- Notification Subscription Admin ----------
@@ -116,7 +134,8 @@ class NotificationSubscriptionAdmin(admin.ModelAdmin):
     search_fields = ('mobile', 'email', 'full_name')
     list_filter = ('is_active', 'topics')
     readonly_fields = ('created_at', 'updated_at')
-    filter_horizontal = ('topics',)  # Better UI for managing many-to-many relationships
+    filter_horizontal = ('topics',)
+    list_per_page = 20
 
     def topics_list(self, obj):
         return ", ".join([topic.title for topic in obj.topics.all()])

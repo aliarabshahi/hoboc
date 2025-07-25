@@ -155,8 +155,7 @@ class ContactUsModel(models.Model):
     def __str__(self):
         return self.full_name
 
-
-class ProjectOrderModel(models.Model):  # renamed (removed "Special")
+class ProjectOrderModel(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20)
@@ -172,6 +171,13 @@ class ProjectOrderModel(models.Model):  # renamed (removed "Special")
     def __str__(self):
         return self.full_name
 
+class ProjectFile(models.Model):
+    project = models.ForeignKey(ProjectOrderModel, related_name='files', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='project_files/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"File for {self.project.full_name}"
 
 class ResumeSubmissionModel(models.Model):
     full_name = models.CharField(max_length=100)

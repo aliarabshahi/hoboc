@@ -31,6 +31,7 @@ from .models import (
     CoursesInstructorModel,
     CoursesLessonModel,
     ContactUsModel,
+    ProjectFile,
     ProjectOrderModel,
     ResumeSubmissionModel,
     BlogWriterModel,
@@ -83,11 +84,26 @@ class ContactUsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProjectOrderSerializer(serializers.ModelSerializer):  
+class ProjectFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectFile
+        fields = ['file']
+
+class ProjectOrderSerializer(serializers.ModelSerializer):
+    files = ProjectFileSerializer(many=True, required=False)
+    
     class Meta:
         model = ProjectOrderModel
         fields = '__all__'
 
+    def create(self, validated_data):
+        files_data = self.context.get('request').FILES
+        project = ProjectOrderModel.objects.create(**validated_data)
+        
+        for file_data in files_data.getlist('files'):
+            ProjectFile.objects.create(project=project, file=file_data)
+            
+        return project
 
 class ResumeSubmissionSerializer(serializers.ModelSerializer):
     class Meta:

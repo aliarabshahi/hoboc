@@ -224,12 +224,16 @@ class ContactUsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class ProjectOrderViewSet(viewsets.ModelViewSet):  # renamed
+class ProjectOrderViewSet(viewsets.ModelViewSet):
     queryset = ProjectOrderModel.objects.all()
     serializer_class = ProjectOrderSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 class ResumeSubmissionViewSet(viewsets.ModelViewSet):
     queryset = ResumeSubmissionModel.objects.all()

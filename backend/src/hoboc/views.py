@@ -13,6 +13,8 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .serializers import TestSerializer, SubscriberDashboardInputSerializer, SubscriberSerializer
+from rest_framework import filters
+
 
 class TestViewSet(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
@@ -197,6 +199,9 @@ class CoursesLessonViewSet(viewsets.ModelViewSet):
     pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at', 'updated_at', 'title', 'duration']
+    ordering = ['-created_at']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -223,13 +228,18 @@ class ContactUsViewSet(viewsets.ModelViewSet):
     serializer_class = ContactUsSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
 
 class ProjectOrderViewSet(viewsets.ModelViewSet):
     queryset = ProjectOrderModel.objects.all()
     serializer_class = ProjectOrderSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -241,15 +251,21 @@ class ResumeSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = ResumeSubmissionSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
 
 
 # Blog ViewSet
 class BlogTopicViewSet(viewsets.ModelViewSet):
-    queryset = BlogTopicModel.objects.filter(is_published=True).order_by('priority')
+    queryset = BlogTopicModel.objects.filter(is_published=True)
     serializer_class = BlogTopicSerializer
     pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['priority', 'created_at', 'updated_at']  # Add all fields you want to allow ordering by
+    ordering = ['priority']  # Default ordering if none specified
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -281,6 +297,9 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     pagination_class = DashboardPagination
     authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at', 'updated_at']
+    ordering = ['-created_at']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -304,6 +323,9 @@ class NotificationSubscriptionViewSet(viewsets.ModelViewSet):
     queryset = NotificationSubscription.objects.filter(is_active=True)
     serializer_class = NotificationSubscriptionSerializer
     permission_classes = [IsAuthenticated] 
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at', 'updated_at']
+    ordering = ['-created_at']
 
     def perform_create(self, serializer):
         mobile = serializer.validated_data.get('mobile')

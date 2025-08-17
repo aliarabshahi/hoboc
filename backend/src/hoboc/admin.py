@@ -18,6 +18,8 @@ from .models import (
 
     RoadmapItem,
     RoadmapResource,
+
+    PodcastEpisodeModel,
 )
 
 # ---------- Inline Admin Classes ----------
@@ -159,6 +161,15 @@ class RoadmapItemAdmin(admin.ModelAdmin):
     ordering = ('order',)
 
 
+
+# ---------- Podcast Admin ----------
+class PodcastEpisodeAdmin(admin.ModelAdmin):
+    list_display = ("title", "is_published", "published_at", "created_at")
+    search_fields = ("title", "description", "content")
+    list_filter = ("is_published",)
+    prepopulated_fields = {"slug": ("title",)}
+    readonly_fields = ("created_at", "updated_at")
+
 # ---------- Register All Models ----------
 admin.site.register(PostCategory, PostCategoryAdmin)
 admin.site.register(CoursesTopicModel, CoursesTopicModelAdmin)
@@ -178,3 +189,4 @@ admin.site.register(BlogPostModel, BlogPostModelAdmin)
 admin.site.register(NotificationSubscription, NotificationSubscriptionAdmin)
 
 admin.site.register(RoadmapItem, RoadmapItemAdmin)
+admin.site.register(PodcastEpisodeModel, PodcastEpisodeAdmin)

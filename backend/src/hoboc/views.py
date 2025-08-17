@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import RoadmapItemSerializer, TestSerializer
+from .serializers import PodcastEpisodeSerializer, RoadmapItemSerializer, TestSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import GenericAPIView
 from datetime import datetime
@@ -120,6 +120,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .models import (
+    PodcastEpisodeModel,
     PostCategory,
     CoursesTopicModel,
     CoursesTagModel,
@@ -374,4 +375,22 @@ class RoadmapItemViewSet(viewsets.ModelViewSet):
         if level:
             queryset = queryset.filter(level=level)
             
+        return queryset
+    
+
+class PodcastEpisodeViewSet(viewsets.ModelViewSet):
+    queryset = PodcastEpisodeModel.objects.filter(is_published=True)
+    serializer_class = PodcastEpisodeSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ["published_at", "created_at", "title"]
+    ordering = ["-published_at"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        slug = self.request.query_params.get("slug")
+        if slug:
+            queryset = queryset.filter(slug=slug)
         return queryset

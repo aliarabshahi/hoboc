@@ -14,7 +14,8 @@ from .views import (
     BlogPostViewSet,
     BlogTopicViewSet,
     BlogTagViewSet,
-    RoadmapItemViewSet
+    RoadmapItemViewSet,
+    PodcastEpisodeViewSet
 )
 from hoboc.views import TestViewSet, SubscriberViewSet
 
@@ -41,6 +42,9 @@ router.register('blog-writers', BlogWriterViewSet,basename='blog-writers')
 
 # Roadmap APIs
 router.register('roadmap-items', RoadmapItemViewSet, basename='roadmap-items')
+
+# Podcast Episodes APIs
+router.register(r'podcast-episodes', PodcastEpisodeViewSet, basename='podcast-episodes')
 
 
 urlpatterns = [

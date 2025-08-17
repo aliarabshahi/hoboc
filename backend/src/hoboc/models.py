@@ -422,3 +422,38 @@ class RoadmapResource(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class PodcastEpisodeModel(models.Model):
+    """Podcast episode with audio, transcript, and metadata"""
+
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    description = models.TextField(blank=True)
+    content = models.TextField(blank=True)  # can store HTML or transcript
+    audio_file = models.FileField(
+        upload_to="podcasts/episodes/",
+        blank=True,
+        null=True
+    )
+    audio_url = models.URLField(blank=True, null=True)  # in case it's remote
+    published_at = models.DateTimeField()
+    is_published = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Podcast Episode"
+        verbose_name_plural = "Podcast Episodes"
+        ordering = ["-published_at"]
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def audio_src(self):
+        """Return either uploaded file or remote URL"""
+        if self.audio_file:
+            return self.audio_file.url
+        return self.audio_url

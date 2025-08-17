@@ -41,6 +41,7 @@ from .models import (
     NotificationSubscription,
     RoadmapItem,
     RoadmapResource,
+    PodcastEpisodeModel,
 )
 
 
@@ -187,3 +188,17 @@ class RoadmapItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoadmapItem
         fields = ['id', 'title', 'description', 'level', 'status', 'order', 'resources']
+
+
+class PodcastEpisodeSerializer(serializers.ModelSerializer):
+    audio = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PodcastEpisodeModel
+        fields = "__all__"
+
+    def get_audio(self, obj):
+        return {
+            "src": obj.audio_src,
+            "type": "audio/mpeg"  # default, or detect by extension if you want
+        }

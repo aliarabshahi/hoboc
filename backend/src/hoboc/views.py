@@ -24,7 +24,6 @@ from .models import (
     ResumeSubmissionModel, BlogWriterModel, BlogTopicModel, BlogTagModel, BlogPostModel,
     NotificationSubscription, RoadmapItem
 )
-from hoboc.views import BaseCustomGenericApiView, DashboardPagination
 
 
 # ---------------------------------------------------------------------

@@ -15,7 +15,8 @@ from .views import (
     BlogTopicViewSet,
     BlogTagViewSet,
     RoadmapItemViewSet,
-    PodcastEpisodeViewSet
+    PodcastEpisodeViewSet,
+    health_check,
 )
 from hoboc.views import TestViewSet, SubscriberViewSet
 
@@ -50,4 +51,5 @@ router.register(r'podcast-episodes', PodcastEpisodeViewSet, basename='podcast-ep
 urlpatterns = [
     path('', include(router.urls)),
     path('subscriber/', SubscriberViewSet.as_view()),
+    path("health/", health_check),
 ]

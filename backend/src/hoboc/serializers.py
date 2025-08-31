@@ -71,14 +71,18 @@ class CoursesInstructorSerializer(serializers.ModelSerializer):
         return obj.name
     
 class CoursesLessonSerializer(serializers.ModelSerializer):
-    topic = serializers.StringRelatedField()
+    topic = serializers.StringRelatedField()  # shows topic title
+    topic_slug = serializers.SlugRelatedField(
+        source='topic',
+        read_only=True,
+        slug_field='slug'
+    )
     instructor = CoursesInstructorSerializer(read_only=True)
     tags = CoursesTagSerializer(many=True, read_only=True)
-    
+
     class Meta:
         model = CoursesLessonModel
-        fields = '__all__'
-
+        fields = '__all__'  # ✅ no concatenation needed
 
 
 class ContactUsSerializer(serializers.ModelSerializer):
@@ -152,12 +156,17 @@ class BlogWriterSerializer(serializers.ModelSerializer):
 
 class BlogPostSerializer(serializers.ModelSerializer):
     topic = serializers.StringRelatedField()
+    topic_slug = serializers.SlugRelatedField(
+        source='topic',  # get from related topic object
+        slug_field='slug',
+        read_only=True
+    )
     writer = BlogWriterSerializer(read_only=True)
     tags = BlogTagSerializer(many=True, read_only=True)
 
     class Meta:
         model = BlogPostModel
-        fields = '__all__'
+        fields = '__all__'  # this will include topic_slug automatically
 
 
 

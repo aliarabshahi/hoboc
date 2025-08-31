@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
 from rest_framework import viewsets
@@ -15,6 +18,20 @@ from rest_framework import status
 from .serializers import TestSerializer, SubscriberDashboardInputSerializer, SubscriberSerializer
 from rest_framework import filters
 
+
+@api_view(["GET"])
+@permission_classes([])  # No auth required
+def health_check(request):
+    try:
+        # DB ping
+        from django.db import connections
+        connections['default'].cursor()
+        return Response({"status": "ok"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(
+            {"status": "error", "message": str(e)},
+            status=status.HTTP_503_SERVICE_UNAVAILABLE
+        )
 
 class TestViewSet(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):

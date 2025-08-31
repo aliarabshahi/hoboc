@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
+
 from .views import (
     BlogWriterViewSet,
     NotificationSubscriptionViewSet,
@@ -21,35 +22,45 @@ from .views import (
 from hoboc.views import TestViewSet, SubscriberViewSet
 
 
+# ---------------------------------------------------------------------
+# Router Configuration
+# ---------------------------------------------------------------------
 router = SimpleRouter()
+
+# Test API
 router.register(r'test', TestViewSet, basename='test')
+
+# Content Management
 router.register(r'post-categories', PostCategoryViewSet, basename='post-categories')
 router.register(r'course-topics', CoursesTopicViewSet, basename='course-topics')
 router.register(r'course-tags', CoursesTagViewSet, basename='course-tags')
 router.register(r'course-instructors', CoursesInstructorViewSet, basename='course-instructors')
 router.register(r'course-lessons', CoursesLessonViewSet, basename='course-lessons')
 
-# Register new form APIs
+# Forms & User Input APIs
 router.register(r'contact-us', ContactUsViewSet, basename='contact-us')
 router.register(r'project-orders', ProjectOrderViewSet, basename='project-orders')
 router.register(r'resume-submissions', ResumeSubmissionViewSet, basename='resume-submissions')
 router.register(r'notification-subscriptions', NotificationSubscriptionViewSet, basename='notification-subscriptions')
 
 # Blog APIs
-router.register('blog-posts', BlogPostViewSet,basename='blog-posts')
-router.register('blog-topics', BlogTopicViewSet,basename='blog-topics')
-router.register('blog-tags', BlogTagViewSet,basename='blog-tags')
-router.register('blog-writers', BlogWriterViewSet,basename='blog-writers')
+router.register(r'blog-posts', BlogPostViewSet, basename='blog-posts')
+router.register(r'blog-topics', BlogTopicViewSet, basename='blog-topics')
+router.register(r'blog-tags', BlogTagViewSet, basename='blog-tags')
+router.register(r'blog-writers', BlogWriterViewSet, basename='blog-writers')
 
 # Roadmap APIs
-router.register('roadmap-items', RoadmapItemViewSet, basename='roadmap-items')
+router.register(r'roadmap-items', RoadmapItemViewSet, basename='roadmap-items')
 
-# Podcast Episodes APIs
+# Podcast APIs
 router.register(r'podcast-episodes', PodcastEpisodeViewSet, basename='podcast-episodes')
 
 
+# ---------------------------------------------------------------------
+# URL Patterns
+# ---------------------------------------------------------------------
 urlpatterns = [
-    path('', include(router.urls)),
-    path('subscriber/', SubscriberViewSet.as_view()),
-    path("health/", health_check),
+    path('', include(router.urls)),              # All router registered endpoints
+    path('subscriber/', SubscriberViewSet.as_view()),  # Subscriber dashboard endpoint
+    path("health/", health_check),               # Health check endpoint
 ]

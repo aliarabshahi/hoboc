@@ -1,7 +1,16 @@
 
+# ---------------------------------------------------------------------
+# Base Image
+# ---------------------------------------------------------------------
+# Use the official stable release of Nginx
 FROM nginx:stable
 
-# 1. generate self-signed certificate & key
+
+# ---------------------------------------------------------------------
+# Step 1: Generate Self-Signed SSL Certificate & Key
+# ---------------------------------------------------------------------
+# This is suitable for development or internal testing.
+# In production, replace with a valid CA-signed SSL certificate.
 RUN openssl req \
     -x509 \
     -nodes \
@@ -12,6 +21,11 @@ RUN openssl req \
     -out /etc/ssl/certs/nginx-selfsigned.crt \
     -keyout /etc/ssl/private/nginx-selfsigned.key;
 
-# 2. set proper conf file
+# ---------------------------------------------------------------------
+# Step 2: Configure Nginx
+# ---------------------------------------------------------------------
+# Remove default Nginx configuration
 RUN rm /etc/nginx/conf.d/default.conf
+
+# Add our custom Nginx configuration into the container
 ADD ./nginx.conf /etc/nginx/conf.d/

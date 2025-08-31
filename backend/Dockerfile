@@ -1,36 +1,69 @@
-# Use Python 3.7-slim-buster as the base image
+# ---------------------------------------------------------------------
+# Base Image
+# ---------------------------------------------------------------------
+# Using official slim Python 3.9 on Debian Bullseye
+# Slim variant keeps image size smaller by excluding dev tools
 FROM python:3.9-slim-bullseye
 
-# Set environment variables
+# ---------------------------------------------------------------------
+# Environment Variables
+# ---------------------------------------------------------------------
+# Prevent Python from generating .pyc files
 ENV PYTHONDONTWRITEBYTECODE=1
+# Force stdout/stderr to flush immediately (no buffering)
 ENV PYTHONUNBUFFERED=1
 
-# Create and set the working directory in the container
+# ---------------------------------------------------------------------
+# Working Directory Setup
+# ---------------------------------------------------------------------
+# Create /opt/hoboc as main working directory
 WORKDIR /opt/hoboc
 
-# Install system dependencies
+# ---------------------------------------------------------------------
+# System Dependencies Installation
+# ---------------------------------------------------------------------
+# Install system-level packages listed in requirements.apt
+# Clean APT cache afterward to reduce layer size
 RUN apt-get update \
     && cat requirements.apt | xargs -I {} apt-get install {} -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# ---------------------------------------------------------------------
+# Python Dependencies Installation
+# ---------------------------------------------------------------------
 COPY requirements.txt .
-
-# Install Python dependencies
-RUN pip install --upgrade pip  \
+RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
-# Copy the entire Django project into the container
+# ---------------------------------------------------------------------
+# Application Code Copy
+# ---------------------------------------------------------------------
+# Copy Django app source code into container
 COPY ./src/ /opt/hoboc/src/
 COPY gunicorn.py /opt/hoboc/src/
 COPY gunicorn.py /opt/hoboc/
+
+# ---------------------------------------------------------------------
+# Switch Working Directory to Source Code Path
+# ---------------------------------------------------------------------
 WORKDIR /opt/hoboc/src
 
-# Run the collectstatic command during the image build
+# ---------------------------------------------------------------------
+# Collect Static Files During Build
+# ---------------------------------------------------------------------
+# Ensures static assets are ready to be served by Nginx
 RUN python manage.py collectstatic --noinput
 
-# Expose the Django development server port (change as needed)
+# ---------------------------------------------------------------------
+# Exposed Port
+# ---------------------------------------------------------------------
+# This port is for Django development server
+# In production, use Gunicorn + Nginx instead
 EXPOSE 8000
 
-# Start the Django development server
+# ---------------------------------------------------------------------
+# Default Container Command
+# ---------------------------------------------------------------------
+# Starts Django development server listening on all interfaces
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

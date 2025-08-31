@@ -1,60 +1,84 @@
-# Python
+# ---------------------------------------------------------------------
+# Python bytecode and cache files
+# ---------------------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Django stuff:
-*.log
-*.pot
-*.pyc
-*.sqlite3
-db.sqlite3
-media/
-staticfiles/
+# ---------------------------------------------------------------------
+# Django-specific files and folders
+# ---------------------------------------------------------------------
+*.log               # Log files
+*.pot               # Translation templates
+*.pyc               # Compiled Python files (redundant but explicit)
+*.sqlite3           # SQLite DB files
+db.sqlite3          # Default Django SQLite DB file
+media/              # Uploaded media files (should not be committed)
+staticfiles/        # Collected static files (from collectstatic)
 
-# Django migrations
+# ---------------------------------------------------------------------
+# Django migrations (ignore generated migrations but keep __init__.py)
+# ---------------------------------------------------------------------
 */migrations/*.py
 */migrations/*.pyc
 !*/migrations/__init__.py
 
-# Environments
+# ---------------------------------------------------------------------
+# Environment variables files
+# ---------------------------------------------------------------------
 .env
 *.env
-.env.*
+.env.*              # Any env file variant
 
-# VS Code
+# ---------------------------------------------------------------------
+# VS Code editor settings
+# ---------------------------------------------------------------------
 .vscode/
 
-# OS-specific
-.DS_Store
-Thumbs.db
+# ---------------------------------------------------------------------
+# OS-specific junk files
+# ---------------------------------------------------------------------
+.DS_Store           # macOS
+Thumbs.db           # Windows
 
-# Virtualenv
+# ---------------------------------------------------------------------
+# Virtual environment folders
+# ---------------------------------------------------------------------
 venv/
 env/
 ENV/
 .Python
 pip-log.txt
 
-# Coverage reports
+# ---------------------------------------------------------------------
+# Code coverage reports
+# ---------------------------------------------------------------------
 htmlcov/
 .coverage
 coverage.xml
 *.cover
 *.py,cover
 
-# Pytest
+# ---------------------------------------------------------------------
+# Pytest cache
+# ---------------------------------------------------------------------
 .cache/
 
-# mypy
+# ---------------------------------------------------------------------
+# mypy static type checker cache
+# ---------------------------------------------------------------------
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
-# Pyre
+# ---------------------------------------------------------------------
+# Pyre static type checker cache
+# ---------------------------------------------------------------------
 .pyre/
 
-# Docker
+# ---------------------------------------------------------------------
+# Docker temporary or override files
+# ---------------------------------------------------------------------
 *.pid
 *.tar
 *.bak
@@ -62,12 +86,16 @@ dmypy.json
 *.swp
 docker-compose.override.yml
 
-# IDEs
-.idea/
+# ---------------------------------------------------------------------
+# IDE configuration files
+# ---------------------------------------------------------------------
+.idea/                  # JetBrains IDEs (PyCharm, etc.)
 *.sublime-project
 *.sublime-workspace
 
-# Build
+# ---------------------------------------------------------------------
+# Build / distribution artifacts
+# ---------------------------------------------------------------------
 build/
 dist/
 *.egg-info/

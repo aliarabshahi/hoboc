@@ -1,9 +1,15 @@
 from rest_framework import serializers
 
+# ---------------------------------------------------------------------
+# Basic Test Serializers (Non-Model)
+# ---------------------------------------------------------------------
 class TestSerializer(serializers.Serializer):
+    """Serializer for simple test message output."""
     message = serializers.CharField()
 
+
 class SubscriberDashboardInputSerializer(serializers.Serializer):
+    """Serializer for Subscriber dashboard input filters."""
     start_time = serializers.DateTimeField()
     end_time = serializers.DateTimeField()
     GW = serializers.CharField()
@@ -15,6 +21,7 @@ class SubscriberDashboardInputSerializer(serializers.Serializer):
 
 
 class SubscriberSerializer(serializers.Serializer):
+    """Serializer for Subscriber dashboard output data."""
     MSISDN = serializers.IntegerField()
     IMSI = serializers.CharField(max_length=20)
     Device_Brand = serializers.CharField(max_length=50)
@@ -24,6 +31,9 @@ class SubscriberSerializer(serializers.Serializer):
     Total_Session = serializers.IntegerField()
 
 
+# ---------------------------------------------------------------------
+# Model Imports
+# ---------------------------------------------------------------------
 from .models import (
     PostCategory,
     CoursesTopicModel,
@@ -45,33 +55,47 @@ from .models import (
 )
 
 
-
+# ---------------------------------------------------------------------
+# Post & Courses Model Serializers
+# ---------------------------------------------------------------------
 class PostCategorySerializer(serializers.ModelSerializer):
+    """Serializer for PostCategory model."""
     class Meta:
         model = PostCategory
         fields = '__all__'
 
+
 class CoursesTopicSerializer(serializers.ModelSerializer):
+    """Serializer for CoursesTopic model."""
     class Meta:
         model = CoursesTopicModel
         fields = '__all__'
 
+
 class CoursesTagSerializer(serializers.ModelSerializer):
+    """Serializer for CoursesTag model."""
     class Meta:
         model = CoursesTagModel
         fields = '__all__'
 
+
 class CoursesInstructorSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # Shows the string representation of the user
+    """Serializer for CoursesInstructor model with related user."""
+    user = serializers.StringRelatedField()  # String representation of user
     name = serializers.SerializerMethodField()
+
     class Meta:
         model = CoursesInstructorModel
         fields = '__all__'
+
     def get_name(self, obj):
+        """Return instructor's name."""
         return obj.name
-    
+
+
 class CoursesLessonSerializer(serializers.ModelSerializer):
-    topic = serializers.StringRelatedField()  # shows topic title
+    """Serializer for CoursesLesson model with related fields."""
+    topic = serializers.StringRelatedField()  # Topic title
     topic_slug = serializers.SlugRelatedField(
         source='topic',
         read_only=True,
@@ -82,42 +106,53 @@ class CoursesLessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CoursesLessonModel
-        fields = '__all__'  # ✅ no concatenation needed
+        fields = '__all__'
 
 
+# ---------------------------------------------------------------------
+# Contact & Project Serializers
+# ---------------------------------------------------------------------
 class ContactUsSerializer(serializers.ModelSerializer):
+    """Serializer for ContactUs model."""
     class Meta:
         model = ContactUsModel
         fields = '__all__'
 
 
 class ProjectFileSerializer(serializers.ModelSerializer):
+    """Serializer for uploaded project files."""
     class Meta:
         model = ProjectFile
         fields = ['file']
 
+
 class ProjectOrderSerializer(serializers.ModelSerializer):
+    """Serializer for ProjectOrder model with file uploads."""
     files = ProjectFileSerializer(many=True, required=False)
-    
+
     class Meta:
         model = ProjectOrderModel
         fields = '__all__'
 
     def create(self, validated_data):
+        """Handle creation along with multiple file uploads."""
         files_data = self.context.get('request').FILES
         project = ProjectOrderModel.objects.create(**validated_data)
-        
+
         for file_data in files_data.getlist('files'):
             ProjectFile.objects.create(project=project, file=file_data)
-            
+
         return project
 
+
 class ResumeSubmissionSerializer(serializers.ModelSerializer):
+    """Serializer for resume submissions with PDF validation."""
     class Meta:
         model = ResumeSubmissionModel
         fields = '__all__'
 
     def validate_resume_file(self, value):
+        """Validate uploaded resume file format and size."""
         if value:
             if value.content_type != 'application/pdf':
                 raise serializers.ValidationError("فقط فایل PDF مجاز است.")
@@ -126,23 +161,25 @@ class ResumeSubmissionSerializer(serializers.ModelSerializer):
         return value
 
 
-# Blog  Serializers
-
-
-
+# ---------------------------------------------------------------------
+# Blog Serializers
+# ---------------------------------------------------------------------
 class BlogTopicSerializer(serializers.ModelSerializer):
+    """Serializer for BlogTopic model."""
     class Meta:
         model = BlogTopicModel
         fields = '__all__'
 
 
 class BlogTagSerializer(serializers.ModelSerializer):
+    """Serializer for BlogTag model."""
     class Meta:
         model = BlogTagModel
         fields = '__all__'
 
 
 class BlogWriterSerializer(serializers.ModelSerializer):
+    """Serializer for BlogWriter model with user details."""
     user = serializers.StringRelatedField()
     name = serializers.SerializerMethodField()
 
@@ -151,13 +188,15 @@ class BlogWriterSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_name(self, obj):
+        """Get writer's name."""
         return obj.name
 
 
 class BlogPostSerializer(serializers.ModelSerializer):
+    """Serializer for BlogPost model with related topic, writer, and tags."""
     topic = serializers.StringRelatedField()
     topic_slug = serializers.SlugRelatedField(
-        source='topic',  # get from related topic object
+        source='topic',
         slug_field='slug',
         read_only=True
     )
@@ -166,11 +205,14 @@ class BlogPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogPostModel
-        fields = '__all__'  # this will include topic_slug automatically
+        fields = '__all__'
 
 
-
+# ---------------------------------------------------------------------
+# Notification Serializer
+# ---------------------------------------------------------------------
 class NotificationSubscriptionSerializer(serializers.ModelSerializer):
+    """Serializer for NotificationSubscription model with topic validation."""
     topics = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=CoursesTopicModel.objects.filter(is_published=True),
@@ -186,20 +228,30 @@ class NotificationSubscriptionSerializer(serializers.ModelSerializer):
         }
 
 
+# ---------------------------------------------------------------------
+# Roadmap Serializers
+# ---------------------------------------------------------------------
 class RoadmapResourceSerializer(serializers.ModelSerializer):
+    """Serializer for RoadmapResource model."""
     class Meta:
         model = RoadmapResource
         fields = ['id', 'title', 'url', 'order']
 
+
 class RoadmapItemSerializer(serializers.ModelSerializer):
+    """Serializer for RoadmapItem model including related resources."""
     resources = RoadmapResourceSerializer(many=True, read_only=True)
-    
+
     class Meta:
         model = RoadmapItem
         fields = ['id', 'title', 'description', 'level', 'status', 'order', 'resources']
 
 
+# ---------------------------------------------------------------------
+# Podcast Serializer
+# ---------------------------------------------------------------------
 class PodcastEpisodeSerializer(serializers.ModelSerializer):
+    """Serializer for PodcastEpisode model with custom audio field."""
     audio = serializers.SerializerMethodField()
 
     class Meta:
@@ -207,7 +259,8 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_audio(self, obj):
+        """Return audio src and type."""
         return {
             "src": obj.audio_src,
-            "type": "audio/mpeg"  # default, or detect by extension if you want
+            "type": "audio/mpeg"  # default value, could be dynamic
         }

@@ -4,7 +4,6 @@ from rest_framework.routers import SimpleRouter
 from .views import (
     BlogWriterViewSet,
     NotificationSubscriptionViewSet,
-    PostCategoryViewSet,
     CoursesTopicViewSet,
     CoursesTagViewSet,
     CoursesInstructorViewSet,
@@ -19,7 +18,7 @@ from .views import (
     PodcastEpisodeViewSet,
     health_check,
 )
-from hoboc.views import TestViewSet, SubscriberViewSet
+from hoboc.views import TestViewSet
 
 
 # ---------------------------------------------------------------------
@@ -30,8 +29,7 @@ router = SimpleRouter()
 # Test API
 router.register(r'test', TestViewSet, basename='test')
 
-# Content Management
-router.register(r'post-categories', PostCategoryViewSet, basename='post-categories')
+# Courses Management
 router.register(r'course-topics', CoursesTopicViewSet, basename='course-topics')
 router.register(r'course-tags', CoursesTagViewSet, basename='course-tags')
 router.register(r'course-instructors', CoursesInstructorViewSet, basename='course-instructors')
@@ -61,6 +59,5 @@ router.register(r'podcast-episodes', PodcastEpisodeViewSet, basename='podcast-ep
 # ---------------------------------------------------------------------
 urlpatterns = [
     path('', include(router.urls)),              # All router registered endpoints
-    path('subscriber/', SubscriberViewSet.as_view()),  # Subscriber dashboard endpoint
     path("health/", health_check),               # Health check endpoint
 ]

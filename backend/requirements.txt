@@ -3,6 +3,7 @@ django-admin-autocomplete-filter==0.7.1
 django-admin-list-filter-dropdown==1.0.3
 django-extensions==3.0.8
 django-filter==23.2
+django-modeladmin-reorder
 Django==3.2.19
 drf-yasg==1.21.6
 gunicorn==20.1.0

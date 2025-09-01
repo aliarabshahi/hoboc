@@ -65,25 +65,81 @@ INSTALLED_APPS = [
     'admin_auto_filters',
     'django_admin_listfilter_dropdown',
     'drf_yasg',
-    "rest_framework.authtoken",
-    "dj_rest_auth",
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     'netfields',
     'corsheaders',
+    'admin_reorder',
+
 ]
 
 # ---------------------------------------------------------------------
 # Middleware
 # ---------------------------------------------------------------------
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',   # Must be placed first for CORS
+    'corsheaders.middleware.CorsMiddleware',   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',  # Keep AFTER CorsMiddleware
+    'django.middleware.common.CommonMiddleware',  
+    'admin_reorder.middleware.ModelAdminReorder',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ADMIN_REORDER = [
+    # 1. Accounts section (custom user model)
+    {'app': 'accounts', 'label': 'Accounts', 'models': [
+        'accounts.CustomUser',  # replace with your actual user model class name if different
+    ]},
+
+    # 2. Auth Token section
+    {'app': 'authtoken', 'label': 'Auth Token', 'models': [
+        'authtoken.Token',
+    ]},
+
+    # 3. Built-in Django Auth section
+    {'app': 'auth', 'label': 'Authentication and Authorization', 'models': [
+        'auth.Group',
+        'auth.Permission',
+    ]},
+
+    # 4. Courses
+    {'app': 'hoboc', 'label': 'Courses', 'models': [
+        'hoboc.CoursesLessonModel',
+        'hoboc.CoursesTopicModel',
+        'hoboc.CoursesTagModel',
+        'hoboc.CoursesInstructorModel',
+    ]},
+
+    # 5. Blog
+    {'app': 'hoboc', 'label': 'Blog', 'models': [
+        'hoboc.BlogPostModel',
+        'hoboc.BlogTopicModel',
+        'hoboc.BlogTagModel',
+        'hoboc.BlogWriterModel',
+    ]},
+
+    # 6. Podcast
+    {'app': 'hoboc', 'label': 'Podcast', 'models': [
+        'hoboc.PodcastEpisodeModel',
+    ]},
+
+    # 7. Roadmap
+    {'app': 'hoboc', 'label': 'Roadmap', 'models': [
+        'hoboc.RoadmapItem',
+    ]},
+
+    # 8. Forms
+    {'app': 'hoboc', 'label': 'Forms', 'models': [
+        'hoboc.ContactUsModel',
+        'hoboc.ProjectOrderModel',
+        'hoboc.ResumeSubmissionModel',
+        'hoboc.NotificationSubscription',
+    ]},
+]
+
 
 # ---------------------------------------------------------------------
 # CORS Configuration
@@ -199,6 +255,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
 }
+
 
 # ---------------------------------------------------------------------
 # Upload Settings

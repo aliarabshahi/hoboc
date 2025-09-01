@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
 from .serializers import (
     PodcastEpisodeSerializer, RoadmapItemSerializer,
-    TestSerializer, SubscriberDashboardInputSerializer,
-    SubscriberSerializer, PostCategorySerializer, CoursesTopicSerializer,
+    TestSerializer, 
+    CoursesTopicSerializer,
     CoursesTagSerializer, CoursesInstructorSerializer, CoursesLessonSerializer,
     ContactUsSerializer, ProjectOrderSerializer, ResumeSubmissionSerializer,
     BlogWriterSerializer, BlogTopicSerializer, BlogTagSerializer, BlogPostSerializer,
@@ -19,7 +19,7 @@ import logging
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .models import (
-    PodcastEpisodeModel, PostCategory, CoursesTopicModel, CoursesTagModel,
+    PodcastEpisodeModel, CoursesTopicModel, CoursesTagModel,
     CoursesInstructorModel, CoursesLessonModel, ContactUsModel, ProjectOrderModel,
     ResumeSubmissionModel, BlogWriterModel, BlogTopicModel, BlogTagModel, BlogPostModel,
     NotificationSubscription, RoadmapItem
@@ -30,7 +30,7 @@ from .models import (
 # Health Check Endpoint
 # ---------------------------------------------------------------------
 @api_view(["GET"])
-@permission_classes([])  # No authentication required
+@permission_classes([])  
 def health_check(request):
     """
     Health check API to verify DB connection.
@@ -130,49 +130,8 @@ class BaseCustomGenericApiView(GenericAPIView):
 
 
 # ---------------------------------------------------------------------
-# Subscriber API View
+# Courses Management ViewSets
 # ---------------------------------------------------------------------
-class SubscriberViewSet(BaseCustomGenericApiView):
-    """
-    Subscriber dashboard API for retrieving subscriber details.
-    Requires authentication.
-    """
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    pagination_class = DashboardPagination
-    serializer_class = SubscriberDashboardInputSerializer
-
-    def get(self, request):
-        """
-        Retrieves sample subscriber data.
-        Normally: Validate against SubscriberDashboardInputSerializer.
-        """
-        sample_data = {
-            "MSISDN": 123456789,
-            "IMSI": "123456789012345",
-            "Device_Brand": "Samsung",
-            "Uplink_Traffic": 1000000,
-            "Downlink_Traffic": 2000000,
-            "Total_Traffic": 3000000,
-            "Total_Session": 50
-        }
-        response_serializer = SubscriberSerializer(data=sample_data)
-        response_serializer.is_valid(raise_exception=True)
-        return Response(response_serializer.data, status=status.HTTP_200_OK)
-
-
-# ---------------------------------------------------------------------
-# Content Management ViewSets
-# ---------------------------------------------------------------------
-class PostCategoryViewSet(viewsets.ModelViewSet):
-    """Manage Post Categories."""
-    queryset = PostCategory.objects.all()
-    serializer_class = PostCategorySerializer
-    pagination_class = DashboardPagination
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-
 class CoursesTopicViewSet(viewsets.ModelViewSet):
     """Manage Published Course Topics."""
     queryset = CoursesTopicModel.objects.filter(is_published=True).order_by('priority')

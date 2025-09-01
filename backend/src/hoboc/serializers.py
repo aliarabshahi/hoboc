@@ -1,41 +1,17 @@
 from rest_framework import serializers
 
 # ---------------------------------------------------------------------
-# Basic Test Serializers (Non-Model)
+# Basic Test Serializer (Non-Model)
 # ---------------------------------------------------------------------
 class TestSerializer(serializers.Serializer):
     """Serializer for simple test message output."""
     message = serializers.CharField()
 
 
-class SubscriberDashboardInputSerializer(serializers.Serializer):
-    """Serializer for Subscriber dashboard input filters."""
-    start_time = serializers.DateTimeField()
-    end_time = serializers.DateTimeField()
-    GW = serializers.CharField()
-    Site = serializers.CharField()
-    Region = serializers.CharField()
-    Province = serializers.CharField()
-    City = serializers.CharField()
-    Top_n = serializers.IntegerField()
-
-
-class SubscriberSerializer(serializers.Serializer):
-    """Serializer for Subscriber dashboard output data."""
-    MSISDN = serializers.IntegerField()
-    IMSI = serializers.CharField(max_length=20)
-    Device_Brand = serializers.CharField(max_length=50)
-    Uplink_Traffic = serializers.IntegerField()
-    Downlink_Traffic = serializers.IntegerField()
-    Total_Traffic = serializers.IntegerField()
-    Total_Session = serializers.IntegerField()
-
-
 # ---------------------------------------------------------------------
 # Model Imports
 # ---------------------------------------------------------------------
 from .models import (
-    PostCategory,
     CoursesTopicModel,
     CoursesTagModel,
     CoursesInstructorModel,
@@ -56,15 +32,8 @@ from .models import (
 
 
 # ---------------------------------------------------------------------
-# Post & Courses Model Serializers
+# Courses Model Serializers
 # ---------------------------------------------------------------------
-class PostCategorySerializer(serializers.ModelSerializer):
-    """Serializer for PostCategory model."""
-    class Meta:
-        model = PostCategory
-        fields = '__all__'
-
-
 class CoursesTopicSerializer(serializers.ModelSerializer):
     """Serializer for CoursesTopic model."""
     class Meta:

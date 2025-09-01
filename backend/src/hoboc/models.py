@@ -50,15 +50,6 @@ def resume_files_upload_path(instance, filename):
 # ---------------------------------------------------------------------
 # Course & Education Models
 # ---------------------------------------------------------------------
-class PostCategory(models.Model):
-    """Category for posts."""
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.name
-
-
 class CoursesTopicModel(models.Model):
     """Teaching category that contains lessons."""
     title = models.CharField(max_length=100)

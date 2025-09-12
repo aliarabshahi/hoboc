@@ -148,7 +148,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost",      
     "http://localhost:3000", 
     "http://127.0.0.1:3000", 
-    "localhost:80",
     "http://nginx:80",
     "http://localhost:80",
     "http://localhost:3000",

@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------
+# Docker Compose configuration for Hoboc project backend
+# Version: 3.8
+# ---------------------------------------------------------------------
+version: "3.8"
+
+services:
+  # =====================================================
+  # PostgreSQL Database Service
+  # =====================================================
+  postgres:
+    container_name: hoboc_database                  # Friendly container name
+    image: postgres:15                              # PostgreSQL version 15
+    environment:
+      # Database name, user, and password are set via environment variables
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"                                  # Expose PostgreSQL to host
+    volumes:
+      - pg_data:/var/lib/postgresql/data             # Persistent data storage
+    restart: always                                  # Restart on failure or reboot
+    networks:
+      - network_hoboc_project                        # Internal project network
+
+  # =====================================================
+  # Django Web Application Service
+  # =====================================================
+  web:
+    container_name: hoboc_web
+    image: hoboc_web:${VERSION:-latest}              # Use VERSION variable or latest
+    env_file: .env                                   # Load environment variables
+    volumes:
+      - static_volume:/opt/hoboc/static/:ro          # Static files (read-only)
+      # - ./src/:/opt/bot/src/                       # Optional local source mapping (dev only)
+    command: gunicorn --config /opt/hoboc/gunicorn.py core.wsgi:application
+                                                     # Start Gunicorn with custom config
+    restart: always
+    networks:
+      - network_hoboc_project
+
+  # =====================================================
+  # Nginx Reverse Proxy Service
+  # =====================================================
+  nginx:
+    container_name: hoboc_backend_nginx
+    build:
+      context: ./etc/nginx/                          # Build from Nginx config directory
+    volumes:
+      - /var/data/hoboc/backend/django/static:/opt/hoboc/src/static/:ro
+                                                     # Map static assets from host (read-only)
+    ports:
+      - "80:80"                                      # HTTP access
+      - "443:443"                                    # HTTPS access
+    depends_on:
+      - web                                          # Ensure web container is ready first
+    restart: always
+    networks:
+      - network_hoboc_project
+
+# ---------------------------------------------------------------------
+# Volumes for persistent storage
+# ---------------------------------------------------------------------
+volumes:
+  pg_data:                                           # PostgreSQL persistent data
+  static_volume:                                     # Static files storage
+
+# ---------------------------------------------------------------------
+# Custom Docker network
+# ---------------------------------------------------------------------
+networks:
+  network_hoboc_project:
+    name: network_hoboc_project

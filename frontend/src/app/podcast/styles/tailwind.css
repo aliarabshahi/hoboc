@@ -1,0 +1,13 @@
+/* Initialize Tailwind like your global setup */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add typography plugin layer only for the podcast section */
+@layer components {
+  .podcast-prose {
+    @apply prose prose-lg max-w-none;
+    font-family: Satoshi, ui-sans-serif, system-ui, sans-serif,
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  }
+}

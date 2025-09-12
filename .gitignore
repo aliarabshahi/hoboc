@@ -1,0 +1,95 @@
+# --------------------
+# Node / Next.js
+# --------------------
+node_modules/
+.npm/
+.pnpm-store/
+.next/
+out/
+dist/
+.cache/
+# Next.js build outputs
+.next
+out
+# Local debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# --------------------
+# Python / Django
+# --------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.tmp
+*.log
+*.pot
+*.pyc
+*.mo
+*.log
+*.sqlite3
+db.sqlite3
+# Django migrations pycache
+*/migrations/__pycache__/
+# Your settings secrets
+backend/src/core/settings_local.py
+backend/src/core/.env
+*.env
+.env.*
+
+# --------------------
+# Media / Static (Generated)
+# --------------------
+# Media uploads (keep in production server, not in repo)
+backend/src/media/
+# Optional: ignore staticfiles if collected with collectstatic
+backend/src/static/
+
+# --------------------
+# Docker
+# --------------------
+# Local volumes
+volumes/
+# Build logs
+docker-compose.override.yml
+# Ignore Docker build cache
+**/.docker-cache
+
+# --------------------
+# VSCode / JetBrains / Editor junk
+# --------------------
+.vscode/
+.history/
+.idea/
+*.swp
+*.swo
+
+# --------------------
+# Mac / OS
+# --------------------
+.DS_Store
+Thumbs.db
+
+# --------------------
+# Testing / Coverage
+# --------------------
+coverage/
+*.cover
+.coverage*
+htmlcov/
+.pytest_cache/
+junit.xml
+
+# --------------------
+# Miscellaneous builds
+# --------------------
+*.bak
+*.tmp
+tmp/
+frontend/src/node_modules/
+**/node_modules/

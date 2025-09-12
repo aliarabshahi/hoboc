@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: hoboc_database
+    environment:
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - network_hoboc_project
+
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hoboc_web
+    env_file:
+      - ./backend/.env
+    volumes:
+      - static_volume:/opt/hoboc/src/static/
+      - ./backend/src/media:/opt/hoboc/src/media
+      - ./backend/src:/opt/hoboc/src
+    command: gunicorn --config /opt/hoboc/gunicorn.py core.wsgi:application
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - network_hoboc_project
+
+  frontend:
+    build:
+      context: ./frontend/src
+      dockerfile: Dockerfile
+    container_name: hoboc_frontend
+    env_file:
+      - ./frontend/src/.env
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - network_hoboc_project
+
+  nginx:
+    build:
+      context: ./backend/etc/nginx
+      dockerfile: Dockerfile
+    container_name: hoboc_nginx
+    volumes:
+      - static_volume:/opt/hoboc/static/:ro
+      - ./backend/src/media:/opt/hoboc/src/media:ro
+    depends_on:
+      - web
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    networks:
+      - network_hoboc_project
+
+volumes:
+  pg_data:
+    external: true
+    name: backend_pg_data
+  static_volume:
+    external: true
+    name: backend_static_volume
+
+networks:
+  network_hoboc_project:
+    name: network_hoboc_project

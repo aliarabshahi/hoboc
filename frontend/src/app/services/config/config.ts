@@ -3,13 +3,17 @@ function logWithTime(...args: any[]) {
 }
 
 export function getServerConfig() {
-  const API_BASE_URL = "http://nginx/hoboc/api/"; // API endpoints
-  const MEDIA_STATIC_BASE_URL = "http://nginx/hoboc/"; // for media/static
-  // const API_BASE_URL = "http://localhost/hoboc/api/";
-  // const MEDIA_STATIC_BASE_URL = "http://localhost/hoboc/";
+  const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhostt/hoboc/api/";
 
-  const API_TOKEN = "c0881af7b46e2dc06f1ff49c2ff8472b9084e13e";
-  const PUBLIC_SITE_FALLBACK = "http://localhost:3000";
+  const MEDIA_STATIC_BASE_URL =
+    process.env.NEXT_PUBLIC_MEDIA_STATIC_BASE_URL || "http://localhostt/hoboc/";
+
+  const API_TOKEN =
+    process.env.NEXT_PUBLIC_API_TOKEN ;
+
+  const PUBLIC_SITE_FALLBACK =
+    process.env.NEXT_PUBLIC_SITE_FALLBACK || "http://localhost:3000";
 
   logWithTime("Loaded config:", {
     API_BASE_URL,

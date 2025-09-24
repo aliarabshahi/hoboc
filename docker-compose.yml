@@ -4,6 +4,8 @@ services:
   postgres:
     image: postgres:15
     container_name: hoboc_database
+    env_file:
+      - ./backend/.env
     environment:
       POSTGRES_DB: ${POSTGRES_NAME}
       POSTGRES_USER: ${POSTGRES_USER}

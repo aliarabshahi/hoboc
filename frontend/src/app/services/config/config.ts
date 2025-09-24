@@ -8,7 +8,7 @@ export function getServerConfig() {
   // const API_BASE_URL = "http://localhost/hoboc/api/";
   // const MEDIA_STATIC_BASE_URL = "http://localhost/hoboc/";
 
-  const API_TOKEN = "1ecdf57453ff0f1ce5ec4fe905ef6c699e0434a3";
+  const API_TOKEN = "c0881af7b46e2dc06f1ff49c2ff8472b9084e13e";
   const PUBLIC_SITE_FALLBACK = "http://localhost:3000";
 
   logWithTime("Loaded config:", {

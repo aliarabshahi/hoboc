@@ -5,11 +5,11 @@ services:
     image: postgres:15
     container_name: hoboc_database
     env_file:
-      - ./backend/.env
-#    environment:
-#      POSTGRES_DB: ${POSTGRES_NAME}
-#      POSTGRES_USER: ${POSTGRES_USER}
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: always
@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
     container_name: hoboc_web
     env_file:
-      - ./backend/.env
+      - .env
     volumes:
       - static_volume:/opt/hoboc/src/static/
       - ./backend/src/media:/opt/hoboc/src/media

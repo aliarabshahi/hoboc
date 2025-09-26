@@ -6,10 +6,10 @@ services:
     container_name: hoboc_database
     env_file:
       - ./backend/.env
-    environment:
-      POSTGRES_DB: ${POSTGRES_NAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#    environment:
+#      POSTGRES_DB: ${POSTGRES_NAME}
+#      POSTGRES_USER: ${POSTGRES_USER}
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: always
@@ -67,11 +67,7 @@ services:
 
 volumes:
   pg_data:
-    external: true
-    name: backend_pg_data
   static_volume:
-    external: true
-    name: backend_static_volume
 
 networks:
   network_hoboc_project:

@@ -10,7 +10,7 @@ export function getServerConfig() {
     process.env.NEXT_PUBLIC_MEDIA_STATIC_BASE_URL || "http://localhostt/hoboc/";
 
   const API_TOKEN =
-    process.env.NEXT_PUBLIC_API_TOKEN ;
+    process.env.NEXT_PUBLIC_API_TOKEN || "";
 
   const PUBLIC_SITE_FALLBACK =
     process.env.NEXT_PUBLIC_SITE_FALLBACK || "http://localhost:3000";
@@ -18,7 +18,7 @@ export function getServerConfig() {
   logWithTime("Loaded config:", {
     API_BASE_URL,
     MEDIA_STATIC_BASE_URL,
-    API_TOKEN: API_TOKEN.slice(0, 6) + "...",
+    API_TOKEN: API_TOKEN ? API_TOKEN.slice(0, 6) + "..." : "undefined",
     PUBLIC_SITE_FALLBACK,
   });
 

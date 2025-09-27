@@ -145,7 +145,8 @@ ADMIN_REORDER = [
 # CORS Configuration
 # ---------------------------------------------------------------------
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost",      
+    "http://localhost",
+    "http://185.204.168.255",      
     "http://localhost:3000", 
     "http://127.0.0.1:3000", 
     "http://nginx:80",
@@ -162,6 +163,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://frontend:3000",
 ]
 CSRF_TRUSTED_ORIGINS = [
+    "http://185.204.168.255",
     "http://localhost",       
     "http://localhost:3000", 
     "http://127.0.0.1:3000",  

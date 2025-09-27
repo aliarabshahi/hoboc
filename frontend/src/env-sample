@@ -1,14 +1,22 @@
-NEXT_PUBLIC_API_BASE_URL=http://nginx/hoboc/api/
-NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://nginx/hoboc/
+####ForDeploymentUseOnly
+NEXT_PUBLIC_API_BASE_URL=http://185.204.168.255/hoboc/api/
+NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://185.204.168.255/hoboc/
+NEXT_PUBLIC_SITE_URL=http://185.204.168.255
+NEXT_PUBLIC_SITE_FALLBACK=http://185.204.168.255
+
+####For Local Development When You Do docker compsoe up####
+#NEXT_PUBLIC_API_BASE_URL=http://nginx/hoboc/api/
+#NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://nginx/hoboc/
+
 ####For Local Development When You Do npm run dev inside frontend/src:####
 #NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
 #NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
 
 
 # Backend API token
-NEXT_PUBLIC_API_TOKEN=
+NEXT_PUBLIC_API_TOKEN=c0881af7b46e2dc06f1ff49c2ff8472b9084e13e
 
 # Site public URL fallback
-NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
+#NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
 
 

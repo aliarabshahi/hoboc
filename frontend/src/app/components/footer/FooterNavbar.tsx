@@ -8,17 +8,17 @@ const navItems = [
     links: [
       { text: "درباره ما", href: "/about" },
       { text: "تماس با ما", href: "/contact" },
-      { text: "فرصت‌های شغلی", href: "/jobs" },
-      { text: "پرسش‌های متداول", href: "/faq" },
+      { text: "فرصت‌های شغلی", href: "/join-us" },
+      { text: "نقشه راه مهندسی داده", href: "/roadmap" },
     ],
   },
   {
     title: "خدمات",
     links: [
-      { text: "برندینگ", href: "/branding" },
-      { text: "طراحی", href: "/design" },
-      { text: "مارکتینگ", href: "/marketing" },
-      { text: "تبلیغات", href: "/advertisement" },
+      { text: "آموزش رایگان", href: "/courses" },
+      { text: "سفارش پروژه", href: "/project-order" },
+      { text: "شبکه متخصصان", href: "/join-us" },
+      { text: "پادکست", href: "/podcast" },
     ],
   },
 ];

@@ -1,7 +1,3 @@
-function logWithTime(...args: any[]) {
-  console.log(new Date().toISOString(), "[apiServerFetch.ts]", ...args);
-}
-
 function cleanEndpoint(endpoint: string) {
   let out = endpoint.replace(/^\/+/, "");
   const isMediaStatic = out.startsWith("media/") || out.startsWith("static/");
@@ -23,20 +19,12 @@ function getBaseUrl() {
 }
 
 export const getApiData = async (endpoint: string) => {
-  logWithTime("Original endpoint:", endpoint);
-
   const cleanedEndpoint = cleanEndpoint(endpoint);
-  logWithTime("Cleaned endpoint:", cleanedEndpoint);
-
   const baseUrl = getBaseUrl();
-  logWithTime("Base URL:", baseUrl);
-
   const finalUrl = `${baseUrl}/api/proxy/${cleanedEndpoint}`;
-  logWithTime("Final fetch URL:", finalUrl);
 
   try {
     const res = await fetch(finalUrl, { cache: "no-store" });
-    logWithTime("Response status:", res.status);
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
@@ -51,8 +39,6 @@ export const getApiData = async (endpoint: string) => {
     if (data.results?.data) return { data: data.results.data };
     return { data };
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    logWithTime("Fetch error:", msg);
     return {
       data: null,
       error: "متاسفانه مشکلی در ارتباط با سرور رخ داده است",

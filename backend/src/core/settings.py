@@ -145,6 +145,8 @@ ADMIN_REORDER = [
 # CORS Configuration
 # ---------------------------------------------------------------------
 CORS_ALLOWED_ORIGINS = [
+    "http://hoboc.ir",
+    "https://hoboc.ir",
     "http://localhost",
     "http://185.204.168.255",      
     "http://localhost:3000", 
@@ -163,6 +165,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://frontend:3000",
 ]
 CSRF_TRUSTED_ORIGINS = [
+    "http://hoboc.ir",
+    "https://hoboc.ir",
     "http://185.204.168.255",
     "http://localhost",       
     "http://localhost:3000", 
@@ -286,3 +290,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 50_857_600  # ~50 MB
 # Default Primary Key Field Type
 # ---------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ---------------------------------------------------------------------
+# Make Https Insted Of Http For Deployment
+# ---------------------------------------------------------------------
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True

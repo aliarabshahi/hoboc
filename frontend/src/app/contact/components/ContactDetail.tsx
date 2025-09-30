@@ -25,18 +25,18 @@ export default function ContactDetail() {
         {/* Social media - left side */}
         <div className="flex flex-col gap-4">
           <div className="flex gap-6 justify-start">
-            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+            <a href="https://www.linkedin.com/in/mraliarabshahi" className="text-white hover:text-gray-200 transition-colors">
               <FaLinkedin className="text-2xl" />
             </a>
-            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+            <a href="https://github.com/aliarabshahi/" className="text-white hover:text-gray-200 transition-colors">
               <FaGithub className="text-2xl" />
             </a>
           </div>
           <div className="flex gap-6 justify-start">
-            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+            <a href="https://youtube.com/HobocAcademy" className="text-white hover:text-gray-200 transition-colors">
               <FaYoutube className="text-2xl" />
             </a>
-            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+            <a href="https://t.me/hoboc_ir" className="text-white hover:text-gray-200 transition-colors">
               <FaTelegram className="text-2xl" />
             </a>
           </div>

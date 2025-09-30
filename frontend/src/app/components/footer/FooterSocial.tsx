@@ -7,22 +7,22 @@ import { FaInstagram, FaYoutube, FaTelegramPlane, FaLinkedin } from "react-icons
 const socialLinks = [
   {
     name: "لینکدین",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/mraliarabshahi",
     icon: <FaLinkedin size={24} color="#0A66C2" />, // LinkedIn blue
   },
   {
     name: "یوتیوب",
-    href: "https://youtube.com",
+    href: "https://youtube.com/HobocAcademy",
     icon: <FaYoutube size={24} color="#FF0000" />, // YouTube red
   },
   {
     name: "اینستاگرام",
-    href: "https://instagram.com",
+    href: "https://instagram.co/hoboc_ir",
     icon: <FaInstagram size={24} color="#E4405F" />, // Instagram pink-red
   },
   {
     name: "تلگرام",
-    href: "https://t.me/yourtelegram",
+    href: "https://t.me/hoboc_ir",
     icon: <FaTelegramPlane size={24} color="#0088cc" />, // Telegram blue
   },
 ];

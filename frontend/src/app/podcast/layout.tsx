@@ -9,7 +9,8 @@ export default function PodcastLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const hosts = ["مهندس داده حمید", "تحلیلگر داده رضا"];
+  // const hosفs = ["مهندس داده حمید", "علی عربشاهی"];
+  const hosts = [ "علی عربشاهی"];
 
   return (
     <AudioProvider>

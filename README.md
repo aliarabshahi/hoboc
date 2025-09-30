@@ -239,37 +239,52 @@ nano .env
 nano ./frontend/src/.env
 
 ```
+#### 4. Edit The Code Based On New Domain Or Ip
 
-#### 4. Build and Start Docker Services
+```bash
+# Configure the backend (CORS_ALLOWED_ORIGINS and CSRF_TRUSTED_ORIGINS)
+nano ./backend/src/core/setting.py
+
+# Configure the frontend:
+nano ./frontend/src/next.config.mjs
+
+```
+next.config.mjs
+
+#### 5. Build and Start Docker Services
 
 ```bash
 docker compose build
 docker compose up -d
 ```
 
-#### 5. Run Django Migrations
+#### 6. Run Django Migrations
 
 ```bash
 docker exec -it hoboc_web bash
 python manage.py migrate
 ```
 
-#### 6. Create Django Superuser
+#### 7. Create Django Superuser
 
 ```bash
 python manage.py createsuperuser
 ```
 
-#### 6. Define Token In Admin Panel
+#### 8. Create Django Superuser
+
+```bash
+python manage.py createsuperuser
+```
+
+
+#### 9. Define Token In Admin Panel
 
 Open the admin panel: `http://<your-server-ip>/hoboc/admin/`
 
-```bash
-docker compose build
-docker compose up -d
-```
 
-#### 7. Update Frontend Token
+
+#### 10. Update Frontend Token
 
 Stop the containers
 
@@ -283,7 +298,7 @@ Update the token in the frontend .env:
 nano ./frontend/src/.env
 ```
 
-#### 8. Rebuild and Restart Services
+#### 11. Rebuild and Restart Services
 
 ```bash
 docker compose up --build -d

@@ -3,10 +3,10 @@ import { MdOutlineRefresh } from "react-icons/md";
 import Link from "next/link";
 
 const socialLinks = [
-  { name: "لینکدین", href: "https://linkedin.com", icon: FaLinkedin },
-  { name: "یوتیوب", href: "https://youtube.com", icon: FaYoutube },
-  { name: "اینستاگرام", href: "https://instagram.com", icon: FaInstagram },
-  { name: "تلگرام", href: "https://t.me/yourtelegram", icon: FaTelegramPlane },
+  { name: "لینکدین", href: "https://www.linkedin.com/in/mraliarabshahi", icon: FaLinkedin },
+  { name: "یوتیوب", href: "https://youtube.com/HobocAcademy", icon: FaYoutube },
+  { name: "اینستاگرام", href: "https://instagram.co/hoboc_ir", icon: FaInstagram },
+  { name: "تلگرام", href: "https://t.me/hoboc_ir", icon: FaTelegramPlane },
 ];
 
 export default function GlobalDowntimeBanner() {

@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerConfig } from "@/app/services/config/config";
 
-function logWithTime(...args: any[]) {
-  console.log(new Date().toISOString(), "[route.ts]", ...args);
-}
-
 // Detect if running on the server (SSR or image optimizer)
 function isServerSide() {
   return typeof window === "undefined";
@@ -12,8 +8,6 @@ function isServerSide() {
 
 async function forward(req: NextRequest, path: string[], method: string) {
   const { API_BASE_URL, API_TOKEN } = getServerConfig();
-
-  logWithTime("Incoming request:", { browserUrl: req.url, method, path });
 
   const isMediaRequest = path[0] === "media" || path[0] === "static";
   let targetBaseUrl = API_BASE_URL;
@@ -36,9 +30,6 @@ async function forward(req: NextRequest, path: string[], method: string) {
       req.headers.get("host") || "localhost:3000"
     }`;
 
-  logWithTime("Resolved backend targetUrl:", targetUrl);
-  logWithTime("Public base URL for rewrite:", publicBaseUrl);
-
   const fetchOptions: RequestInit = {
     method,
     headers: !isMediaRequest
@@ -58,18 +49,15 @@ async function forward(req: NextRequest, path: string[], method: string) {
 
   try {
     const resp = await fetch(targetUrl, fetchOptions);
-    logWithTime("Backend response status:", resp.status);
 
     if (resp.status >= 300 && resp.status < 400) {
       const location = resp.headers.get("location");
-      logWithTime("Redirect location from backend:", location);
       if (location) {
         return NextResponse.redirect(location);
       }
     }
 
     const contentType = resp.headers.get("content-type") || "";
-    logWithTime("Backend response content-type:", contentType);
 
     if (contentType.includes("application/json")) {
       const data = await resp.json();
@@ -90,7 +78,6 @@ async function forward(req: NextRequest, path: string[], method: string) {
       });
     }
   } catch (error) {
-    logWithTime("Error forwarding request:", error);
     return NextResponse.json({ error: "Failed to proxy request" }, { status: 500 });
   }
 }
@@ -104,14 +91,11 @@ function rewriteUrlsInObject(obj: any, publicBaseUrl: string, ssrBaseUrl: string
       // Server-side behavior: split by file type
       if (isServerSide()) {
         if (isPdfOrDoc(obj)) {
-          logWithTime("SSR rewriting PDF/doc for browser:", obj);
           return obj.replace("http://nginx/hoboc/", `${publicBaseUrl}/api/proxy/`);
         }
-        logWithTime("Rewriting for SSR (image/media):", obj);
         return ssrBaseUrl ? obj.replace("http://nginx/hoboc/", ssrBaseUrl) : obj;
       }
       // Client: always go public
-      logWithTime("Rewriting for Browser:", obj);
       return obj.replace("http://nginx/hoboc/", `${publicBaseUrl}/api/proxy/`);
     }
     return obj;

@@ -1,4 +1,4 @@
-####ForDeploymentUseOnly
+####ForDeploymentUseOnly (ip or domain)
 NEXT_PUBLIC_API_BASE_URL=http://185.204.168.255/hoboc/api/
 NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://185.204.168.255/hoboc/
 NEXT_PUBLIC_SITE_URL=http://185.204.168.255

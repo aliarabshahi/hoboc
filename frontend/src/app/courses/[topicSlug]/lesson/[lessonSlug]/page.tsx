@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import LessonPdfViewer from "./components/lessons/LessonPdfViewer";
 import Sidebar from "./components/lessons/sidebar/Sidebar";
 import LessonNavigationBar from "./components/lessons/LessonNavigationBar";
-import LessonDebugLogger from "./components/lessons/LessonDebugLogger";
 
 interface Params {
   params: {
@@ -53,8 +52,8 @@ export default async function LessonPage({ params }: Params) {
   if (!topicData) notFound();
 
   // Server log (appears in terminal)
-  console.log("🖥 Server log → lessonData:", lessonData);
-  console.log("🖥 Server log → topicData:", topicData);
+  // console.log("🖥 Server log → lessonData:", lessonData);
+  // console.log("🖥 Server log → topicData:", topicData);
 
   return (
     <div dir="rtl" className="relative isolate overflow-hidden min-h-screen">
@@ -66,9 +65,6 @@ export default async function LessonPage({ params }: Params) {
         <div className="absolute top-[19%] right-[15%] w-20 h-20 bg-[#fbb5d4] rounded-full mix-blend-multiply filter blur-3xl opacity-[0.015]" />
         <div className="absolute bottom-[17%] left-1/3 w-20 h-20 bg-[#fbd3e7] rounded-full mix-blend-multiply filter blur-3xl opacity-[0.018]" />
       </div>
-
-      {/* Client logger (appears in browser console) */}
-      <LessonDebugLogger lessonData={lessonData} topicData={topicData} />
 
       {/* Page container */}
       <section className="container mx-auto px-4 md:px-8 lg:px-20 py-8">

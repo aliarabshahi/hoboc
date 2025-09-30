@@ -3,7 +3,7 @@ export default function AboutIntro() {
     // Intro container for the "About" page
     <div className="text-center">
       {/* Main heading */}
-      <h1 className="text-3xl md:text-4xl font-extrabold text-[#1F9ECE] dark:text-[#1F9ECE]">
+      <h1 className="text-3xl md:text-4xl font-bold text-[#1F9ECE] dark:text-[#1F9ECE]">
         درباره <span className="text-[#F477B8]">هوبوک</span>
       </h1>
 

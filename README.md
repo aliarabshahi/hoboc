@@ -17,6 +17,18 @@ The application is containerized with Docker and uses `docker-compose.yml` in th
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Nginx Configuration](#nginx-configuration)
+3. [Frontend Creation](#frontend-creation)
+4. [Environment Variables and .env Files](#environment-variables-and-env-files)
+5. [How Frontend Gets Data from Backend](#how-frontend-gets-data-from-backend)
+6. [Data Fetch and Post Utility Functions](#data-fetch-and-post-utility-functions)
+7. [Frontend Development Notes](#frontend-development-notes)
+8. [**Final All Services Deployment Notes**](#final-all-services-deployment-notes)  
+9. [Data Flow Diagram](#data-flow-diagram)
+
 ## Nginx Configuration
 
 The Nginx configuration file is located at:
@@ -148,7 +160,7 @@ These functions always hit the **frontend’s proxy API routes** (`/api/proxy/..
 
 ---
 
-#### `fetchApiData.ts` — For **GET** requests
+#### `fetchApiData.ts` — For Fetch Data Client Side
 
 - Builds URL in the form `/api/proxy/{endpoint}/`.
 - Optionally appends query parameters.
@@ -170,7 +182,7 @@ These functions always hit the **frontend’s proxy API routes** (`/api/proxy/..
 
 ---
 
-#### `apiServerFetch.ts` — For generic server or client requests
+#### `apiServerFetch.ts` — For Fetch Data Server Side
 
 - Cleans endpoints to add or remove trailing slashes as needed.
 - Detects static/media requests and formats URLs accordingly.
@@ -222,24 +234,133 @@ git clone <your-repo-url>
 cd <project-folder>
 ```
 
-#### 2. Clone the Project
+
+#### 2. Set Environment Variables
+##### Configure the backend .env: 
 
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
-```
-
-#### 3. Set Environment Variables
-
-```bash
-# Configure the backend
 nano .env
 
-# Configure the frontend:
-nano ./frontend/src/.env
+DEBUG=true
+LOG_LEVEL=INFO
+POSTGRES_ENGINE=django.db.backends.postgresql_psycopg2
+POSTGRES_NAME=hoboc
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
 
 ```
-#### 4. Edit The Code Based On New Domain Or Ip
+##### Configure the frontend .env
+
+```
+nano ./frontend/src/.env
+```
+We develop locally or on the server, and based on that we must set different environment variables for the frontend.
+
+Locally, we have two options to run the frontend:
+
+- `docker compose up` → runs frontend as a Docker service
+- `npm run dev` inside `frontend/src/` → runs frontend in development mode directly
+
+###### For Server Deployment with Docker Compose
+
+```
+nano ./frontend/src/.env
+
+# Production domain with HTTPS
+# NEXT_PUBLIC_API_BASE_URL=https://hoboc.ir/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=https://hoboc.ir/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=https://hoboc.ir/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=https://hoboc.ir
+# NEXT_PUBLIC_SITE_FALLBACK=https://hoboc.ir
+
+# Production IP with HTTP (not recommended for final deployment)
+# NEXT_PUBLIC_API_BASE_URL=http://185.204.168.255/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://185.204.168.255/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=http://185.204.168.255/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=http://185.204.168.255
+# NEXT_PUBLIC_SITE_FALLBACK=http://185.204.168.255
+
+NEXT_PUBLIC_API_TOKEN=
+
+```
+
+###### For Local Development with Docker Compose
+
+```
+nano ./frontend/src/.env
+
+NEXT_PUBLIC_API_BASE_URL=http://nginx/hoboc/api/
+NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://nginx/hoboc/
+NEXT_PUBLIC_HEALTHCHECK_URL=https://localhost/hoboc/api/health/
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
+
+NEXT_PUBLIC_API_TOKEN=
+
+```
+
+###### For Local Development with `npm run dev` (frontend/src/)
+```
+nano ./frontend/src/.env
+
+# NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=http://localhost/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=http://localhost:3000
+# NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
+
+NEXT_PUBLIC_API_TOKEN=
+
+```
+
+#### 3 HTTPS or HTTP Configuration 
+
+When deploying on the server, you must use HTTPS to ensure secure communication but when develop locally no need to do that. Follows these steps based on `local` or `server` Developement:
+
+##### Step 1. Enable HTTPS on ArvanCloud
+
+1. Go to ArvanCloud panel
+2. Enable Let's Encrypt SSL certificate (CDN configurations)
+3. Activate HTTPS for your domain (e.g., `https://hoboc.ir`)
+
+##### Step 2. Update Django Settings
+
+In your backend, open:
+
+```bash
+nano ./backend/src/core/settings.py
+```
+At the **end of the file**, make sure these lines are uncommented for deployment:
+```python
+# ---------------------------------------------------------------------
+# Make HTTPS Instead Of HTTP For Deployment (ONLY FOR DEPLOYMENT)
+# ---------------------------------------------------------------------
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+
+```
+
+This will:
+
+- Redirect all requests to HTTPS
+- Ensure Django treats requests as secure
+- Generate secure URLs
+
+
+And For **local development**:
+
+- **Comment** out the above lines in `settings.py` so you can work with plain `http://localhost`
+
+✅ **With this setup:**
+
+- Local development works with HTTP (localhost / nginx)
+- Deployment uses HTTPS automatically via ArvanCloud + Django settings
+
+
+
+##### 4. Edit The Code Based On New Domain Or Ip
 
 ```bash
 # Configure the backend (CORS_ALLOWED_ORIGINS and CSRF_TRUSTED_ORIGINS)

@@ -5,14 +5,13 @@ import { getServerConfig } from "../config/config";
 
 export default function useHealthCheck(intervalMs = 30000) {
   const [healthy, setHealthy] = useState(true);
-  const { API_BASE_URL } = getServerConfig(); 
-  const healthUrl = `${API_BASE_URL}health/`;
+  const { HEALTHCHECK_URL } = getServerConfig(); // use full URL from .env
 
   async function check() {
     try {
-      const res = await fetch(healthUrl, {
+      const res = await fetch(HEALTHCHECK_URL, {
         cache: "no-store",
-        redirect: "follow",
+        redirect: "follow", // handle any proxy redirects
       });
       setHealthy(res.ok);
     } catch {
@@ -24,7 +23,7 @@ export default function useHealthCheck(intervalMs = 30000) {
     check();
     const id = setInterval(check, intervalMs);
     return () => clearInterval(id);
-  }, [intervalMs, healthUrl]);
+  }, [intervalMs, HEALTHCHECK_URL]);
 
   return healthy;
 }

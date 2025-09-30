@@ -1,22 +1,37 @@
-####ForDeploymentUseOnly (ip or domain)
-NEXT_PUBLIC_API_BASE_URL=http://185.204.168.255/hoboc/api/
-NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://185.204.168.255/hoboc/
-NEXT_PUBLIC_SITE_URL=http://185.204.168.255
-NEXT_PUBLIC_SITE_FALLBACK=http://185.204.168.255
+#### For Server Deployment with Docker Compose ####
+# NEXT_PUBLIC_API_BASE_URL=https://hoboc.ir/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=https://hoboc.ir/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=https://hoboc.ir/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=https://hoboc.ir
+# NEXT_PUBLIC_SITE_FALLBACK=https://hoboc.ir
 
-####For Local Development When You Do docker compsoe up####
-#NEXT_PUBLIC_API_BASE_URL=http://nginx/hoboc/api/
-#NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://nginx/hoboc/
+# NEXT_PUBLIC_API_BASE_URL=http://185.204.168.255/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://185.204.168.255/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=http://185.204.168.255/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=http://185.204.168.255
+# NEXT_PUBLIC_SITE_FALLBACK=http://185.204.168.255
 
-####For Local Development When You Do npm run dev inside frontend/src:####
-#NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
-#NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
+#### For Local Development with Docker Compose ####
+# NEXT_PUBLIC_API_BASE_URL=http://nginx/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://nginx/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=https://localhost/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=http://localhost:3000
+# NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
 
 
-# Backend API token
-NEXT_PUBLIC_API_TOKEN=c0881af7b46e2dc06f1ff49c2ff8472b9084e13e
+#### For Local Development with `npm run dev` (frontend/src) ####
+# NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
+# NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
+# NEXT_PUBLIC_HEALTHCHECK_URL=http://localhost/hoboc/api/health/
+# NEXT_PUBLIC_SITE_URL=http://localhost:3000
+# NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
 
-# Site public URL fallback
-#NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
+
+#### Backend API Token ####
+NEXT_PUBLIC_API_TOKEN=7ea807796f921d469e55cc1ab75a200d57043bd0
+
+
+
+
 
 

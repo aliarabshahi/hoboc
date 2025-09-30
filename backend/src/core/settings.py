@@ -292,7 +292,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 50_857_600  # ~50 MB
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ---------------------------------------------------------------------
-# Make Https Insted Of Http For Deployment
+# Make Https Insted Of Http For Deployment      (ONLY FOR DEVELOPMENT)
 # ---------------------------------------------------------------------
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True

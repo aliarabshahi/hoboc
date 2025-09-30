@@ -39,7 +39,7 @@ export default function BlogList({
         );
         setPosts(postsResponse.results);
       } catch (err) {
-        setError("Error fetching blog data");
+        setError("متاسفانه مشکلی در ارتباط با سرور رخ داده است");
       } finally {
         setLoading(false);
       }

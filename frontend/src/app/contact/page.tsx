@@ -24,7 +24,7 @@ function ContactFormSkeleton() {
  * - Contact details (address, phone, email)
  * 
  * Behavior:
- * - Displays skeleton while simulating form loading delay (1500ms).
+ * - Displays skeleton while simulating form loading delay (300ms).
  * - Switches to the real form after the delay.
  */
 export default function ContactPage() {
@@ -33,7 +33,7 @@ export default function ContactPage() {
 
   useEffect(() => {
     // Simulate a loading delay for the contact form (1.5 seconds)
-    const timer = setTimeout(() => setLoading(false), 1500);
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 

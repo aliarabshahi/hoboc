@@ -17,7 +17,7 @@ export default function ProjectOrderPage() {
 
   // Simulate loading delay before showing the form
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 

@@ -7,7 +7,7 @@ export default function ContactImage() {
     <div className="w-full h-full flex items-start justify-start">
       <Image
         src="/images/forms/contact-us.svg"
-        alt="تماس با ما"
+        alt="تماس با تیم متخصص مهندسی داده و هوش مصنوعی هوبوک"
         width={800}
         height={600}
         className="w-full h-auto"

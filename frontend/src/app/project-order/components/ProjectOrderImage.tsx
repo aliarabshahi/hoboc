@@ -8,7 +8,7 @@ export default function ProjectOrderImage() {
     <div className="w-full h-full flex items-start justify-start">
       <Image
         src="/images/forms/project-order.svg" // Ensure this asset exists in /public/images/forms/
-        alt="سفارش پروژه"
+        alt="سفارش پروژه تخصصی مهندسی داده، هوش مصنوعی و تحلیل داده"
         width={800}
         height={600}
         className="w-full h-auto"

@@ -7,7 +7,7 @@ export default function JoinUsImage() {
     <div className="w-full h-full flex items-start justify-start">
       <Image
         src="/images/forms/join-us.svg"
-        alt="ارسال رزومه"
+        alt="ارسال رزومه و همکاری با تیم هوبوک در حوزه مهندسی داده و هوش مصنوعی"
         width={800}
         height={600}
         className="w-full h-auto"

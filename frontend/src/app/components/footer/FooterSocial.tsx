@@ -30,11 +30,11 @@ const socialLinks = [
 /** Footer's social media section with logo and Persian heading */
 export default function FooterSocial() {
   return (
-    <nav className="flex flex-col items-center space-y-4">
+    <nav className="flex flex-col items-center space-y-2">
       {/* Logo */}
       <div className="pb-1">
         <Image
-          src="/images/footer/footer-logo.png"
+          src="/images/logo-icon.png"
           alt="لوگو"
           width={100}
           height={100}

@@ -4,19 +4,22 @@
 export const finalWordData = {
   title: (
     <>
-      <span className="text-hoboc-dark">داده‌ها</span> زندگی می‌کنند!
+      از <span className="text-hoboc-dark">داستانِ داده</span> تا{" "}
+      <span className="bg-gradient-to-r from-hoboc to-purple-600 bg-clip-text text-transparent">
+        راهکارِ هوشمند
+      </span>
     </>
   ),
   description: (
     <>
-      در دنیای امروز، داده‌ها نفس می‌کشند و داستان‌ها می‌گویند. ما به شما یاد می‌دهیم
-      چگونه این داستان‌ها را بخوانید و از آنها زندگی‌های بهتری بسازید.
-      <br />
-      مهندسی داده تنها یک شغل نیست، یک هنر است!
+      هر <strong>داده</strong>، یک روایت پنهان دارد. ما شما را در مسیر کشف این
+      روایت‌ها، تحلیل دقیق، طراحی <strong>پایپ‌لاین‌های قابل اتکا</strong> و
+      پیاده‌سازی راهکارهای مبتنی بر <strong>هوش مصنوعی</strong> همراهی می‌کنیم
+      تا تجربه‌ای واقعی و <strong>ارزش‌افزا</strong> برای کسب‌وکارتان ایجاد شود.
     </>
   ),
   button: {
-    label: "تماس با ما",
+    label: "شروع همکاری",
     href: "/contact",
   },
 };

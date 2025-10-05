@@ -21,8 +21,8 @@ function CoursesPageInner() {
   const title = selectedTopic
     ? `دوره آموزشی ${selectedTopic.title || selectedTopic.title || ""}`
     : "دوره‌های آموزشی";
-  const description =
-    "یادگیری حرفه‌ای با دوره‌های کاربردی علم داده و مهندسی داده برای ورود به بازار کار";
+const description = 
+  "آموزش ساده مهندسی داده، هوش مصنوعی و تحلیل داده. پیاده سازی پایپ‌لاین‌های داده به زبان خودمونی";
 
   // Fetch course topics on mount
   useEffect(() => {

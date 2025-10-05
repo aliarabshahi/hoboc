@@ -3,12 +3,13 @@ export default function AboutCTA() {
     <div className="text-center">
       {/* Section heading */}
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        آماده‌ای شروع کنیم؟
+        آماده‌ای برای تحول در دنیای داده؟
       </h2>
 
       {/* Section description */}
       <p className="text-gray-600 dark:text-gray-300 mb-6">
-        چه بخوای مهارت یاد بگیری، چه بخوای پروژه‌ات رو بسپری، ما کنارتیم!
+        چه برای <strong>یادگیری مهارت‌های تخصصی</strong> و چه برای <strong>اجرای پروژه‌های داده‌محور</strong>، 
+        ما همراه شما هستیم تا بهترین نتایج رو کسب کنید.
       </p>
 
       {/* Call-to-action buttons */}
@@ -16,17 +17,17 @@ export default function AboutCTA() {
         {/* Link to courses */}
         <a
           href="/courses"
-          className="bg-hoboc hover:bg-hoboc-dark text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-sm"
+          className="bg-hoboc hover:bg-hoboc-dark text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-sm hover:shadow-md"
         >
-          مشاهده دوره‌ها
+          شروع یادگیری رایگان
         </a>
 
         {/* Link to contact page */}
         <a
           href="/contact"
-          className="bg-white dark:bg-gray-800 border border-hoboc text-hoboc dark:text-hoboc-dark font-medium py-3 px-6 rounded-lg transition-colors hover:bg-hoboc/5 dark:hover:bg-hoboc/10"
+          className="bg-white dark:bg-gray-800 border border-hoboc text-hoboc dark:text-hoboc-dark font-medium py-3 px-6 rounded-lg transition-colors hover:bg-hoboc/5 dark:hover:bg-hoboc/10 shadow-sm"
         >
-          تماس با ما
+          درخواست مشاوره تخصصی
         </a>
       </div>
     </div>

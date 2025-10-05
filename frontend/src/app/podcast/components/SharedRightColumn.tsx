@@ -41,12 +41,11 @@ export default function SharedRightColumn({
 
         <div className="mt-8 text-center">
           <p className="text-xl font-bold text-slate-900">
-            <Link href="/">دنیای داده</Link>
+            <Link href="/">پادکست هوبوک</Link>
           </p>
-          <p className="mt-3 text-lg font-medium text-slate-700">
-            گفتگو با مهندسان داده، تحلیلگران و متخصصان بیگ‌دیتا درباره
-            تکنولوژی‌ها، ابزارها و چالش‌های دنیای داده.
-          </p>
+<p className="mt-3 text-lg font-medium text-slate-700">
+   هر چه می‌خواهد دل تنگت بشنو! پادکست‌های باحال مهندسی داده، هوش مصنوعی و دنیای داده.
+</p>
         </div>
 
         <AboutSection className="mt-8" />
@@ -55,18 +54,18 @@ export default function SharedRightColumn({
           <PersonIcon className="h-3 w-auto text-slate-300" />
           <span className="mr-2.5">با اجرای</span>
         </h2>
-        <div className="mt-2 flex gap-6 text-sm font-bold text-slate-900">
-          {hosts.map((host, i) => (
-            <Fragment key={host}>
-              {i !== 0 && (
-                <span aria-hidden="true" className="text-slate-400">
-                  /
-                </span>
-              )}
-              {host}
-            </Fragment>
-          ))}
-        </div>
+<div className="mt-2 flex justify-start ps-6 gap-6 text-sm font-bold text-slate-900">
+  {hosts.map((host, i) => (
+    <Fragment key={host}>
+      {i !== 0 && (
+        <span aria-hidden="true" className="text-slate-400">
+          /
+        </span>
+      )}
+      {host}
+    </Fragment>
+  ))}
+</div>
       </div>
     </aside>
   );

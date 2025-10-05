@@ -8,27 +8,32 @@ export default function AboutFeatures() {
       {/* Feature 1 — Free Education */}
       <div className="p-6 bg-gradient-to-br from-[#1f9ece08] to-[#f477b810] dark:from-[#1f9ece15] dark:to-[#f477b815] rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
         <FaUserGraduate className="mx-auto text-[#1F9ECE] text-3xl mb-4" />
-        <h3 className="text-xl font-semibold mb-2">آموزش رایگان</h3>
+        <h3 className="text-xl font-semibold mb-2">آموزش رایگان و تخصصی</h3>
         <p className="text-sm leading-6">
-          تو هوبوک، یادگیری توی اولویته. آموزش‌هایی با کیفیت، کاملاً رایگان، درباره‌ی دیتا، ابزارهای حرفه‌ای، و تجربه‌هایی که تو هیچ کلاس دیگه‌ای نمی‌شنوی.
+          دسترسی به <strong>آموزش‌های باکیفیت و کاملاً رایگان</strong> در حوزه مهندسی داده، هوش مصنوعی و تحلیل داده. 
+          یادگیری <strong>ابزارهای حرفه‌ای</strong> و <strong>تجربیات عملی</strong> که مسیر رشد حرفه‌ای شما رو هموار می‌کنه.
         </p>
       </div>
 
       {/* Feature 2 — Real Projects */}
       <div className="p-6 bg-gradient-to-br from-[#1f9ece08] to-[#f477b810] dark:from-[#1f9ece15] dark:to-[#f477b815] rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
         <FaRocket className="mx-auto text-[#1F9ECE] text-3xl mb-4" />
-        <h3 className="text-xl font-semibold mb-2">پروژه‌های واقعی</h3>
+        <h3 className="text-xl font-semibold mb-2">پروژه‌های واقعی و کاربردی</h3>
         <p className="text-sm leading-6">
-          ما فقط تئوری نمی‌گیم. واقعاً پروژه انجام می‌دیم، از ایده تا اجرا. اگه دوست داری با مسائل واقعی سر و کله بزنی، جای درستی اومدی.
+          اجرای <strong>پروژه‌های واقعی</strong> از ایده تا پیاده‌سازی. 
+          تجربه‌ی کار با <strong>چالش‌های عملی</strong> در حوزه داده و هوش مصنوعی، 
+          از طراحی <strong>پایپ‌لاین</strong> تا پیاده‌سازی <strong>راهکارهای هوشمند</strong>.
         </p>
       </div>
 
       {/* Feature 3 — Friendly Community */}
       <div className="p-6 bg-gradient-to-br from-[#1f9ece08] to-[#f477b810] dark:from-[#1f9ece15] dark:to-[#f477b815] rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
         <FaHandsHelping className="mx-auto text-[#1F9ECE] text-3xl mb-4" />
-        <h3 className="text-xl font-semibold mb-2">یه جامعه‌ی باحال</h3>
+        <h3 className="text-xl font-semibold mb-2">جامعه‌ی متخصصان داده</h3>
         <p className="text-sm leading-6">
-          ما اینجاییم تا یه جمع دوستانه و فعال بسازیم؛ کنار هم رشد کنیم، یاد بگیریم و کلی تجربه به اشتراک بذاریم. تو هم بیا کنارمون :)
+          عضویت در <strong>جامعه‌ی پویا و حرفه‌ای</strong> متخصصان داده. 
+          <strong>تبادل تجربه</strong>، <strong>یادگیری جمعی</strong> و <strong>همکاری در پروژه‌ها</strong> 
+          در محیطی صمیمی و پشتیبان.
         </p>
       </div>
     </div>

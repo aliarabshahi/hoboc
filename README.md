@@ -26,8 +26,14 @@ The application is containerized with Docker and uses `docker-compose.yml` in th
 5. [How Frontend Gets Data from Backend](#how-frontend-gets-data-from-backend)
 6. [Data Fetch and Post Utility Functions](#data-fetch-and-post-utility-functions)
 7. [Frontend Development Notes](#frontend-development-notes)
-8. [**Final All Services Deployment Notes**](#final-all-services-deployment-notes)  
+8. [**Final All Services Deployment Notes**](#final-all-services-deployment-notes) 
 9. [Data Flow Diagram](#data-flow-diagram)
+
+
+
+
+
+
 
 ## Nginx Configuration
 

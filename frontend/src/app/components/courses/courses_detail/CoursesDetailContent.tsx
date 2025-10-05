@@ -48,7 +48,7 @@ const CoursesDetailContent = ({ course }: { course: any }) => {
 
   return (
     <div className="lg:w-2/3 mx-auto" dir="rtl">
-      <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 dark:bg-gray-900 dark:border-gray-700 min-h-[200px]">
+      <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100   min-h-[200px]">
         {/* Section heading */}
         <h2 className="text-xl font-bold mb-6 flex items-center ">
           <BsBook className="w-6 h-6 ml-2" />
@@ -56,13 +56,13 @@ const CoursesDetailContent = ({ course }: { course: any }) => {
         </h2>
 
         {/* Scrollable lesson list */}
-        <div className="overflow-y-auto max-h-[300px] pl-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800">
+        <div className="overflow-y-auto max-h-[300px] pl-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100  ">
           <div className="space-y-2">
             {lessons.map((lesson, index) => (
               <Link
                 key={lesson.id}
                 href={`/courses/${activeTopic?.slug}/lesson/${lesson.slug}`}
-                className="group block rounded-md p-3 transition-colors duration-200 cursor-pointer bg-base-100 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 border-0"
+                className="group block rounded-md p-3 transition-colors duration-200 cursor-pointer bg-base-100  hover:bg-gray-50  border-0"
                 aria-label={`رفتن به درس ${lesson.title}`}
               >
                 <div className="flex justify-between items-center">
@@ -81,10 +81,10 @@ const CoursesDetailContent = ({ course }: { course: any }) => {
                     </div>
                     {/* Lesson title and description */}
                     <div className="text-right max-w-xs">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover:text-hoboc transition-colors truncate">
+                      <h3 className="text-sm font-semibold text-gray-900  group-hover:text-hoboc transition-colors truncate">
                         {lesson.title}
                       </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                      <p className="text-sm text-gray-500  mt-0.5">
                         {truncateDescription(lesson.description, 100)}
                       </p>
                     </div>

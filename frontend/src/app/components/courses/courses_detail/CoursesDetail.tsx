@@ -22,9 +22,9 @@ const SkeletonLoader = () => (
     {/* Main flex container */}
     <div className="flex flex-col lg:flex-row gap-8">
       {/* Content block */}
-      <div className="lg:w-2/3 h-[200px] bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse" />
+      <div className="lg:w-2/3 h-[200px] bg-gray-100  rounded-xl animate-pulse" />
       {/* Image block */}
-      <div className="lg:w-1/3 h-[200px] aspect-video bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse" />
+      <div className="lg:w-1/3 h-[200px] aspect-video bg-gray-100  rounded-xl animate-pulse" />
     </div>
   </div>
 );

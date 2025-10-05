@@ -47,14 +47,14 @@ export default function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 w-full"
+      className="bg-white  p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100  w-full"
     >
       {/* Form header */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-hoboc mb-2">
           تماس با ما
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 ">
           سوالات و پیشنهادات خود را با ما در میان بگذارید
         </p>
       </div>
@@ -62,7 +62,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name input */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             نام کامل
           </label>
           <div className="relative">
@@ -72,7 +72,7 @@ export default function ContactForm() {
             <input
               type="text"
               placeholder="نام و نام خانوادگی"
-              className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
               value={contact.full_name}
               onChange={(e) => handleChange("full_name", e.target.value)}
               required
@@ -82,7 +82,7 @@ export default function ContactForm() {
 
         {/* Email input */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             ایمیل
           </label>
           <div className="relative">
@@ -92,7 +92,7 @@ export default function ContactForm() {
             <input
               type="email"
               placeholder="ایمیل شما"
-              className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
               value={contact.email}
               onChange={(e) => handleChange("email", e.target.value)}
               required
@@ -102,7 +102,7 @@ export default function ContactForm() {
 
         {/* Phone number input */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             شماره تماس
           </label>
           <div className="relative">
@@ -115,7 +115,7 @@ export default function ContactForm() {
               pattern="^0.*$"
               maxLength={12}
               required
-              className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
               value={contact.phone_number}
               onChange={(e) => handleChange("phone_number", e.target.value)}
               onInvalid={(e) =>
@@ -132,7 +132,7 @@ export default function ContactForm() {
 
         {/* Message textarea */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             پیام شما
           </label>
           <div className="relative">
@@ -141,7 +141,7 @@ export default function ContactForm() {
             </div>
             <textarea
               placeholder="متن پیام..."
-              className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
+              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
               value={contact.message}
               onChange={(e) => handleChange("message", e.target.value)}
               required
@@ -170,8 +170,8 @@ export default function ContactForm() {
             animate={{ opacity: 1 }}
             className={`p-3 rounded-lg text-sm flex items-center gap-2 ${
               !message.startsWith("پیام شما")
-                ? "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
-                : "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                ? "bg-red-100  text-red-800 "
+                : "bg-green-100  text-green-800 "
             }`}
           >
             {!message.startsWith("پیام شما") ? (

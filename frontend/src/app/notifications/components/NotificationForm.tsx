@@ -97,14 +97,14 @@ export default function NotificationForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 w-full"
+      className="bg-white  p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100  w-full"
     >
       {/* Heading */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-hoboc mb-2">
           نوتیفیکیشن جات!!!
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 ">
           اگه دوست داری زودتر از بقیه باخبر شی، شمارتو وارد کن!
         </p>
       </div>
@@ -147,7 +147,7 @@ export default function NotificationForm() {
 
         {/* Topics selection */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             موضوعات مورد علاقه
           </label>
           <div className="flex flex-wrap gap-2">
@@ -159,7 +159,7 @@ export default function NotificationForm() {
                 className={`px-4 py-2 rounded-full text-sm transition-colors ${
                   notification.topics.includes(topic.id)
                     ? "bg-hoboc text-white"
-                    : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    : "bg-gray-100  text-gray-800  hover:bg-gray-200 "
                 }`}
               >
                 {topic.title}
@@ -194,8 +194,8 @@ export default function NotificationForm() {
             animate={{ opacity: 1 }}
             className={`p-3 rounded-lg text-sm flex items-center gap-2 ${
               !message.startsWith("مشخصات شما")
-                ? "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
-                : "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                ? "bg-red-100  text-red-800 "
+                : "bg-green-100  text-green-800 "
             }`}
           >
             {!message.startsWith("مشخصات شما") ? (
@@ -237,7 +237,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+      <label className="block text-sm font-medium mb-2 text-gray-700 ">
         {label}
       </label>
       <div className="relative">
@@ -247,7 +247,7 @@ function FormField({
         <input
           type={type}
           placeholder={placeholder}
-          className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+          className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}

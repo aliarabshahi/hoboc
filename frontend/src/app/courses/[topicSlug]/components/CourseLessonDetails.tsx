@@ -29,7 +29,7 @@ export default function CourseLessonDetails({
 }) {
   return (
     <div className="flex-1 min-w-0">
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
+      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100  ">
         {/* Section title with icon */}
         <h2 className="text-xl font-bold mb-6 flex items-center text-hoboc-dark">
           <BsBook className="w-6 h-6 ml-2" />
@@ -37,7 +37,7 @@ export default function CourseLessonDetails({
         </h2>
 
         {/* Scrollable lessons list */}
-        <div className="overflow-y-auto max-h-[calc(100vh-200px)] pl-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800">
+        <div className="overflow-y-auto max-h-[calc(100vh-200px)] pl-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100  ">
           <div className="space-y-2">
             {lessons.map((lesson, index) => {
               const isPremium = !lesson.is_free;
@@ -45,7 +45,7 @@ export default function CourseLessonDetails({
                 <Link
                   key={lesson.id}
                   href={`/courses/${topic.slug}/lesson/${lesson.slug}`}
-                  className="group block rounded-lg p-3 transition-colors duration-200 bg-base-100 dark:bg-gray-900 hover:bg-hoboc/5 dark:hover:bg-hoboc/10 focus:outline-none focus-visible:ring-0"
+                  className="group block rounded-lg p-3 transition-colors duration-200 bg-base-100  hover:bg-hoboc/5  focus:outline-none focus-visible:ring-0"
                   aria-label={`رفتن به درس ${lesson.title}`}
                 >
                   <div className="flex justify-between items-center">
@@ -77,7 +77,7 @@ export default function CourseLessonDetails({
                             </span>
                           )}
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                        <p className="text-sm text-gray-500  mt-0.5">
                           {truncateDescription(lesson.description, 100)}
                         </p>
                       </div>

@@ -11,7 +11,7 @@ import ContactDetail from "./components/ContactDetail";
  */
 function ContactFormSkeleton() {
   return (
-    <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse mb-6" />
+    <div className="w-full h-[400px] bg-gray-200  rounded-xl animate-pulse mb-6" />
   );
 }
 
@@ -38,7 +38,7 @@ export default function ContactPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 py-12 px-6 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-white  py-12 px-6 sm:px-8 lg:px-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-10">
           

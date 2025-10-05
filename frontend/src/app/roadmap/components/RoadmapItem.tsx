@@ -51,16 +51,16 @@ export const RoadmapItem = ({
   const getStatusColor = (): string => {
     switch (status) {
       case "تکمیل شده":
-        return "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200";
+        return "bg-green-100  text-green-800 ";
       case "در حال یادگیری":
-        return "bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200";
+        return "bg-yellow-100  text-yellow-800 ";
       default:
-        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200";
+        return "bg-gray-100  text-gray-800 ";
     }
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-all">
+    <div className="bg-white  rounded-lg shadow-sm border border-gray-200  overflow-hidden transition-all">
       {/* Header row: icon + title/description + expand toggle */}
       <div
         className="p-3 sm:p-4 cursor-pointer flex justify-between items-center"
@@ -73,10 +73,10 @@ export const RoadmapItem = ({
             {getStatusIcon()}
           </div>
           <div>
-            <h3 className="text-base font-medium text-gray-800 dark:text-white">
+            <h3 className="text-base font-medium text-gray-800 ">
               {title}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-gray-600 ">
               {description}
             </p>
           </div>
@@ -88,7 +88,7 @@ export const RoadmapItem = ({
 
       {/* Expanded content */}
       {isExpanded && (
-        <div className="px-4 pb-4 pt-2 border-t border-gray-100 dark:border-gray-700">
+        <div className="px-4 pb-4 pt-2 border-t border-gray-100 ">
           {/* Level badge */}
           <div className="mb-3">
             <span
@@ -101,7 +101,7 @@ export const RoadmapItem = ({
           {/* Learning resources */}
           {resources.length > 0 && (
             <div className="mt-3">
-              <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300 mb-1.5">
+              <h4 className="font-medium text-sm text-gray-700  mb-1.5">
                 منابع یادگیری:
               </h4>
               <ul className="space-y-1.5">
@@ -109,7 +109,7 @@ export const RoadmapItem = ({
                   <li key={idx}>
                     <a
                       href={resource.url}
-                      className="text-sm text-hoboc-dark dark:text-hoboc hover:underline flex items-center gap-1.5"
+                      className="text-sm text-hoboc-dark  hover:underline flex items-center gap-1.5"
                       target="_blank"
                       rel="noopener noreferrer"
                     >

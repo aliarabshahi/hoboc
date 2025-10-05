@@ -152,14 +152,14 @@ export default function ProjectOrderForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 max-w-2xl mx-auto"
+      className="bg-white  p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100  max-w-2xl mx-auto"
     >
       {/* Heading */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-hoboc mb-2">
           سفارش پروژه
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 ">
           فرم زیر را پر کنید تا با شما تماس بگیریم
         </p>
       </div>
@@ -204,7 +204,7 @@ export default function ProjectOrderForm() {
 
         {/* Project Description */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             توضیحات پروژه
           </label>
           <div className="relative">
@@ -213,7 +213,7 @@ export default function ProjectOrderForm() {
             </div>
             <textarea
               placeholder="جزئیات پروژه مورد نظر خود را شرح دهید"
-              className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
+              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
               value={projectOrder.project_description}
               onChange={(e) =>
                 setProjectOrder({
@@ -246,17 +246,17 @@ export default function ProjectOrderForm() {
 
         {/* File Upload */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             فایل‌های پروژه (اختیاری)
           </label>
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300  rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100  transition">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <FaFileUpload className="w-8 h-8 mb-3 text-hoboc" />
-              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mb-2 text-sm text-gray-500 ">
                 <span className="font-semibold">برای آپلود کلیک کنید</span> یا
                 فایل‌ها را بکشید
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+              <p className="text-xs text-gray-500  text-center">
                 فرمت‌های مجاز: PDF, DOCX, TXT, CSV, JSON, ZIP, JPG, PNG (حداکثر{" "}
                 {MAX_SIZE_MB}MB )
               </p>
@@ -276,7 +276,7 @@ export default function ProjectOrderForm() {
               {files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-gray-100  rounded-lg"
                 >
                   <div className="flex items-center gap-2">
                     {getFileIcon(file.type)}
@@ -323,8 +323,8 @@ export default function ProjectOrderForm() {
             animate={{ opacity: 1 }}
             className={`p-3 rounded-lg text-sm flex items-center gap-2 ${
               message === "سفارش شما با موفقیت ثبت شد"
-                ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-                : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                ? "bg-green-100  text-green-800 "
+                : "bg-red-100  text-red-800 "
             }`}
           >
             {message === "سفارش شما با موفقیت ثبت شد" ? (
@@ -364,7 +364,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+      <label className="block text-sm font-medium mb-2 text-gray-700 ">
         {label}
       </label>
       <div className="relative">
@@ -374,7 +374,7 @@ function FormField({
         <input
           type={type}
           placeholder={placeholder}
-          className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+          className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}

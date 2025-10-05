@@ -40,7 +40,7 @@ export default function LatestLessonsCard({ lesson }: { lesson: CoursesLesson })
                  relative overflow-hidden h-[418px] max-h-[418px]"
     >
       {/* Lesson thumbnail */}
-      <div className="-mt-5 -mx-5 mb-4 h-40 overflow-hidden flex items-center justify-center rounded-t-xl bg-gray-100 dark:bg-gray-800 relative">
+      <div className="-mt-5 -mx-5 mb-4 h-40 overflow-hidden flex items-center justify-center rounded-t-xl bg-gray-100  relative">
         {lesson.thumbnail ? (
           <>
             <Image

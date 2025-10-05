@@ -27,7 +27,7 @@ export default function LatestLessonsArrowButton({
 /** Skeleton arrow button placeholder shown while loading */
 export function LatestLessonsSkeletonArrowButton() {
   return (
-    <div className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse">
+    <div className="p-2 rounded-full bg-gray-200  animate-pulse">
       <div className="w-6 h-6" />
     </div>
   );

@@ -101,14 +101,14 @@ export default function JoinUsForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 max-w-2xl mx-auto"
+      className="bg-white  p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100  max-w-2xl mx-auto"
     >
       {/* Heading */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-hoboc mb-2">
           ارسال رزومه
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 ">
           فرم زیر را برای همکاری با ما تکمیل کنید
         </p>
       </div>
@@ -164,7 +164,7 @@ export default function JoinUsForm() {
 
         {/* Cover letter */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             انگیزه‌نامه (اختیاری)
           </label>
           <div className="relative">
@@ -173,7 +173,7 @@ export default function JoinUsForm() {
             </div>
             <textarea
               placeholder="دلایل خود برای همکاری با ما را بیان کنید"
-              className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
+              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
               value={resume.cover_letter}
               onChange={(e) =>
                 setResume({ ...resume, cover_letter: e.target.value })
@@ -184,17 +184,17 @@ export default function JoinUsForm() {
 
         {/* File upload */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-700 ">
             فایل رزومه (PDF - اختیاری)
           </label>
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300  rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100  transition">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <FaFileUpload className="w-8 h-8 mb-3 text-hoboc" />
-              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mb-2 text-sm text-gray-500 ">
                 <span className="font-semibold">برای آپلود کلیک کنید</span> یا
                 فایل را بکشید
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-gray-500 ">
                 فقط فایل‌های PDF (حداکثر {MAX_SIZE_MB}MB)
               </p>
             </div>
@@ -242,8 +242,8 @@ export default function JoinUsForm() {
             animate={{ opacity: 1 }}
             className={`p-3 rounded-lg text-sm flex items-center gap-2 ${
               message === "رزومه با موفقیت ارسال شد"
-                ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-                : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                ? "bg-green-100  text-green-800 "
+                : "bg-red-100  text-red-800 "
             }`}
           >
             {message === "رزومه با موفقیت ارسال شد" ? (
@@ -281,7 +281,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+      <label className="block text-sm font-medium mb-2 text-gray-700 ">
         {label}
       </label>
       <div className="relative">
@@ -291,7 +291,7 @@ function FormField({
         <input
           type={type}
           placeholder={placeholder}
-          className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+          className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={!label.includes("اختیاری")}

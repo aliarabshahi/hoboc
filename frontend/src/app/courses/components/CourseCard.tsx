@@ -63,7 +63,7 @@ export default function CourseCard({
             unoptimized={lesson.thumbnail.startsWith("data:")}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-400 text-sm">
+          <div className="w-full h-full flex items-center justify-center bg-gray-100  text-gray-400 text-sm">
             تصویری موجود نیست
           </div>
         )}

@@ -7,7 +7,7 @@ import NotificationImage from "./components/NotificationImage";
 /** Grey placeholder shown while NotificationForm is loading */
 function NotificationFormSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />
+    <div className="w-full h-[500px] bg-gray-200  rounded-xl animate-pulse" />
   );
 }
 
@@ -22,7 +22,7 @@ export default function NotificationPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 py-12 px-6 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-white  py-12 px-6 sm:px-8 lg:px-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* Image section */}

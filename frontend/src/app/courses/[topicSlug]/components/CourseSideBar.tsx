@@ -23,7 +23,7 @@ export default function CourseSideBar({ topic, lessons }: CourseSideBarProps) {
 
   return (
     <div className="lg:w-80 xl:w-96 flex-shrink-0">
-      <div className="bg-white p-4 rounded-xl py-6 px-6 shadow-sm border border-gray-100 dark:bg-gray-900 dark:border-gray-700 lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto">
+      <div className="bg-white p-4 rounded-xl py-6 px-6 shadow-sm border border-gray-100   lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto">
         
         {/* Back to courses link */}
         <Link 
@@ -45,15 +45,15 @@ export default function CourseSideBar({ topic, lessons }: CourseSideBarProps) {
         </div>
 
         {/* Title and subtitle */}
-        <h1 className="text-3xl font-bold text-hoboc-dark dark:text-hoboc mb-1">
+        <h1 className="text-3xl font-bold text-hoboc-dark  mb-1">
           {topic.title}
         </h1>
-        <h2 className="text-lg text-hoboc dark:text-hoboc-dark mb-4">
+        <h2 className="text-lg text-hoboc  mb-4">
           {topic.catchy_title}
         </h2>
 
         {/* Description */}
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-6">
+        <p className="text-gray-600  text-sm mb-6">
           {topic.description}
         </p>
 
@@ -98,7 +98,7 @@ export default function CourseSideBar({ topic, lessons }: CourseSideBarProps) {
         )}
 
         {/* Tags list */}
-        <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="mt-6 pt-4 border-t border-gray-200 ">
           <div className="flex items-center text-gray-500 text-[13px] gap-2 mb-2">
             <FiBookmark size={14} className="text-gray-500" />
             <span>برچسب‌ها:</span>

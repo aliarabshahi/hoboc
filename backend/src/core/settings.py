@@ -131,7 +131,12 @@ ADMIN_REORDER = [
         'hoboc.RoadmapItem',
     ]},
 
-    # 8. Forms
+    # 8. Resources
+    {'app': 'hoboc', 'label': 'Resource', 'models': [
+        'hoboc.ResourceModel',
+    ]},
+
+    # 9. Forms
     {'app': 'hoboc', 'label': 'Forms', 'models': [
         'hoboc.ContactUsModel',
         'hoboc.ProjectOrderModel',

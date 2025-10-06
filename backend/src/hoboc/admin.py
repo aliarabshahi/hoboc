@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
     CoursesTopicModel, CoursesTagModel, CoursesInstructorModel, CoursesLessonModel,
-    ContactUsModel, ProjectOrderModel, ProjectFile, ResumeSubmissionModel, NotificationSubscription,
+    ContactUsModel, ProjectOrderModel, ProjectFile, ResourceModel, ResumeSubmissionModel, NotificationSubscription,
     BlogWriterModel, BlogTopicModel, BlogTagModel, BlogPostModel,
     RoadmapItem, RoadmapResource,
     PodcastEpisodeModel,
@@ -162,6 +162,15 @@ class PodcastEpisodeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("created_at", "updated_at")
 
+# ---------------------------------------------------------------------
+# Resourse Admin Configurations
+# ---------------------------------------------------------------------
+class ResourceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'creator', 'type', 'order')
+    list_filter = ('type',)
+    search_fields = ('title', 'creator')
+    ordering = ('order',)
+
 
 # ---------------------------------------------------------------------
 # Model Registration
@@ -183,3 +192,5 @@ admin.site.register(BlogPostModel, BlogPostModelAdmin)
 
 admin.site.register(RoadmapItem, RoadmapItemAdmin)
 admin.site.register(PodcastEpisodeModel, PodcastEpisodeAdmin)
+admin.site.register(ResourceModel, ResourceAdmin)
+

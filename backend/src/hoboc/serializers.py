@@ -19,6 +19,7 @@ from .models import (
     ContactUsModel,
     ProjectFile,
     ProjectOrderModel,
+    ResourceModel,
     ResumeSubmissionModel,
     BlogWriterModel,
     BlogTopicModel,
@@ -233,3 +234,19 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
             "src": obj.audio_src,
             "type": "audio/mpeg"  # default value, could be dynamic
         }
+
+
+# ---------------------------------------------------------------------
+# Resource Serializer
+# ---------------------------------------------------------------------
+class ResourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResourceModel
+        fields = [
+            'id',
+            'title',
+            'creator',
+            'type',
+            'link',
+            'order'
+        ]

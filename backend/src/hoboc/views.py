@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
 from .serializers import (
-    PodcastEpisodeSerializer, RoadmapItemSerializer,
+    PodcastEpisodeSerializer, ResourceSerializer, RoadmapItemSerializer,
     TestSerializer, 
     CoursesTopicSerializer,
     CoursesTagSerializer, CoursesInstructorSerializer, CoursesLessonSerializer,
@@ -20,7 +20,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 from .models import (
     PodcastEpisodeModel, CoursesTopicModel, CoursesTagModel,
-    CoursesInstructorModel, CoursesLessonModel, ContactUsModel, ProjectOrderModel,
+    CoursesInstructorModel, CoursesLessonModel, ContactUsModel, ProjectOrderModel, ResourceModel,
     ResumeSubmissionModel, BlogWriterModel, BlogTopicModel, BlogTagModel, BlogPostModel,
     NotificationSubscription, RoadmapItem
 )
@@ -377,4 +377,24 @@ class PodcastEpisodeViewSet(viewsets.ModelViewSet):
         slug_param = self.request.query_params.get("slug")
         if slug_param:
             queryset = queryset.filter(slug=slug_param)
+        return queryset
+
+# ---------------------------------------------------------------------
+# Resource Items
+# ---------------------------------------------------------------------
+class ResourceViewSet(viewsets.ModelViewSet):
+    """Manage Resource Items."""
+    queryset = ResourceModel.objects.all().order_by('order')
+    serializer_class = ResourceSerializer
+    pagination_class = DashboardPagination
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        type_param = self.request.query_params.get('type')
+
+        if type_param:
+            queryset = queryset.filter(type=type_param)
+
         return queryset

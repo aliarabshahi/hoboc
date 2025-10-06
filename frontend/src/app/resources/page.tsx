@@ -30,7 +30,7 @@ export default function ResourcesPage() {
           </div>
 
           {/* Resource list */}
-          <div className="w-full lg:w-1/2 order-2 lg:order-2">
+          <div className="w-full lg:w-1/2 pt-14 order-2 lg:order-2">
             {loading ? <ResourceSkeleton /> : <ResourceList />}
           </div>
         </div>

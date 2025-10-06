@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   BookOpen,
   GraduationCap,
@@ -9,8 +10,9 @@ import {
   Newspaper,
   Building,
   Heart,
-  User, // آیکون برای friend
+  User,
 } from "lucide-react";
+import { getApiData } from "@/app/services/receive_data/apiServerFetch";
 
 type ResourceType =
   | "book"
@@ -20,7 +22,7 @@ type ResourceType =
   | "podcast"
   | "article"
   | "company"
-  | "friend"; // نوع جدید
+  | "friend";
 
 interface Resource {
   id: number;
@@ -30,92 +32,54 @@ interface Resource {
   link: string;
 }
 
-const resources: Resource[] = [
-  {
-    id: 1,
-    title: "Designing Data-Intensive Applications",
-    creator: "Martin Kleppmann",
-    type: "book",
-    link: "https://dataintensive.net/",
-  },
-  {
-    id: 2,
-    title: "Data Engineering Zoomcamp",
-    creator: "DataTalks.Club",
-    type: "course",
-    link: "https://github.com/DataTalksClub/data-engineering-zoomcamp",
-  },
-  {
-    id: 3,
-    title: "Modern Data Stack Explained",
-    creator: "Seattle Data Guy",
-    type: "video",
-    link: "https://www.youtube.com/@SeattleDataGuy",
-  },
-  {
-    id: 4,
-    title: "Towards Data Science",
-    creator: "Medium Publication",
-    type: "website",
-    link: "https://towardsdatascience.com/",
-  },
-  {
-    id: 5,
-    title: "The Data Engineering Podcast",
-    creator: "Tobias Macey",
-    type: "podcast",
-    link: "https://www.dataengineeringpodcast.com/",
-  },
-  {
-    id: 6,
-    title: "The Rise of the Data Engineer",
-    creator: "Maxime Beauchemin",
-    type: "article",
-    link: "https://maximebeauchemin.medium.com/the-rise-of-the-data-engineer-e0c2b06a72e2",
-  },
-  {
-    id: 7,
-    title: "Confluent Inc.",
-    creator: "Company",
-    type: "company",
-    link: "https://www.confluent.io/",
-  },
-  {
-    id: 8,
-    title: "Ali Arabshahi",
-    creator: "Best Friend",
-    type: "friend",
-    link: "#",
-  },
-];
-
+// آیکون‌ها با سایز واکنش‌گرا
 const typeIcons: Record<ResourceType, JSX.Element> = {
-  book: <BookOpen className="text-sky-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  course: <GraduationCap className="text-pink-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  video: <Video className="text-sky-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  website: <Globe className="text-green-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  podcast: <Podcast className="text-purple-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  article: <Newspaper className="text-yellow-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  company: <Building className="text-orange-500 w-6 h-6 sm:w-7 sm:h-7" />,
-  friend: <User className="text-rose-500 w-6 h-6 sm:w-7 sm:h-7" />, // رنگ صورتی-قرمز برای حس دوستانه
+  book: <BookOpen className="text-sky-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  course: <GraduationCap className="text-pink-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  video: <Video className="text-sky-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  website: <Globe className="text-green-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  podcast: <Podcast className="text-purple-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  article: <Newspaper className="text-yellow-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  company: <Building className="text-orange-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
+  friend: <User className="text-rose-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />,
 };
 
 export default function ResourceList() {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchResources = async () => {
+      setLoading(true);
+      const { data, error } = await getApiData("/resource-items/");
+      if (error) setError(error);
+      else setResources(data || []);
+      setLoading(false);
+    };
+    fetchResources();
+  }, []);
+
+  if (loading) return <p className="text-center">در حال بارگذاری...</p>;
+  if (error) return <p className="text-center text-red-600">خطا: {error}</p>;
+  if (resources.length === 0)
+    return <p className="text-center text-gray-500">هیچ منبعی موجود نیست.</p>;
+
   return (
     <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 w-full">
-      {/* Header Section */}
+      {/* عنوان بخش */}
       <div className="mb-8 text-center">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-hoboc mb-2">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-hoboc mb-2">
           منابعی که از آنها آموختم
         </h2>
-        <p className="text-gray-600 text-sm sm:text-base">
+        <p className="text-gray-600 text-xs sm:text-sm md:text-base">
           هر خِرَد و دانشی که در این مسیر می‌بینید، از این اساتید گران‌قدر است
           و هر کاستی و خطایی، تنها از من است{" "}
-          <Heart className="inline-block text-red-500 fill-red-500 w-5 h-5 sm:w-6 sm:h-6" />
+          <Heart className="inline-block text-red-500 fill-red-500 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-1" />
         </p>
       </div>
 
-      {/* Resource Cards */}
+      {/* لیست منابع */}
       <div className="space-y-4">
         {resources.map((res) => (
           <a
@@ -123,19 +87,21 @@ export default function ResourceList() {
             href={res.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-50 rounded-lg border border-gray-200 shadow-sm p-4 flex items-center hover:shadow-md hover:bg-gray-100 transition relative min-h-[72px] sm:min-h-[80px]"
+            className="bg-gray-50 rounded-lg border border-gray-200 shadow-sm p-3 sm:p-4 flex items-center hover:shadow-md hover:bg-gray-100 transition relative min-h-[64px] sm:min-h-[72px] md:min-h-[80px]"
           >
-            {/* Icon in top-right with safe space */}
-            <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+            {/* آیکون بالا-راست */}
+            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4">
               {typeIcons[res.type]}
             </div>
 
-            {/* Centered text */}
+            {/* متن وسط‌چین */}
             <div className="flex-1 text-center pr-8 sm:pr-10">
-              <h3 className="text-sm sm:text-base md:text-base font-medium text-gray-800">
+              <h3 className="text-xs sm:text-sm md:text-base font-medium text-gray-800">
                 {res.title}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500">{res.creator}</p>
+              <p className="text-[10px] sm:text-xs md:text-sm text-gray-500">
+                {res.creator}
+              </p>
             </div>
           </a>
         ))}

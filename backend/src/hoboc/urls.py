@@ -10,6 +10,7 @@ from .views import (
     CoursesLessonViewSet,
     ContactUsViewSet,
     ProjectOrderViewSet,
+    ResourceViewSet,
     ResumeSubmissionViewSet,
     BlogPostViewSet,
     BlogTopicViewSet,
@@ -53,6 +54,8 @@ router.register(r'roadmap-items', RoadmapItemViewSet, basename='roadmap-items')
 # Podcast APIs
 router.register(r'podcast-episodes', PodcastEpisodeViewSet, basename='podcast-episodes')
 
+# Roadmap APIs
+router.register(r'resource-items', ResourceViewSet, basename='resource-items')
 
 # ---------------------------------------------------------------------
 # URL Patterns

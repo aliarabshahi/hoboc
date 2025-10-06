@@ -471,3 +471,41 @@ class PodcastEpisodeModel(models.Model):
         if self.audio_file:
             return self.audio_file.url
         return self.audio_url
+
+
+# ---------------------------------------------------------------------
+# Roadmap Models
+# ---------------------------------------------------------------------
+class ResourceModel(models.Model):
+    """A single learning resource (book, website, video, etc.)."""
+
+    class ResourceType(models.TextChoices):
+        BOOK = 'book', _('کتاب')
+        WEBSITE = 'website', _('وبسایت')
+        VIDEO = 'video', _('ویدیو')
+        COURSE = 'course', _('دوره')
+        PODCAST = 'podcast', _('پادکست')
+        ARTICLE = 'article', _('مقاله')
+        COMPANY = 'company', _('شرکت')
+        FRIEND = 'friend', _('دوست')
+
+    title = models.CharField(_('عنوان'), max_length=200)
+    creator = models.CharField(_('سازنده / نویسنده'), max_length=200)
+    type = models.CharField(
+        _('نوع'),
+        max_length=20,
+        choices=ResourceType.choices,
+        default=ResourceType.BOOK
+    )
+    link = models.URLField(_('لینک'))
+    order = models.PositiveIntegerField(_('ترتیب'), default=0)
+    created_at = models.DateTimeField(_('تاریخ ایجاد'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('تاریخ بروزرسانی'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('Resource')
+        verbose_name_plural = _('Resources')
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title

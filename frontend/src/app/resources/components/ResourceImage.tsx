@@ -7,7 +7,7 @@ export default function ResourceImage() {
   return (
     <div className="w-full h-full flex items-start justify-start">
       <Image
-        src="/images/forms/notification.svg"
+        src="/images/resources_page/resources.svg"
         alt="منابع آموزشی مهندسی داده"
         width={800}
         height={600}

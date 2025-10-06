@@ -8,7 +8,7 @@ const navItems = [
     links: [
       { text: "درباره ما", href: "/about" },
       { text: "تماس با ما", href: "/contact" },
-      { text: "فرصت‌های شغلی", href: "/join-us" },
+      { text: "بانک منابع یادگیری", href: "/resources" },
       { text: "نقشه راه مهندسی داده", href: "/roadmap" },
     ],
   },

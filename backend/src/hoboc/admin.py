@@ -1,4 +1,5 @@
 from django.contrib import admin
+from rest_framework.authtoken.models import Token
 from .models import (
     CoursesTopicModel, CoursesTagModel, CoursesInstructorModel, CoursesLessonModel,
     ContactUsModel, ProjectOrderModel, ProjectFile, ResourceModel, ResumeSubmissionModel, NotificationSubscription,
@@ -194,3 +195,4 @@ admin.site.register(RoadmapItem, RoadmapItemAdmin)
 admin.site.register(PodcastEpisodeModel, PodcastEpisodeAdmin)
 admin.site.register(ResourceModel, ResourceAdmin)
 
+admin.site.register(Token)

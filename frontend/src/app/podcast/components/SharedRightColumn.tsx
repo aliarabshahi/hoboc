@@ -44,7 +44,7 @@ export default function SharedRightColumn({
             <Link href="/">پادکست هوبوک</Link>
           </p>
 <p className="mt-3 text-lg font-medium text-slate-700">
-   هر چه می‌خواهد دل تنگت بشنو! پادکست‌های باحال مهندسی داده، هوش مصنوعی و دنیای داده.
+   هر چه می‌خواهد دل تنگت بشنو! پادکست‌ باحال مهندسی داده، هوش مصنوعی و دنیای داده.
 </p>
         </div>
 

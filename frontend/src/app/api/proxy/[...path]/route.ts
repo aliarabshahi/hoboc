@@ -22,6 +22,7 @@ async function forward(req: NextRequest, path: string[], method: string) {
   const trailingSlash = isMediaRequest && isMediaFile ? "" : "/";
   const queryString = req.nextUrl.search;
   const targetUrl = `${targetBaseUrl}${path.join("/")}${trailingSlash}${queryString}`;
+  console.log(`[Proxy→Nginx] ${method} -> ${targetUrl}`);
 
   // Determine the public base URL from request headers or fallback
   const publicBaseUrl =

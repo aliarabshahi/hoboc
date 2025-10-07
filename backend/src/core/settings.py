@@ -152,6 +152,8 @@ ADMIN_REORDER = [
 CORS_ALLOWED_ORIGINS = [
     "http://hoboc.ir",
     "https://hoboc.ir",
+    "http://easytg.ir",
+    "https://easytg.ir",
     "http://localhost",
     "http://185.204.168.255",  
     "http://103.130.147.37",    
@@ -173,6 +175,8 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://hoboc.ir",
     "https://hoboc.ir",
+    "http://easytg.ir",
+    "https://easytg.ir",
     "http://185.204.168.255",
     "http://103.130.147.37",
     "http://localhost",       

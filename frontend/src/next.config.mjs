@@ -7,6 +7,8 @@ const nextConfig = {
       { protocol: 'http', hostname: 'nginx', pathname: '/hoboc/media/**' },
       { protocol: 'http', hostname: 'hoboc.ir', pathname: '/hoboc/media/**' },
       { protocol: 'https', hostname: 'hoboc.ir', pathname: '/hoboc/media/**' },
+      { protocol: 'http', hostname: 'easytg.ir', pathname: '/hoboc/media/**' },
+      { protocol: 'https', hostname: 'easytg.ir', pathname: '/hoboc/media/**' },
       { protocol: 'http', hostname: '185.204.168.255', pathname: '/hoboc/media/**' },
       { protocol: 'http', hostname: '103.130.147.37', pathname: '/hoboc/media/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '**' },

@@ -297,8 +297,8 @@ NEXT_PUBLIC_API_TOKEN=
 ```
 nano ./frontend/src/.env
 
-NEXT_PUBLIC_API_BASE_URL=http://nginx/hoboc/api/
-NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://nginx/hoboc/
+NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
+NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
 NEXT_PUBLIC_HEALTHCHECK_URL=https://localhost/hoboc/api/health/
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000

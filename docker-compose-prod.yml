@@ -41,8 +41,6 @@ services:
     container_name: hoboc_frontend
     env_file:
       - ./frontend/src/.env
-    ports:
-      - "3000:3000"
     restart: always
     networks:
       - network_hoboc_project

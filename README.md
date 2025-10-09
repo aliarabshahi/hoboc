@@ -214,6 +214,27 @@ to avoid direct backend calls, ensuring consistent CORS policy, authentication, 
 - Use **`apiClientAxios.ts`** for dynamic updates after page load (not needed for SEO indexing).
 
 
+### Frontend Development Notes
+
+#### Local `npm run dev` Mode
+
+When developing locally and running:
+```bash
+git clone
+# create .envs
+docker compose up --build
+docker compose down hoboc_frontend
+cd frontend/src
+npm run dev
+```
+make sure:
+
+1. **Port 3000 is free** — Next.js by default runs on `http://localhost:3000`.  
+   If another service (including Docker containers) is using this port, the dev server will either fail or start on another port, causing API calls expecting `3000` to return errors (like 404).
+
+
+
+
 ### Final All Services Deployment Notes
 
 Follow these steps to deploy the project correctly:
@@ -299,12 +320,13 @@ nano ./frontend/src/.env
 # NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
 # NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
 # NEXT_PUBLIC_HEALTHCHECK_URL=http://localhost/hoboc/api/health/
-# NEXT_PUBLIC_SITE_URL=http://localhost:3000
-# NEXT_PUBLIC_SITE_FALLBACK=http://localhost:3000
+# NEXT_PUBLIC_SITE_URL=http://localhost
+# NEXT_PUBLIC_SITE_FALLBACK=http://localhost
 
 NEXT_PUBLIC_API_TOKEN=
 
 ```
+
 #### 3. HTTPS or HTTP Configuration
 
 When developing **locally** you **do not** need HTTPS — HTTP is sufficient.  

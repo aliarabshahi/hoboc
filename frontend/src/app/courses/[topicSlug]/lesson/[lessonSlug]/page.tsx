@@ -75,7 +75,7 @@ export default async function LessonPage({ params }: Params) {
           <div className="flex-1 min-w-0 order-2 lg:order-1">
             {lessonData.pdf_file && (
               <div className="border rounded-lg shadow-lg overflow-hidden h-[80vh] w-full">
-                <LessonPdfViewer pdfUrl={lessonData.pdf_file} />
+                <LessonPdfViewer pdfUrl={lessonData.pdf_file.replace(/^https?:\/\//, '//')} />
               </div>
             )}
           </div>

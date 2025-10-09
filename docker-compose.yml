@@ -56,7 +56,7 @@ services:
   nginx:
     build:
       context: ./backend/etc/nginx
-      dockerfile: Dockerfile_local
+      dockerfile: Dockerfile
     container_name: hoboc_nginx
     volumes:
       - static_volume:/opt/hoboc/static/:ro

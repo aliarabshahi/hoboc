@@ -47,7 +47,7 @@ const description =
   "بلاگ تخصصی مهندسی داده و هوش مصنوعی. مقالات آموزشی به زبان ساده و خودمونی";
 
   return (
-    <main className="min-h-screen pb-16">
+    <main className="min-h-screen pb-16 bg-[#fffbfd] ">
       {/* Blog page header */}
       <BlogHeader title={title} description={description} />
 

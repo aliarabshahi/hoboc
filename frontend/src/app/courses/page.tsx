@@ -41,7 +41,7 @@ const description =
   }, []);
 
   return (
-    <main className="min-h-screen pb-16">
+    <main className="min-h-screen pb-16 bg-[#fffbfd] ">
       {/* Page header */}
       <CourseHeader title={title} description={description} />
 

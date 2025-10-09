@@ -22,7 +22,7 @@ export default function NotificationPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white  py-12 px-6 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-[#fffbfd]  py-12 px-6 sm:px-8 lg:px-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* Image section */}

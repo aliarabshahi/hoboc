@@ -9,11 +9,13 @@ export default function NavbarLogin({ shrink }: Props) {
   if (shrink) {
     return (
       <div className="flex items-center gap-2">
-        <div className="h-4 w-px bg-gray-400"></div>
+        {/* خط جداکننده فقط روی سایز md+ */}
+        <div className="hidden md:block h-4 w-px bg-gray-400"></div>
         <Link href="/roadmap" passHref>
           <button className="text-hoboc-dark text-sm flex items-center gap-1">
             <MapPinCheck size={18} />
-            نقشه راه
+            {/* متن "نقشه راه" فقط از md+ نمایش داده می‌شود */}
+            <span className="hidden md:inline">نقشه راه</span>
           </button>
         </Link>
       </div>

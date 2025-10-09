@@ -8,7 +8,7 @@ interface BlogHeaderProps {
 const BlogHeader: React.FC<BlogHeaderProps> = ({ title, description }) => {
   return (
     // Blog header section with decorative background and centered content
-    <section className="relative isolate overflow-hidden pt-16 md:pt-20 pb-12 md:pb-16 shadow-sm rounded-b-2xl bg-gradient-to-br from-white to-[#fef6fb]">
+    <section className="relative isolate overflow-hidden pt-16 md:pt-20 pb-12 md:pb-16 shadow-sm rounded-b-md bg-gradient-to-br from-white to-[#fef6fb]">
       
       {/* --- Background Elements --- */}
       <div className="absolute inset-0 -z-10">
@@ -25,7 +25,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ title, description }) => {
         
         {/* Decorative divider above title */}
         <div className="mb-3 md:mb-4 flex justify-center">
-          <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-full"></div>
+          <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-full opacity-80"></div>
         </div>
         
         {/* Header title (dynamic from props) */}

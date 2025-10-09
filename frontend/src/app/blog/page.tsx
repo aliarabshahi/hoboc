@@ -44,7 +44,7 @@ export default function BlogPage({
 
   // Blog description (Persian UI text preserved)
 const description = 
-  "بلاگ تخصصی مهندسی داده و هوش مصنوعی. مقالات آموزشی به زبان ساده و خودمونی";
+  "بلاگ تخصصی مهندسی داده و هوش مصنوعی؛ آموزش‌ها و مقالات کاربردی";
 
   return (
     <main className="min-h-screen pb-16 bg-[#fffbfd] ">

@@ -22,7 +22,7 @@ function CoursesPageInner() {
     ? `دوره آموزشی ${selectedTopic.title || selectedTopic.title || ""}`
     : "دوره‌های آموزشی";
 const description = 
-  "آموزش ساده مهندسی داده، هوش مصنوعی و تحلیل داده. پیاده سازی پایپ‌لاین‌های داده به زبان خودمونی";
+  "آموزش خودمونی مهندسی داده، هوش مصنوعی و تحلیل داده؛ پیاده سازی پایپ‌لاین‌های داده به زبان ساده";
 
   // Fetch course topics on mount
   useEffect(() => {

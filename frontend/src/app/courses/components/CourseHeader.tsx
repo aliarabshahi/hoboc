@@ -8,7 +8,7 @@ interface CourseHeaderProps {
 /** Courses page header - gradient background with decorative shapes */
 const CourseHeader: React.FC<CourseHeaderProps> = ({ title, description }) => {
   return (
-    <section className="relative isolate overflow-hidden pt-16 md:pt-20 pb-12 md:pb-16 shadow-sm rounded-b-2xl bg-gradient-to-br from-white to-[#fef6fb]">
+    <section className="relative isolate overflow-hidden pt-16 md:pt-20 pb-12 md:pb-16 shadow-sm rounded-b-md bg-gradient-to-br from-white to-[#fef6fb]">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         {/* Subtle gradient overlay */}
@@ -23,7 +23,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({ title, description }) => {
       <div className="container mx-auto px-4 text-center relative z-10" dir="rtl">
         {/* Accent divider line */}
         <div className="mb-3 md:mb-4 flex justify-center">
-          <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-full"></div>
+          <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-full opacity-80"></div>
         </div>
         
         {/* Page title */}

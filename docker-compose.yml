@@ -56,12 +56,11 @@ services:
   nginx:
     build:
       context: ./backend/etc/nginx
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_local
     container_name: hoboc_nginx
     volumes:
       - static_volume:/opt/hoboc/static/:ro
       - ./backend/src/media:/opt/hoboc/src/media:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro   # Mount Let's Encrypt certs
     depends_on:
       - web
       - frontend

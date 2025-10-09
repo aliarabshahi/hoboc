@@ -19,17 +19,15 @@ The application is containerized with Docker and uses `docker-compose.yml` in th
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Nginx Configuration](#nginx-configuration)
-3. [Frontend Creation](#frontend-creation)
-4. [Environment Variables and .env Files](#environment-variables-and-env-files)
-5. [How Frontend Gets Data from Backend](#how-frontend-gets-data-from-backend)
-6. [Data Fetch and Post Utility Functions](#data-fetch-and-post-utility-functions)
-7. [Frontend Development Notes](#frontend-development-notes)
-8. [**Final All Services Deployment Notes**](#final-all-services-deployment-notes) 
+1. [Overview](#overview)  
+2. [Nginx Configuration](#nginx-configuration)  
+3. [Frontend Creation](#frontend-creation)  
+4. [Environment Variables and .env Files](#environment-variables-and-env-files)  
+5. [How Frontend Gets Data from Backend](#how-frontend-gets-data-from-backend)  
+6. [Data Fetch and Post Utility Functions](#data-fetch-and-post-utility-functions)  
+7. [Frontend Development Notes](#frontend-development-notes)  
+8. [Final All Services Deployment Notes](#final-all-services-deployment-notes)   
 9. [Data Flow Diagram](#data-flow-diagram)
-
-
 
 
 
@@ -66,7 +64,7 @@ Nginx acts as the **main reverse proxy** and **static file server** in the backe
 - **Timeouts**
   - Client body, headers, send, read, and keep‑alive configured for stability.
 - **API Proxy**
-  - Proxies `/hoboc/` requests to Django backend (`hoboc_upstream`).
+  - Proxies `/hoboc/` requests to Django backend (`backend_web_upstream`).
   - Preserves host headers, client IP, and supports **WebSocket upgrades**.
 - **Static File Handling**
   - Serves files from `/opt/hoboc/static/` with long-term caching and **CORS** enabled.
@@ -109,8 +107,8 @@ npm install @types/node@20 @types/react@18 @types/react-dom@18 \
 The backend environment variables are defined in:
 
 ```bash
-./.env
 # ./backend/etc/env-sample
+./.env
 ```
 
 ### Frontend
@@ -118,8 +116,8 @@ The backend environment variables are defined in:
 Frontend environment variables are loaded from:
 
 ```bash
+# ./frontend/src/env-sample
 ./frontend/src/.env
-./frontend/src/env-sample
 ```
 
 ## How Frontend Gets Data from Backend
@@ -138,6 +136,8 @@ The data flow between the frontend and backend is handled in two main steps:
   - **MEDIA_STATIC_BASE_URL** — Base URL for serving media and static files.
   - **API_TOKEN** — Token for authentication with the backend API.
   - **PUBLIC_SITE_FALLBACK** — Default site to use if the primary configuration is unavailable.
+  - **HEALTHCHECK_URL** — Base URL to ckeck the helth of backend using `health` api.
+
 
 ---
 
@@ -162,72 +162,57 @@ frontend/src/app/services/receive_data/
 
 ### Data Fetch and Post Utility Functions — Details
 
-These functions always hit the **frontend’s proxy API routes** (`/api/proxy/...`) instead of contacting the backend directly.
+All these functions route requests through the **frontend proxy API** (`/api/proxy/...`)  
+to avoid direct backend calls, ensuring consistent CORS policy, authentication, and error handling.
 
 ---
 
-#### `fetchApiData.ts` — For Fetch Data Client Side
+#### `apiClientAxios.ts` — Client‑Side Data Fetch
 
-- Builds URL in the form `/api/proxy/{endpoint}/`.
-- Optionally appends query parameters.
-- Fetches fresh data using `cache: "no-store"` to avoid stale results.
-
----
-
-#### `postApiData.ts` — For **POST** requests (JSON)
-
-- Sends request body as JSON to `/api/proxy/{endpoint}/`.
-- Parses backend errors and returns an { data, error } object.
+- **Scope:** Runs in the browser (`window` is defined).
+- Builds URL in form `/api/proxy/{endpoint}/` using `window.location.origin`.
+- Can append optional query parameters.
+- Always fetches **fresh data** (`cache: "no-store"`) to prevent stale responses.
+- For SEO‑irrelevant or dynamic user interactions (filters, live updates).
 
 ---
 
-#### `postApiDataWithFile.ts` — For **POST** requests with file uploads
+#### `apiServerFetch.ts` — Server‑Side Data Fetch
 
-- Sends `FormData` to `/api/proxy/{endpoint}/`.
-- Relies on browser-supplied `Content-Type` when uploading files.
-
----
-
-#### `apiServerFetch.ts` — For Fetch Data Server Side
-
-- Cleans endpoints to add or remove trailing slashes as needed.
-- Detects static/media requests and formats URLs accordingly.
-- Builds the final proxy URL and fetches data from the backend.
-- Returns structured objects containing `data` or `error` fields, along with localized error messages.
+- **Scope:** Runs during SSR (`getServerSideProps`, server actions) or inside API routes.
+- Cleans endpoint paths:
+  - Removes extra leading/trailing slashes.
+  - Detects static/media files and formats accordingly.
+- Assembles final URL: `${baseUrl}/api/proxy/{cleanedEndpoint}`.
+- Returns unified structured objects with `{ data, error }`.
+- Includes localized “no data” fallback messages for Persian UI.
+- Recommended for **SEO‑critical** data so HTML ships with content.
 
 ---
 
-### Frontend Development Notes
+#### `apiClientPost.ts` — POST Requests with JSON (Client Side)
 
-- **Environment consistency** is critical:
-  - **Production Docker** → Keep URLs pointing to internal service names (e.g., `http://nginx/...`).
-  - **Local development** → Use `localhost` or a reachable IP that maps to backend ports.
-- **Local development startup flow**:
+- **Scope:** Runs in the browser when submitting forms or sending JSON payloads.
+- Sends data to `/api/proxy/{endpoint}/` with `Content-Type: application/json`.
+- Collects backend error details and merges into a single readable message.
+- Response shape: `{ data: T | null, error?: string }`.
 
-1. From the project root, run:
+---
 
-```bash
-docker compose build
-docker compose up
-```
+#### `apiClientPostDataWithFile.ts` — POST Requests with File Uploads (Client Side)
 
-This starts all backend and supporting services.
+- **Scope:** Runs in the browser for file uploads (images, PDFs, etc.).
+- Uses `FormData` without manually setting `Content-Type` (browser handles it).
+- Sends data to `/api/proxy/{endpoint}/`.
+- Parses backend errors consistently with JSON POST function.
+- Response shape: `{ data: T | null, error?: string }`.
 
-2. Open frontend/src/.env and change API URLs from `http://nginx/...` to `http://localhost/...`:
+---
 
-```bash
-NEXT_PUBLIC_API_BASE_URL=http://localhost/hoboc/api/
-NEXT_PUBLIC_MEDIA_STATIC_BASE_URL=http://localhost/hoboc/
-```
+**SEO Recommendation:**  
+- Use **`apiServerFetch.ts`** for data required in the initial HTML (ensures crawlers like Google see content).
+- Use **`apiClientAxios.ts`** for dynamic updates after page load (not needed for SEO indexing).
 
-3.  In the `frontend/src` directory:
-
-```bash
-npm i
-npm run dev
-```
-
-This runs the Next.js development server connected to your locally running backend.
 
 ### Final All Services Deployment Notes
 
@@ -320,53 +305,127 @@ nano ./frontend/src/.env
 NEXT_PUBLIC_API_TOKEN=
 
 ```
+#### 3. HTTPS or HTTP Configuration
 
-#### 3 HTTPS or HTTP Configuration 
+When developing **locally** you **do not** need HTTPS — HTTP is sufficient.  
+When deploying on a **server**, you **must** use HTTPS for security and SEO benefits.
 
-When deploying on the server, you must use HTTPS to ensure secure communication but when develop locally no need to do that. Follows these steps based on `local` or `server` Developement:
+---
 
-##### Step 1. Enable HTTPS on ArvanCloud
+#### Nginx Configurations
 
-1. Go to ArvanCloud panel
-2. Enable Let's Encrypt SSL certificate (CDN configurations)
-3. Activate HTTPS for your domain (e.g., `https://hoboc.ir`)
+We maintain **two separate Nginx configuration files** and also **two DockerFile** located in `backend/etc/`:
 
-##### Step 2. Update Django Settings
+- **`nginx-prod.conf`** — Used **on the server** with HTTPS enabled.
+- **`nginx.conf`** — Used **locally** without HTTPS.
+<br><br>
+- **`Dockerfile_prod`** — Used **on the server** .
+- **`Dockerfile`** — Used **locally**.
+---
 
-In your backend, open:
+#### Docker Compose Variants
+
+Similarly, there are **two Docker Compose files** at the repository root:
+
+- **`./docker-compose-prod.yml`** — For **server deployment** with HTTPS enabled.
+- **`./docker-compose.yml`** — For **local development** without HTTPS.
+
+---
+
+**Main Differences:**
+
+1. **SSL Certificates Mount:**
+   - `docker-compose-prod.yml` mounts the Let's Encrypt certificate volumes (`/etc/letsencrypt`) in the **Nginx** service.
+   - `docker-compose.yml` (local mode) does **not** mount SSL certs because HTTPS is not used locally.
+
+2. **Image Build Requirement (Prod Only):**
+   - In `docker-compose-prod.yml` you **must** build all Docker images before running `docker compose up -d` on the server.
+   - This ensures the server uses the latest production-ready builds.
+   - Local `docker-compose.yml` can build on-the-fly during `docker compose up` without needing manual pre-build.
+   <br><br>
+**Image Build Commands for Production Deployment:**
+```bash
+# Backend (web)
+docker build -t hoboc_web:latest -f backend/Dockerfile backend
+
+# Frontend
+docker build -t hoboc_frontend:latest -f frontend/Dockerfile frontend
+
+# Nginx reverse proxy layer
+docker build -t hoboc_nginx:latest -f backend/etc/nginx/Dockerfile backend/etc/nginx
+
+```
+
+
+3. **Postgres Availability (Prod Only):**
+   - Ensure `postgres:15` image is already present on the server.
+   - If not available, pull it before deployment:
+```bash
+docker pull postgres:15
+```
+
+#### Preparing Let's Encrypt (Server)
+
+So Before bringing services up **on the server**, you must prepare Let's Encrypt SSL certificates:
+```bash
+sudo apt update
+sudo apt install -y certbot python3-certbot-nginx
+
+sudo certbot certonly --standalone \
+  -d hoboc.ir \
+  -d www.hoboc.ir
+```
+The certificates will be stored at:
+```bash
+/etc/letsencrypt/live/hoboc.ir/fullchain.pem
+/etc/letsencrypt/live/hoboc.ir/privkey.pem
+```
+
+content_copy
+
+**Renewal Process:**
+- Certificates are free for 90 days.
+- To renew after expiry:
+```bash
+docker compose down
+sudo certbot renew --dry-run    # Test renewal
+sudo certbot renew              # Actual renewal
+docker compose up -d
+
+```
+**Automating Renewal**
+You can schedule automatic renewal via cron or Airflow:
 
 ```bash
-nano ./backend/src/core/settings.py
-```
-At the **end of the file**, make sure these lines are uncommented for deployment:
-```python
-# ---------------------------------------------------------------------
-# Make HTTPS Instead Of HTTP For Deployment (ONLY FOR DEPLOYMENT)
-# ---------------------------------------------------------------------
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+0 3 1 */3 * cd /opt/hoboc && docker compose down && certbot renew --quiet && docker compose up -d
 
 ```
 
-This will:
+####  Important Security Note
 
-- Redirect all requests to HTTPS
-- Ensure Django treats requests as secure
-- Generate secure URLs
+**For better domain security and to hide your actual server IP — in addition to Let's Encrypt on the server:**
+
+1. **Go to [ArvanCloud Panel](https://panel.arvancloud.ir)**  
+2. **Enable Let’s Encrypt SSL certificate** via CDN configurations  
+3. **Activate HTTPS** for your domain (e.g., `https://hoboc.ir`)  
+4. **Enable ArvanCloud “CDN Cloud” mode** — ensures visitors connect through ArvanCloud’s CDN and your server IP remains hidden and inaccessible directly  .
+
+5. **Verify DNS records** are only pointing to ```
+
+```
+nslookup hoboc.ir
+```
+
+6. **Extra hosts configuration (if server is outside ArvanCloud infra):**  
+If you use **CDN Cloud** but host your server outside ArvanCloud, you must add an `extra_hosts` entry to **all services** in your Docker Compose.  
+This ensures the container can still resolve your domain to the correct IP for internal requests:
+```yaml
+extra_hosts:
+  - "hoboc.ir:127.0.0.1"
+```
 
 
-And For **local development**:
-
-- **Comment** out the above lines in `settings.py` so you can work with plain `http://localhost`
-
-✅ **With this setup:**
-
-- Local development works with HTTP (localhost / nginx)
-- Deployment uses HTTPS automatically via ArvanCloud + Django settings
-
-
-
-##### 4. Edit The Code Based On New Domain Or Ip
+#### 4. Edit The Code Based On New Domain Or Ip
 
 ```bash
 # Configure the backend (CORS_ALLOWED_ORIGINS and CSRF_TRUSTED_ORIGINS)

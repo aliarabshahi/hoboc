@@ -352,7 +352,7 @@ docker build -t hoboc_web:latest -f backend/Dockerfile backend
 docker build -t hoboc_frontend:latest -f frontend/Dockerfile frontend
 
 # Nginx reverse proxy layer
-docker build -t hoboc_nginx:latest -f backend/etc/nginx/Dockerfile backend/etc/nginx
+docker build -t hoboc_nginx_prod:latest -f backend/etc/nginx/Dockerfile_prod backend/etc/nginx
 
 ```
 

@@ -19,9 +19,7 @@ services:
       - "hoboc.ir:103.130.147.37"
 
   web:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: hoboc_web:latest
     container_name: hoboc_web
     env_file:
       - .env
@@ -39,9 +37,7 @@ services:
       - "hoboc.ir:103.130.147.37"
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: hoboc_frontend:latest
     container_name: hoboc_frontend
     env_file:
       - ./frontend/src/.env
@@ -54,9 +50,7 @@ services:
       - "hoboc.ir:103.130.147.37"
 
   nginx:
-    build:
-      context: ./backend/etc/nginx
-      dockerfile: Dockerfile
+    image: hoboc_nginx_prod:latest
     container_name: hoboc_nginx
     volumes:
       - static_volume:/opt/hoboc/static/:ro

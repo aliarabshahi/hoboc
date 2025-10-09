@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }: Params) {
           <div className="flex-1 min-w-0 order-2">
             {postData.pdf_file && (
               <div className="border rounded-lg shadow-lg overflow-hidden h-[80vh] w-full">
-                <BlogPdfViewer pdfUrl={postData.pdf_file} />
+                <BlogPdfViewer pdfUrl={postData.pdf_file.replace(/^https?:\/\//, '//')} />
               </div>
             )}
           </div>

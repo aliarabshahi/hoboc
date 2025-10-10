@@ -7,7 +7,7 @@ import JoinUsImage from "./components/JoinUsImage";
 /** Grey placeholder shown while JoinUsForm is loading */
 function ResumeFormSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-gray-200  rounded-xl animate-pulse" />
+    <div className="w-full h-[500px]  bg-[#E9D7EB]/30  rounded-xl animate-pulse" />
   );
 }
 
@@ -26,7 +26,7 @@ export default function ResumePage() {
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* Image section */}
-          <div className="w-full lg:w-1/2 order-1 lg:order-2 lg:sticky  lg:top-0 self-start">
+          <div className="w-full lg:w-1/2 order-1 lg:order-2 lg:sticky  lg:top-12 self-start">
             <JoinUsImage />
           </div>
 

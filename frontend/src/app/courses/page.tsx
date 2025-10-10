@@ -52,7 +52,7 @@ const description =
       >
         {loadingTopics ? (
           // Skeleton loader while topics load
-          <div className="h-10 w-48 bg-gray-200 rounded-md animate-pulse mx-auto" />
+          <div className="h-10 w-48 bg-[#E9D7EB]/30 rounded-md animate-pulse mx-auto" />
         ) : (
           <CourseTopicsFilter
             topics={topics}

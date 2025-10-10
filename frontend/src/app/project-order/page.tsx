@@ -7,7 +7,7 @@ import ProjectOrderImage from "./components/ProjectOrderImage";
 /** Simple skeleton placeholder for the project order form */
 function ProjectOrderFormSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-gray-200  rounded-xl animate-pulse" />
+    <div className="w-full h-[500px] bg-[#E9D7EB]/30  rounded-xl animate-pulse" />
   );
 }
 

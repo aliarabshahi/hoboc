@@ -9,7 +9,7 @@ import { RoadmapItem as RoadmapItemType } from "@/app/types/roadmapType";
 /** Placeholder skeleton displayed while roadmap content loads */
 function RoadmapSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-gray-200 rounded-xl animate-pulse" />
+    <div className="w-full h-[500px] bg-[#E9D7EB]/30 rounded-xl animate-pulse" />
   );
 }
 

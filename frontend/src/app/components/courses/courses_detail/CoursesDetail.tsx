@@ -18,13 +18,13 @@ interface CoursesDetailProps {
 const SkeletonLoader = () => (
   <div className="flex flex-col gap-6" dir="rtl">
     {/* Fake header */}
-    <div className="h-14 w-1/5 bg-gray-100 rounded-lg animate-pulse" />
+    <div className="h-14 w-1/5 bg-[#E9D7EB]/30 rounded-lg animate-pulse" />
     {/* Main flex container */}
     <div className="flex flex-col lg:flex-row gap-8">
       {/* Content block */}
-      <div className="lg:w-2/3 h-[200px] bg-gray-100  rounded-xl animate-pulse" />
+      <div className="lg:w-2/3 h-[200px] bg-[#E9D7EB]/30  rounded-xl animate-pulse" />
       {/* Image block */}
-      <div className="lg:w-1/3 h-[200px] aspect-video bg-gray-100  rounded-xl animate-pulse" />
+      <div className="lg:w-1/3 h-[200px] aspect-video bg-[#E9D7EB]/30  rounded-xl animate-pulse" />
     </div>
   </div>
 );

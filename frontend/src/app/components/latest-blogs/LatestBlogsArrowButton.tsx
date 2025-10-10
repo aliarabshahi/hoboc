@@ -27,7 +27,7 @@ export default function LatestBlogsArrowButton({
 /** Skeleton placeholder for arrow buttons while loading */
 export function LatestBlogsSkeletonArrowButton() {
   return (
-    <div className="p-2 rounded-full bg-gray-200  animate-pulse">
+    <div className="p-2 rounded-full bg-[#E9D7EB]/30  animate-pulse">
       <div className="w-6 h-6" />
     </div>
   );

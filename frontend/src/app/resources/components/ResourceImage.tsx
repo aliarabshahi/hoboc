@@ -5,7 +5,7 @@ import Image from "next/image";
 /** Static illustration reused from the notification form */
 export default function ResourceImage() {
   return (
-    <div className="w-full h-full flex items-start justify-start">
+    <div className="w-full h-full flex items-start justify-start md:pt-6">
       <Image
         src="/images/resources_page/resources.svg"
         alt="منابع آموزشی مهندسی داده"

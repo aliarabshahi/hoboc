@@ -7,7 +7,7 @@ import NotificationImage from "./components/NotificationImage";
 /** Grey placeholder shown while NotificationForm is loading */
 function NotificationFormSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-gray-200  rounded-xl animate-pulse" />
+    <div className="w-full h-[500px] bg-[#E9D7EB]/30  rounded-xl animate-pulse" />
   );
 }
 
@@ -26,7 +26,7 @@ export default function NotificationPage() {
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* Image section */}
-          <div className="w-full lg:w-1/2 order-1 lg:order-1 lg:sticky lg:top-0 self-start pt-8">
+          <div className="w-full lg:w-1/2 order-1 lg:order-1 lg:sticky lg:top-0 self-start ">
             <NotificationImage />
           </div>
 

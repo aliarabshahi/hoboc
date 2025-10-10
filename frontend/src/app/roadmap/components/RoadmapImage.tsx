@@ -5,7 +5,7 @@ import Image from "next/image";
 /** Static roadmap illustration for the Roadmap page */
 export default function RoadmapImage() {
   return (
-    <div className="w-full h-full flex items-start justify-start">
+    <div className="w-full h-full flex items-start justify-start md:pt-6">
       <Image
         src="/images/roadmap_page/roadmap.svg"
         alt="نقشه راه تحول داده‌محور - از مهندسی داده تا هوش مصنوعی و تحلیل پیشرفته"

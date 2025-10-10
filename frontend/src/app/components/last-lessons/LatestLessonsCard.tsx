@@ -35,12 +35,14 @@ export default function LatestLessonsCard({ lesson }: { lesson: CoursesLesson })
     <Link
       href={`/courses/${lesson.topic_slug}/lesson/${lesson.slug}`}
       prefetch={false}
-      className="group block bg-white p-5 rounded-xl shadow-sm border border-hoboc
+      className="group block bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-hoboc
                  flex flex-col justify-between transition hover:shadow-md 
-                 relative overflow-hidden h-[418px] max-h-[418px]"
+                 relative overflow-hidden h-[360px] sm:h-[418px] max-h-[418px]"
     >
       {/* Lesson thumbnail */}
-      <div className="-mt-5 -mx-5 mb-4 h-40 overflow-hidden flex items-center justify-center rounded-t-xl bg-gray-100  relative">
+      <div className="-mt-4 sm:-mt-5 -mx-4 sm:-mx-5 mb-3 sm:mb-4 h-36 sm:h-40 
+                      overflow-hidden flex items-center justify-center 
+                      rounded-t-xl bg-gray-100 relative">
         {lesson.thumbnail ? (
           <>
             <Image
@@ -55,30 +57,32 @@ export default function LatestLessonsCard({ lesson }: { lesson: CoursesLesson })
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent pointer-events-none" />
           </>
         ) : (
-          <span className="text-gray-400 text-sm z-10">تصویری موجود نیست</span>
+          <span className="text-gray-400 text-xs sm:text-sm z-10">
+            تصویری موجود نیست
+          </span>
         )}
       </div>
 
       {/* Title */}
-      <h3 className="text-lg font-bold text-gray-700 mb-1 line-clamp-2">
+      <h3 className="text-base sm:text-lg font-bold text-gray-700 mb-1 line-clamp-2 leading-snug">
         {lesson.title}
       </h3>
 
       {/* Short description */}
       {lesson.description && (
-        <p className="text-gray-500 text-sm mb-3 mt-1 line-clamp-3 leading-6">
+        <p className="text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3 mt-1 line-clamp-3 leading-5 sm:leading-6">
           {lesson.description}
         </p>
       )}
 
       {/* Metadata: topic + duration */}
-      <div className="flex items-center justify-between text-sm text-hoboc-dark mt-auto mb-5 pt-3">
-        <div className="flex items-center gap-2">
-          <FiBookOpen size={14} />
+      <div className="flex items-center justify-between text-xs sm:text-sm text-hoboc-dark mt-auto mb-3 sm:mb-5 pt-2 sm:pt-3">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <FiBookOpen size={13} className="sm:w-[14px] sm:h-[14px]" />
           <span>{getTopicTitle(lesson.topic)}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <FiClock size={14} />
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <FiClock size={13} className="sm:w-[14px] sm:h-[14px]" />
           <span>{formatDuration(lesson.duration)}</span>
         </div>
       </div>
@@ -86,10 +90,10 @@ export default function LatestLessonsCard({ lesson }: { lesson: CoursesLesson })
       {/* Call-to-action */}
       <div className="mt-auto">
         <div
-          className="block w-full text-center py-3 rounded-xl font-bold
+          className="block w-full text-center py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-bold
                      bg-white text-hoboc border border-hoboc
                      group-hover:bg-hoboc group-hover:text-white
-                     transition-colors duration-200 shadow-sm"
+                     transition-colors duration-200 shadow-sm text-sm sm:text-base"
         >
           مشاهده درس
         </div>

@@ -41,7 +41,7 @@ export default function LatestBlogs() {
           آخرین مقالات
         </h2>
         <Link href="/blog">
-          <button className="button button--gray text-white text-base font-medium px-4 py-2 rounded bg-gray-800 hover:bg-hoboc-dark transition">
+          <button className="button text-sm sm:text-sm md:text-base button--gray mr-auto text-white  font-medium px-4 py-2 rounded bg-gray-400 hover:bg-hoboc-dark transition">
             مشاهده همه
           </button>
         </Link>

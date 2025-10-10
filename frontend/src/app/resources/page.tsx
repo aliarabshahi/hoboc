@@ -25,7 +25,7 @@ export default function ResourcesPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fffbfd] py-12 px-6 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-[#FFFBFD]  px-6 sm:px-8 lg:px-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* تصویر سمت چپ */}

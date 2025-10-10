@@ -1,4 +1,3 @@
-// app/components/final-word/FinalWordCard.tsx
 "use client";
 
 import Link from "next/link";
@@ -8,13 +7,11 @@ import { finalWordData } from "./FinalWordTexts";
 export default function FinalWordCard() {
   return (
     <div className="mx-auto max-w-2xl text-center space-y-8">
-      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl sm:leading-tight">
-        {finalWordData.title}
-      </h1>
+      {/* Title (already includes h2) */}
+      {finalWordData.title}
 
-      <p className="text-lg leading-8 text-gray-600">
-        {finalWordData.description}
-      </p>
+      {/* Description (already includes p tag) */}
+      {finalWordData.description}
 
       <div className="flex items-center justify-center">
         <Link

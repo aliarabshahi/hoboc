@@ -1,43 +1,43 @@
 "use client";
-
 import { FaPhone, FaEnvelope, FaLinkedin, FaGithub, FaYoutube, FaTelegram } from "react-icons/fa";
 
-/** Contact info card with phone, email, and social links (Persian labels kept) */
 export default function ContactDetail() {
   return (
-    <div className="w-full bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-lg shadow-lg p-6 mt-8">
-      <h3 className="text-xl font-bold text-white mb-8 text-center">اطلاعات تماس</h3>
-      
-      <div className="flex flex-row-reverse justify-between items-center gap-8">
-        {/* Phone & Email - right side */}
-        <div className="space-y-4 text-white" dir="rtl">
-          <div className="flex items-center justify-end">
-            <span className="ml-2 tracking-widest">۰۹۱۹۰۰۸۸۱۹۰</span>
-            <FaPhone className="text-lg mr-1" />
+    <div
+      className="w-full bg-gradient-to-r from-[#1F9ECE] to-[#F477B8]
+                 rounded-xl shadow-[0_2px_10px_rgba(31,158,206,0.15)]
+                 p-5 sm:p-6 mt-8 text-center text-white"
+    >
+      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-6">اطلاعات تماس</h3>
+
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-10">
+        <div className="space-y-3 text-sm sm:text-base" dir="rtl">
+          <div className="flex items-center justify-center sm:justify-end">
+            <span className="ml-2 tracking-wide">۰۹۱۹۰۰۸۸۱۹۰</span>
+            <FaPhone className="text-base sm:text-lg mr-1" />
           </div>
-          
-          <div className="flex items-center justify-end">
-            <span className="ml-2 tracking-wider">s4aa4m@gmail.com</span>
-            <FaEnvelope className="text-lg mr-1" />
+          <div className="flex items-center justify-center sm:justify-end">
+            <span className="ml-2 tracking-wide">s4aa4m@gmail.com</span>
+            <FaEnvelope className="text-base sm:text-lg mr-1" />
           </div>
         </div>
-        
-        {/* Social media - left side */}
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-6 justify-start">
-            <a href="https://www.linkedin.com/in/mraliarabshahi" className="text-white hover:text-gray-200 transition-colors">
-              <FaLinkedin className="text-2xl" />
+
+        {/* شبکه‌ها */}
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-5 justify-center sm:justify-start">
+            <a href="https://www.linkedin.com/in/mraliarabshahi" className="hover:opacity-80 transition">
+              <FaLinkedin className="text-xl sm:text-2xl" />
             </a>
-            <a href="https://github.com/aliarabshahi/" className="text-white hover:text-gray-200 transition-colors">
-              <FaGithub className="text-2xl" />
+            <a href="https://github.com/aliarabshahi/" className="hover:opacity-80 transition">
+              <FaGithub className="text-xl sm:text-2xl" />
             </a>
           </div>
-          <div className="flex gap-6 justify-start">
-            <a href="https://youtube.com/HobocAcademy" className="text-white hover:text-gray-200 transition-colors">
-              <FaYoutube className="text-2xl" />
+          <div className="flex gap-5 justify-center sm:justify-start">
+            <a href="https://youtube.com/HobocAcademy" className="hover:opacity-80 transition">
+              <FaYoutube className="text-xl sm:text-2xl" />
             </a>
-            <a href="https://t.me/hoboc_ir" className="text-white hover:text-gray-200 transition-colors">
-              <FaTelegram className="text-2xl" />
+            <a href="https://t.me/hoboc_ir" className="hover:opacity-80 transition">
+              <FaTelegram className="text-xl sm:text-2xl" />
             </a>
           </div>
         </div>

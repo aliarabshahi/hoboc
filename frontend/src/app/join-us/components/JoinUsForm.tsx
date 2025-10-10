@@ -1,93 +1,46 @@
 "use client";
-
 import { useState } from "react";
 import { ResumeSubmissionRequest } from "@/app/types/formsType";
 import { postApiDataWithFile } from "@/app/services/receive_data/apiClientPostDataWithFile";
 import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaLinkedin,
-  FaGithub,
-  FaFilePdf,
-  FaFileUpload,
-  FaFileAlt,
-  FaCheckCircle,
-  FaTimesCircle,
+  FaUser, FaEnvelope, FaPhone, FaLinkedin, FaGithub,
+  FaFilePdf, FaFileUpload, FaFileAlt, FaCheckCircle, FaTimesCircle
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-/** Join Us form — collects applicant info, validates PDF upload, and posts data to /resume-submissions/ */
 export default function JoinUsForm() {
-  const [resume, setResume] = useState<
-    Omit<ResumeSubmissionRequest, "resume_file">
-  >({
-    full_name: "",
-    email: "",
-    phone_number: "",
-    linkedin_profile: "",
-    github_profile: "",
-    cover_letter: "",
+  const [resume, setResume] = useState<Omit<ResumeSubmissionRequest, "resume_file">>({
+    full_name: "", email: "", phone_number: "",
+    linkedin_profile: "", github_profile: "", cover_letter: "",
   });
-
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   const MAX_SIZE_MB = 5;
 
-  /** Validates selected file (must be PDF under size limit) */
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (file.type !== "application/pdf") {
-        setMessage("فقط فایل PDF قابل قبول است");
-        setResumeFile(null);
-        return;
-      }
-      if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-        setMessage(`حجم فایل نباید بیشتر از ${MAX_SIZE_MB} مگابایت باشد`);
-        setResumeFile(null);
-        return;
-      }
-      setResumeFile(file);
-      setMessage("");
-    }
+    if (!file) return;
+    if (file.type !== "application/pdf")
+      return setMessage("فقط فایل PDF قابل قبول است");
+    if (file.size > MAX_SIZE_MB * 1024 * 1024)
+      return setMessage(`حجم فایل نباید بیشتر از ${MAX_SIZE_MB} مگابایت باشد`);
+    setResumeFile(file);
+    setMessage("");
   };
 
-  /** Submits form data + file (if present) to API */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = new FormData();
-    Object.entries(resume).forEach(([key, value]) => {
-      if (value) formData.append(key, value);
-    });
-
-    if (resumeFile) {
-      formData.append("resume_file", resumeFile);
-    }
+    Object.entries(resume).forEach(([k, v]) => v && formData.append(k, v));
+    if (resumeFile) formData.append("resume_file", resumeFile);
 
     try {
-      const { error } = await postApiDataWithFile(
-        "/resume-submissions/",
-        formData
-      );
-
-      if (error) {
-        throw new Error(error);
-      }
-
+      const { error } = await postApiDataWithFile("/resume-submissions/", formData);
+      if (error) throw new Error(error);
       setMessage("رزومه با موفقیت ارسال شد");
-      setResume({
-        full_name: "",
-        email: "",
-        phone_number: "",
-        linkedin_profile: "",
-        github_profile: "",
-        cover_letter: "",
-      });
+      setResume({ full_name: "", email: "", phone_number: "", linkedin_profile: "", github_profile: "", cover_letter: "" });
       setResumeFile(null);
     } catch (err: any) {
       setMessage(err.message);
@@ -101,156 +54,115 @@ export default function JoinUsForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white  p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100  max-w-2xl mx-auto"
+      className="bg-white/70 backdrop-blur-md 
+                 p-5 sm:p-7 md:p-8 rounded-xl 
+                 shadow-[0_2px_10px_rgba(31,158,206,0.07)] 
+                 border border-[#1F9ECE]/15 max-w-2xl mx-auto"
     >
-      {/* Heading */}
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-hoboc mb-2">
+      {/* تیتر و توضیح */}
+      <div className="mb-6 sm:mb-8 text-center">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1F9ECE] mb-2">
           ارسال رزومه
         </h2>
-        <p className="text-gray-600 ">
-          فرم زیر را برای همکاری با ما تکمیل کنید
+        <p className="text-[#393939]/80 text-sm sm:text-base leading-relaxed">
+          فرم زیر را برای همکاری با تیم هوبوک تکمیل کنید
         </p>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <FormField
-          label="نام کامل"
-          icon={<FaUser className="text-hoboc" />}
-          value={resume.full_name}
-          onChange={(v) => setResume({ ...resume, full_name: v })}
-          placeholder="نام و نام خانوادگی"
-          type="text"
-        />
+        <FormField label="نام کامل" icon={<FaUser className="text-[#1F9ECE]" />} value={resume.full_name}
+          onChange={(v) => setResume({ ...resume, full_name: v })} placeholder="نام و نام خانوادگی" type="text" />
 
-        <FormField
-          label="ایمیل"
-          icon={<FaEnvelope className="text-hoboc" />}
-          value={resume.email}
-          onChange={(v) => setResume({ ...resume, email: v })}
-          placeholder="ایمیل شما"
-          type="email"
-        />
+        <FormField label="ایمیل" icon={<FaEnvelope className="text-[#1F9ECE]" />} value={resume.email}
+          onChange={(v) => setResume({ ...resume, email: v })} placeholder="ایمیل شما" type="email" />
 
-        <FormField
-          label="شماره تماس"
-          icon={<FaPhone className="text-hoboc" />}
-          value={resume.phone_number}
-          onChange={(v) => setResume({ ...resume, phone_number: v })}
-          placeholder="مثلاً 09123456789"
-          type="tel"
-          pattern="^0.*$"
-          customInvalidMessage="The Phone Number must start with 0 And in English Please"
-        />
+        <FormField label="شماره تماس" icon={<FaPhone className="text-[#1F9ECE]" />} value={resume.phone_number}
+          onChange={(v) => setResume({ ...resume, phone_number: v })} placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹" type="tel"
+          pattern="^0.*$" customInvalidMessage="The Phone Number must start with 0 And in English Please" />
 
-        <FormField
-          label="لینکدین (اختیاری)"
-          icon={<FaLinkedin className="text-hoboc" />}
-          value={resume.linkedin_profile ?? ""}
-          onChange={(v) => setResume({ ...resume, linkedin_profile: v })}
-          placeholder="https://linkedin.com/in/your-profile"
-          type="url"
-        />
+        <FormField label="لینکدین (اختیاری)" icon={<FaLinkedin className="text-[#1F9ECE]" />} value={resume.linkedin_profile ?? ""}
+          onChange={(v) => setResume({ ...resume, linkedin_profile: v })} placeholder="https://linkedin.com/in/your-profile" type="url" />
 
-        <FormField
-          label="گیت‌هاب (اختیاری)"
-          icon={<FaGithub className="text-hoboc" />}
-          value={resume.github_profile ?? ""}
-          onChange={(v) => setResume({ ...resume, github_profile: v })}
-          placeholder="https://github.com/your-username"
-          type="url"
-        />
+        <FormField label="گیت‌هاب (اختیاری)" icon={<FaGithub className="text-[#1F9ECE]" />} value={resume.github_profile ?? ""}
+          onChange={(v) => setResume({ ...resume, github_profile: v })} placeholder="https://github.com/your-username" type="url" />
 
-        {/* Cover letter */}
+        {/* انگیزه نامه */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 ">
+          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
             انگیزه‌نامه (اختیاری)
           </label>
           <div className="relative">
-            <div className="absolute top-3 right-3 text-gray-400">
-              <FaFileAlt className="text-hoboc" />
+            <div className="absolute top-3 right-3 text-[#1F9ECE]">
+              <FaFileAlt />
             </div>
             <textarea
               placeholder="دلایل خود برای همکاری با ما را بیان کنید"
-              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
+              className="w-full bg-white/60 border border-[#1F9ECE]/20 text-[#393939]
+                         text-sm sm:text-base rounded-lg focus:ring-2 focus:ring-[#1F9ECE]
+                         focus:border-[#1F9ECE] p-3 pr-10 h-32 placeholder-gray-400 transition"
               value={resume.cover_letter}
-              onChange={(e) =>
-                setResume({ ...resume, cover_letter: e.target.value })
-              }
+              onChange={(e) => setResume({ ...resume, cover_letter: e.target.value })}
             />
           </div>
         </div>
 
-        {/* File upload */}
+        {/* فایل رزومه */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 ">
+          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
             فایل رزومه (PDF - اختیاری)
           </label>
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300  rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100  transition">
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <FaFileUpload className="w-8 h-8 mb-3 text-hoboc" />
-              <p className="mb-2 text-sm text-gray-500 ">
-                <span className="font-semibold">برای آپلود کلیک کنید</span> یا
-                فایل را بکشید
+          <label
+            className="flex flex-col items-center justify-center w-full h-32 
+                       border-2 border-dashed border-[#1F9ECE]/25 rounded-lg cursor-pointer 
+                       bg-white/60 hover:bg-[#E9D7EB]/30 transition"
+          >
+            <div className="flex flex-col items-center pt-5 pb-6 text-center">
+              <FaFileUpload className="w-8 h-8 mb-3 text-[#1F9ECE]" />
+              <p className="mb-2 text-xs sm:text-sm text-[#393939]/80">
+                <span className="font-semibold">برای آپلود کلیک کنید</span> یا فایل را بکشید
               </p>
-              <p className="text-xs text-gray-500 ">
-                فقط فایل‌های PDF (حداکثر {MAX_SIZE_MB}MB)
+              <p className="text-xs text-gray-500">
+                فقط PDF (حداکثر {MAX_SIZE_MB}MB)
               </p>
             </div>
-            <input
-              type="file"
-              accept=".pdf"
-              className="hidden"
-              onChange={handleFileChange}
-            />
+            <input type="file" accept=".pdf" className="hidden" onChange={handleFileChange} />
           </label>
+
           {resumeFile && (
-            <div className="mt-2 flex items-center text-sm text-hoboc">
-              <FaFilePdf className="ml-1" />
-              {resumeFile.name}
+            <div className="mt-2 flex items-center text-sm text-[#1F9ECE]">
+              <FaFilePdf className="ml-1" /> {resumeFile.name}
             </div>
           )}
         </div>
 
-        {/* Submit button */}
+        {/* دکمه ارسال */}
         <button
           type="submit"
           disabled={loading}
           className="w-full bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] 
-             hover:from-[#1a8abc] hover:to-[#e066a6] 
-             text-white font-medium py-3 px-6 rounded-lg 
-             transition-colors duration-300 
-             shadow-md hover:shadow-lg 
-             disabled:opacity-70 disabled:cursor-not-allowed 
-             flex items-center justify-center gap-2"
+                     hover:from-[#198cb0] hover:to-[#e267a5] 
+                     text-white font-medium text-sm sm:text-base py-2.5 sm:py-3
+                     rounded-lg transition-all duration-300 shadow-md hover:shadow-lg 
+                     disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {loading ? (
             <>
-              <span className="h-4 w-4 border-2 border-white rounded-full animate-spin"></span>
+              <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               در حال ارسال...
             </>
-          ) : (
-            <>ارسال رزومه</>
-          )}
+          ) : <>ارسال رزومه</>}
         </button>
 
-        {/* Feedback messages */}
+        {/* پیام وضعیت */}
         {message && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={`p-3 rounded-lg text-sm flex items-center gap-2 ${
-              message === "رزومه با موفقیت ارسال شد"
-                ? "bg-green-100  text-green-800 "
-                : "bg-red-100  text-red-800 "
+            className={`p-3 rounded-lg text-xs sm:text-sm flex items-center gap-2 ${
+              message.includes("موفق") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
             }`}
           >
-            {message === "رزومه با موفقیت ارسال شد" ? (
-              <FaCheckCircle className="flex-shrink-0" />
-            ) : (
-              <FaTimesCircle className="flex-shrink-0" />
-            )}
+            {message.includes("موفق") ? <FaCheckCircle /> : <FaTimesCircle />}
             {message}
           </motion.div>
         )}
@@ -259,53 +171,34 @@ export default function JoinUsForm() {
   );
 }
 
-/** Single labeled input field with icon, supports validation & custom error message */
+/*------------------- Field Component -------------------*/
 function FormField({
-  label,
-  icon,
-  value,
-  onChange,
-  placeholder,
-  type,
-  pattern,
-  customInvalidMessage,
+  label, icon, value, onChange, placeholder, type, pattern, customInvalidMessage
 }: {
-  label: string;
-  icon: React.ReactNode;
-  value: string;
-  onChange: (v: string) => void;
-  placeholder: string;
-  type: string;
-  pattern?: string;
-  customInvalidMessage?: string;
+  label: string; icon: React.ReactNode; value: string; onChange: (v: string) => void;
+  placeholder: string; type: string; pattern?: string; customInvalidMessage?: string;
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2 text-gray-700 ">
+      <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
         {label}
       </label>
       <div className="relative">
-        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#1F9ECE] pointer-events-none">
           {icon}
         </div>
         <input
           type={type}
           placeholder={placeholder}
-          className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={!label.includes("اختیاری")}
           pattern={pattern}
-          onInvalid={(e) => {
-            if (customInvalidMessage) {
-              (e.target as HTMLInputElement).setCustomValidity(
-                customInvalidMessage
-              );
-            }
-          }}
-          onInput={(e) => {
-            (e.target as HTMLInputElement).setCustomValidity("");
-          }}
+          onInvalid={(e) => customInvalidMessage && (e.target as HTMLInputElement).setCustomValidity(customInvalidMessage!)}
+          onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
+          className="w-full bg-white/60 border border-[#1F9ECE]/20 text-[#393939]
+                     text-sm sm:text-base rounded-lg focus:ring-2 focus:ring-[#1F9ECE]
+                     focus:border-[#1F9ECE] p-3 pr-10 placeholder-gray-400 transition"
         />
       </div>
     </div>

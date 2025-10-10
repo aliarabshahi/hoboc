@@ -20,19 +20,17 @@ export const RoadmapItem = ({
 }: RoadmapItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Icon per status
   const getStatusIcon = () => {
     switch (status) {
       case "تکمیل شده":
-        return <FiCheck className="text-white text-sm" />;
+        return <FiCheck className="text-white text-xs sm:text-sm" />;
       case "در حال یادگیری":
-        return <FiClock className="text-white text-sm" />;
+        return <FiClock className="text-white text-xs sm:text-sm" />;
       default:
-        return <FiAward className="text-white text-sm" />;
+        return <FiAward className="text-white text-xs sm:text-sm" />;
     }
   };
 
-  // Background color per level
   const getLevelColor = (): string => {
     switch (level) {
       case "مبتدی":
@@ -46,7 +44,6 @@ export const RoadmapItem = ({
     }
   };
 
-  // Status badge styling
   const getStatusColor = (): string => {
     switch (status) {
       case "تکمیل شده":
@@ -69,35 +66,41 @@ export const RoadmapItem = ({
         className="p-3 sm:p-4 cursor-pointer flex justify-between items-center"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getLevelColor()}`}
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getLevelColor()}`}
           >
             {getStatusIcon()}
           </div>
+
           <div>
-            <h3 className="text-base font-medium text-[#393939]">{title}</h3>
-            <p className="text-sm text-[#5C6F82]">{description}</p>
+            <h3 className="text-sm sm:text-base md:text-lg font-medium text-[#393939]">
+              {title}
+            </h3>
+            <p className="text-xs sm:text-sm text-[#5C6F82] leading-snug">
+              {description}
+            </p>
           </div>
         </div>
+
         <div className="text-[#8DA9C4]">
-          {isExpanded ? <FiChevronUp size={18} /> : <FiChevronDown size={18} />}
+          {isExpanded ? <FiChevronUp size={16} className="sm:size-[18px]" /> : <FiChevronDown size={16} className="sm:size-[18px]" />}
         </div>
       </div>
 
       {isExpanded && (
-        <div className="px-4 pb-4 pt-2 border-t border-[#1F9ECE]/15">
-          <div className="mb-3">
+        <div className="px-3 sm:px-4 pb-3 sm:pb-4 pt-2 border-t border-[#1F9ECE]/15">
+          <div className="mb-2 sm:mb-3">
             <span
-              className={`px-2.5 py-0.5 rounded-full text-xs font-medium text-white ${getLevelColor()}`}
+              className={`px-2 py-0.5 sm:px-2.5 rounded-full text-[10px] sm:text-xs font-medium text-white ${getLevelColor()}`}
             >
               {level}
             </span>
           </div>
 
           {resources.length > 0 && (
-            <div className="mt-3">
-              <h4 className="font-medium text-sm text-[#393939] mb-1.5">
+            <div className="mt-2 sm:mt-3">
+              <h4 className="font-medium text-xs sm:text-sm text-[#393939] mb-1.5">
                 منابع یادگیری:
               </h4>
               <ul className="space-y-1.5">
@@ -105,7 +108,7 @@ export const RoadmapItem = ({
                   <li key={idx}>
                     <a
                       href={resource.url}
-                      className="text-sm text-[#1F9ECE] hover:underline flex items-center gap-1.5"
+                      className="text-xs sm:text-sm text-[#1F9ECE] hover:underline flex items-center gap-1.5"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -117,9 +120,9 @@ export const RoadmapItem = ({
             </div>
           )}
 
-          <div className="mt-4 flex justify-end">
+          <div className="mt-3 sm:mt-4 flex justify-end">
             <span
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium ${getStatusColor()}`}
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium ${getStatusColor()}`}
             >
               {status}
             </span>

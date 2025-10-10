@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-/** Contact form with API submit + Persian UI labels */
 export default function ContactForm() {
   const [contact, setContact] = useState<ContactUsRequest>({
     full_name: "",
@@ -21,25 +20,20 @@ export default function ContactForm() {
     phone_number: "",
     message: "",
   });
-
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Update form state
   const handleChange = (field: keyof ContactUsRequest, value: string) => {
     setContact({ ...contact, [field]: value });
   };
 
-  // Submit form to API
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     const { error } = await postApiData("/contact-us/", contact);
     setLoading(false);
-    setMessage(error ? ` ${error}` : "پیام شما با موفقیت ارسال شد");
-    if (!error) {
-      setContact({ full_name: "", email: "", phone_number: "", message: "" });
-    }
+    setMessage(error ? error : "پیام شما با موفقیت ارسال شد");
+    if (!error) setContact({ full_name: "", email: "", phone_number: "", message: "" });
   };
 
   return (
@@ -47,32 +41,38 @@ export default function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white  p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100  w-full"
+      className="bg-white/70 backdrop-blur-md 
+                 p-5 sm:p-7 md:p-8 rounded-xl 
+                 shadow-[0_2px_10px_rgba(31,158,206,0.07)] 
+                 border border-[#1F9ECE]/15 w-full"
     >
-      {/* Form header */}
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-hoboc mb-2">
+      {/* تیتر و توضیح */}
+      <div className="mb-6 sm:mb-8 text-center">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1F9ECE] mb-2">
           تماس با ما
         </h2>
-        <p className="text-gray-600 ">
+        <p className="text-[#393939]/80 text-sm sm:text-base leading-relaxed">
           سوالات و پیشنهادات خود را با ما در میان بگذارید
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name input */}
+        {/* نام */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 ">
+          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
             نام کامل
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
-              <FaUser className="text-hoboc" />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#1F9ECE]">
+              <FaUser />
             </div>
             <input
               type="text"
               placeholder="نام و نام خانوادگی"
-              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+              className="w-full bg-white/60 border border-[#1F9ECE]/20 
+                         text-[#393939] text-sm sm:text-base rounded-lg 
+                         focus:ring-2 focus:ring-[#1F9ECE] focus:border-[#1F9ECE] 
+                         p-3 pr-10 placeholder-gray-400 transition"
               value={contact.full_name}
               onChange={(e) => handleChange("full_name", e.target.value)}
               required
@@ -80,19 +80,22 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Email input */}
+        {/* ایمیل */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 ">
+          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
             ایمیل
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
-              <FaEnvelope className="text-hoboc" />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#1F9ECE]">
+              <FaEnvelope />
             </div>
             <input
               type="email"
               placeholder="ایمیل شما"
-              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+              className="w-full bg-white/60 border border-[#1F9ECE]/20 
+                         text-[#393939] text-sm sm:text-base rounded-lg 
+                         focus:ring-2 focus:ring-[#1F9ECE] focus:border-[#1F9ECE]
+                         p-3 pr-10 placeholder-gray-400 transition"
               value={contact.email}
               onChange={(e) => handleChange("email", e.target.value)}
               required
@@ -100,48 +103,44 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Phone number input */}
+        {/* شماره تماس */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 ">
+          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
             شماره تماس
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
-              <FaPhone className="text-hoboc" />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#1F9ECE]">
+              <FaPhone />
             </div>
             <input
               type="tel"
-              placeholder="مثلاً 09123456789"
-              pattern="^0.*$"
-              maxLength={12}
-              required
-              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"
+              placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹"
+              className="w-full bg-white/60 border border-[#1F9ECE]/20 
+                         text-[#393939] text-sm sm:text-base rounded-lg 
+                         focus:ring-2 focus:ring-[#1F9ECE] focus:border-[#1F9ECE]
+                         p-3 pr-10 placeholder-gray-400 transition"
               value={contact.phone_number}
               onChange={(e) => handleChange("phone_number", e.target.value)}
-              onInvalid={(e) =>
-                (e.target as HTMLInputElement).setCustomValidity(
-                  "The Phone Number must start with 0 And in English Please"
-                )
-              }
-              onInput={(e) =>
-                (e.target as HTMLInputElement).setCustomValidity("")
-              }
+              required
             />
           </div>
         </div>
 
-        {/* Message textarea */}
+        {/* پیام */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 ">
+          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
             پیام شما
           </label>
           <div className="relative">
-            <div className="absolute top-3 right-3 text-gray-400">
-              <FaComment className="text-hoboc" />
+            <div className="absolute top-3 right-3 text-[#1F9ECE]">
+              <FaComment />
             </div>
             <textarea
               placeholder="متن پیام..."
-              className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 h-32 transition"
+              className="w-full bg-white/60 border border-[#1F9ECE]/20 
+                         text-[#393939] text-sm sm:text-base rounded-lg 
+                         focus:ring-2 focus:ring-[#1F9ECE] focus:border-[#1F9ECE]
+                         p-3 pr-10 h-32 placeholder-gray-400 transition"
               value={contact.message}
               onChange={(e) => handleChange("message", e.target.value)}
               required
@@ -149,11 +148,16 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Submit button */}
+        {/* دکمه ارسال */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] hover:from-[#1a8abc] hover:to-[#e066a6] text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-[#1F9ECE] to-[#F477B8]
+                     hover:from-[#198cb0] hover:to-[#e267a5]
+                     text-white font-medium text-sm sm:text-base py-2.5 sm:py-3 px-6 
+                     rounded-lg transition-all duration-300 shadow-md 
+                     hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed
+                     flex items-center justify-center gap-2"
         >
           {loading ? (
             <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -163,21 +167,21 @@ export default function ContactForm() {
           {loading ? "در حال ارسال..." : "ارسال پیام"}
         </button>
 
-        {/* Feedback message */}
+        {/* پیغام بازخورد */}
         {message && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={`p-3 rounded-lg text-sm flex items-center gap-2 ${
-              !message.startsWith("پیام شما")
-                ? "bg-red-100  text-red-800 "
-                : "bg-green-100  text-green-800 "
+            className={`p-3 rounded-lg text-xs sm:text-sm flex items-center gap-2 ${
+              message.startsWith("پیام شما")
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
             }`}
           >
-            {!message.startsWith("پیام شما") ? (
-              <FaTimesCircle className="flex-shrink-0" />
-            ) : (
+            {message.startsWith("پیام شما") ? (
               <FaCheckCircle className="flex-shrink-0" />
+            ) : (
+              <FaTimesCircle className="flex-shrink-0" />
             )}
             {message}
           </motion.div>

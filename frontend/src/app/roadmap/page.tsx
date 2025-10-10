@@ -10,7 +10,7 @@ import { RoadmapItem as RoadmapItemType } from "@/app/types/roadmapType";
 function RoadmapSkeleton() {
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="w-full h-[500px] bg-gray-200  rounded-xl animate-pulse" />
+      <div className="w-full h-[430px] bg-gray-200  rounded-xl animate-pulse" />
     </div>
   );
 }

@@ -33,23 +33,34 @@ export default function VisionCard({
     >
       <Link
         href={link}
-        className={`group flex items-center p-4 rounded-lg transition-colors duration-200 border border-gray-100 ${hoverColor}`}
+        className={`group flex flex-col items-center justify-center text-center
+                    sm:flex-row sm:items-center sm:text-right
+                    p-3 sm:p-4 rounded-lg transition-colors duration-200 border border-gray-100 ${hoverColor}`}
       >
         {/* Icon */}
-        <motion.div
-          whileHover={{ scale: 1.15, rotate: 5 }}
-          className={`w-12 h-12 flex justify-center items-center rounded-lg ${bgColor} ${iconColor}`}
+        <div
+          className={`flex justify-center items-center rounded-lg ${bgColor} ${iconColor}
+                      w-9 h-9 sm:w-12 sm:h-12 flex-shrink-0
+                      transition-transform duration-150 ease-out group-hover:scale-[1.12]`}
         >
-          <Icon size={30} className="opacity-90" />
-        </motion.div>
-
-        {/* Title */}
-        <div className="flex-1 mr-4">
-          <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+          <Icon size={22} className="sm:size-[30px] opacity-90" />
         </div>
 
-        {/* Arrow */}
-        <FaArrowLeft className="text-gray-400 group-hover:text-current text-sm" />
+        {/* Title */}
+        <div className="flex-1 mt-2 sm:mt-0 sm:mr-4">
+          <h3
+            className="font-semibold text-[#393939] text-sm sm:text-base md:text-lg
+                       transition-colors duration-150 group-hover:text-[#000000]"
+          >
+            {title}
+          </h3>
+        </div>
+
+        {/* Arrow — unchanged in desktop */}
+        <FaArrowLeft
+          className="hidden sm:block text-gray-400 group-hover:text-[#000000]
+                     text-xs sm:text-sm transition-colors"
+        />
       </Link>
     </motion.div>
   );

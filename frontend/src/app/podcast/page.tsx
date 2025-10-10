@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import PodcastLeftColumn from "./components/main-page/PodcastLeftColumn";
@@ -54,7 +54,8 @@ export default function PodcastPage() {
     return (
       <div className="flex-1 flex flex-col lg:pr-20 pt-4 pb-10">
         <div className="flex justify-center pt-8">
-          <FaSpinner className="animate-spin text-[#F477B8] text-4xl" />
+          <FaSpinner className="animate-spin text-[#F477B8] text-3xl sm:text-4xl" />
+          {/* موبایل کوچک‌تر از قبل: text-3xl → sm:text-4xl */}
         </div>
       </div>
     );
@@ -65,7 +66,9 @@ export default function PodcastPage() {
     return (
       <div className="w-full lg:w-3/5 flex flex-col">
         <div className="flex-1 overflow-y-auto flex items-center pr-10 py-8">
-          <p className="text-center text-md text-gray-600">{error}</p>
+          <p className="w-full text-center text-[13px] sm:text-[15px] md:text-base text-gray-600 leading-7">
+            {error}
+          </p>
         </div>
       </div>
     );

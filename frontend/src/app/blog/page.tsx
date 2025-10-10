@@ -17,7 +17,6 @@ export default function BlogPage({
   const [topics, setTopics] = useState<BlogTopic[]>([]);
   const [loadingTopics, setLoadingTopics] = useState(true);
 
-  // Fetch list of blog topics on first render
   useEffect(() => {
     const fetchTopics = async () => {
       try {
@@ -30,48 +29,29 @@ export default function BlogPage({
         setLoadingTopics(false);
       }
     };
-
     fetchTopics();
   }, []);
 
-  // Identify the currently selected topic from the fetched list
   const selectedTopic = topics.find((t) => t.slug === selectedTopicSlug);
-
-  // Build page title based on selected topic (fallback to general blog title)
   const title = selectedTopic
-    ? `مطالب بلاگ ${selectedTopic.title || selectedTopic.title || ""}`
+    ? `مطالب بلاگ ${selectedTopic.title || ""}`
     : "مطالب بلاگ";
-
-  // Blog description (Persian UI text preserved)
-const description = 
-  "بلاگ تخصصی مهندسی داده و هوش مصنوعی؛ آموزش‌ها و مقالات کاربردی";
+  const description =
+    "بلاگ تخصصی مهندسی داده و هوش مصنوعی؛ آموزش‌ها و مقالات کاربردی";
 
   return (
-    <main className="min-h-screen pb-16 bg-[#fffbfd] ">
-      {/* Blog page header */}
+    <main className="min-h-screen pb-16 bg-[#fffbfd]">
       <BlogHeader title={title} description={description} />
 
-      {/* Blog topic filter dropdown */}
-      <section
-        className="relative container mx-auto px-4 md:px-8 lg:px-20 mt-8 text-center"
-        dir="rtl"
-      >
+      <section className="relative container mx-auto px-4 md:px-8 lg:px-20 mt-8 text-center" dir="rtl">
         {loadingTopics ? (
-          // Skeleton loader for topics dropdown
-          <div className="h-10 w-48 bg-[#E9D7EB]/30 rounded-md animate-pulse mx-auto" />
+          <div className="h-8 w-40 bg-[#E9D7EB]/30 rounded-md animate-pulse mx-auto" />
         ) : (
-          <BlogTopicsDropdown
-            topics={topics}
-            selectedTopicSlug={selectedTopicSlug}
-          />
+          <BlogTopicsDropdown topics={topics} selectedTopicSlug={selectedTopicSlug} />
         )}
       </section>
 
-      {/* Blog list/grid */}
-      <section
-        className="relative container mx-auto px-4 md:px-8 lg:px-20 mt-10"
-        dir="rtl"
-      >
+      <section className="relative container mx-auto px-4 md:px-8 lg:px-20 mt-10" dir="rtl">
         <BlogList selectedTopicSlug={selectedTopicSlug} pageSize={9} />
       </section>
     </main>

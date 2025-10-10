@@ -1,4 +1,3 @@
-// app/podcast/components/SharedRightColumn.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -12,12 +11,12 @@ interface SharedRightColumnProps {
   showWaveformOnMobile?: boolean;
 }
 
-export default function SharedRightColumn({ 
-  hosts, 
-  showWaveformOnMobile = true 
+export default function SharedRightColumn({
+  hosts,
+  showWaveformOnMobile = true,
 }: SharedRightColumnProps) {
   return (
-    <aside className="w-full lg:w-2/5 bg-slate-50 border-b lg:border-b-0 lg:border-e border-slate-200 overflow-y-auto lg:pr-40 md:pr-12">
+    <aside className="w-full lg:w-2/5 bg-slate-50 border-b lg:border-b-0 lg:border-e border-slate-200 overflow-y-auto lg:pr-40 md:pr-12 font-sans">
       {showWaveformOnMobile && (
         <div className="block lg:hidden">
           <Waveform className="h-20 w-full" />
@@ -25,9 +24,10 @@ export default function SharedRightColumn({
       )}
 
       <div className="px-6 py-10 lg:py-16 flex flex-col items-center lg:items-start">
+        {/* پوستر پادکست */}
         <Link
           href="/"
-          className="relative block w-56 sm:w-72 rounded-xl overflow-hidden bg-slate-200 shadow-xl mx-auto"
+          className="relative block w-44 sm:w-56 md:w-72 rounded-xl overflow-hidden bg-slate-200 shadow-xl mx-auto"
         >
           <Image
             src={posterImage}
@@ -39,33 +39,37 @@ export default function SharedRightColumn({
           <div className="absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset" />
         </Link>
 
+        {/* عنوان و توضیح */}
         <div className="mt-8 text-center">
-          <p className="text-xl font-bold text-slate-900">
+          <p className="text-lg sm:text-xl font-bold text-slate-900">
             <Link href="/">پادکست هوبوک</Link>
           </p>
-<p className="mt-3 text-lg font-medium text-slate-700">
-   هر چه می‌خواهد دل تنگت بشنو! پادکست‌ باحال مهندسی داده، هوش مصنوعی و دنیای داده.
-</p>
+          <p className="mt-3 text-sm sm:text-[15px] md:text-lg font-medium text-slate-700">
+            هر چه می‌خواهد دل تنگت بشنو! پادکست‌ باحال مهندسی داده، هوش مصنوعی و دنیای داده
+          </p>
         </div>
 
+        {/* درباره پادکست */}
         <AboutSection className="mt-8" />
 
-        <h2 className="mt-8 flex items-center font-mono text-sm font-medium text-slate-900">
+        {/* مجریان */}
+        <h2 className="mt-8 flex items-center font-sans text-xs sm:text-sm font-medium text-slate-900">
           <PersonIcon className="h-3 w-auto text-slate-300" />
           <span className="mr-2.5">با اجرای</span>
         </h2>
-<div className="mt-2 flex justify-start ps-6 gap-6 text-sm font-bold text-slate-900">
-  {hosts.map((host, i) => (
-    <Fragment key={host}>
-      {i !== 0 && (
-        <span aria-hidden="true" className="text-slate-400">
-          /
-        </span>
-      )}
-      {host}
-    </Fragment>
-  ))}
-</div>
+
+        <div className="mt-2 flex justify-start ps-5 gap-4 sm:gap-6 text-[12px] sm:text-sm font-bold text-slate-900">
+          {hosts.map((host, i) => (
+            <Fragment key={host}>
+              {i !== 0 && (
+                <span aria-hidden="true" className="text-slate-400">
+                  /
+                </span>
+              )}
+              {host}
+            </Fragment>
+          ))}
+        </div>
       </div>
     </aside>
   );

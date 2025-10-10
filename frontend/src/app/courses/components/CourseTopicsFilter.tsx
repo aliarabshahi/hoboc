@@ -1,10 +1,7 @@
-// app/courses/components/CourseTopicsFilter.tsx
 "use client";
-
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { CoursesTopic } from "@/app/types/coursesType";
 
-/** Topics filter bar - lets users filter course list by topic */
 export default function CourseTopicsFilter({
   topics,
   selectedTopicSlug,
@@ -16,7 +13,6 @@ export default function CourseTopicsFilter({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Handle topic selection and update query params
   const handleSelect = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString());
     slug ? params.set("topic", slug) : params.delete("topic");
@@ -24,11 +20,10 @@ export default function CourseTopicsFilter({
   };
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
-      {/* "All topics" button */}
+    <div className="flex flex-wrap justify-center gap-1.5 sm:gap-3 md:gap-4 mb-8 text-xs sm:text-sm md:text-base">
       <button
         onClick={() => handleSelect("")}
-        className={`px-4 py-2 rounded-full font-medium transition ${
+        className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition ${
           !selectedTopicSlug
             ? "bg-hoboc text-white"
             : "bg-gray-100 text-gray-700 hover:bg-hoboc hover:text-white"
@@ -37,14 +32,13 @@ export default function CourseTopicsFilter({
         همه موضوعات
       </button>
 
-      {/* Individual topic buttons */}
       {topics.map((topic) => {
         const isActive = topic.slug === selectedTopicSlug;
         return (
           <button
             key={topic.id}
             onClick={() => handleSelect(topic.slug)}
-            className={`px-4 py-2 rounded-full font-medium transition ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition ${
               isActive
                 ? "bg-hoboc text-white"
                 : "bg-gray-100 text-gray-700 hover:bg-hoboc hover:text-white"

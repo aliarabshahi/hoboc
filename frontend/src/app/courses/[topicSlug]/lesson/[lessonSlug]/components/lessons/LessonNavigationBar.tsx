@@ -7,7 +7,7 @@ interface LessonNavigationBarProps {
   lessonTitle: string;
 }
 
-/** Breadcrumb-style navigation for course lessons */
+/** Breadcrumb-style navigation for course lessons (responsive) */
 export default function LessonNavigationBar({ topic, lessonTitle }: LessonNavigationBarProps) {
   return (
     <nav
@@ -15,7 +15,7 @@ export default function LessonNavigationBar({ topic, lessonTitle }: LessonNaviga
       className="bg-transparent backdrop-blur-sm border-b border-gray-200 py-3 mb-6"
       dir="rtl"
     >
-      <ol className="flex items-center gap-1 text-sm select-none">
+      <ol className="flex items-center gap-1 text-[12px] sm:text-[13px] md:text-sm select-none">
         {/* Link to courses root */}
         <li>
           <Link
@@ -41,8 +41,8 @@ export default function LessonNavigationBar({ topic, lessonTitle }: LessonNaviga
         <li className="flex items-center">
           <FaChevronLeft className="w-3 h-3 mx-1 text-gray-400" />
           <span
-            title={lessonTitle} // Full title on hover
-            className="truncate max-w-[220px] font-bold text-hoboc-dark"
+            title={lessonTitle}
+            className="truncate max-w-[220px] font-bold text-hoboc-dark text-[12px] sm:text-[13px] md:text-sm"
           >
             {lessonTitle}
           </span>

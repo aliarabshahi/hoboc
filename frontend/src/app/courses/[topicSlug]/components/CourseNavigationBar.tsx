@@ -6,7 +6,7 @@ interface CourseNavigationBarProps {
   topic: CoursesTopic;
 }
 
-/** Breadcrumb navigation for course topic pages */
+/** Breadcrumb navigation for course topic pages (responsive typography) */
 export default function CourseNavigationBar({ topic }: CourseNavigationBarProps) {
   return (
     <nav
@@ -14,7 +14,7 @@ export default function CourseNavigationBar({ topic }: CourseNavigationBarProps)
       className="bg-transparent backdrop-blur-sm border-b border-gray-200 py-3 mb-6"
       dir="rtl"
     >
-      <ol className="flex items-center gap-1 text-sm select-none">
+      <ol className="flex items-center gap-1 text-[12px] sm:text-[13px] md:text-sm select-none">
         {/* Root link */}
         <li>
           <Link
@@ -29,8 +29,8 @@ export default function CourseNavigationBar({ topic }: CourseNavigationBarProps)
         <li className="flex items-center">
           <FaChevronLeft className="w-3 h-3 mx-1 text-gray-400" />
           <span
-            title={topic.title} // Show full title on hover
-            className="truncate max-w-[220px] font-bold text-hoboc-dark"
+            title={topic.title}
+            className="truncate max-w-[220px] font-bold text-hoboc-dark text-[12px] sm:text-[13px] md:text-sm"
           >
             {topic.title}
           </span>

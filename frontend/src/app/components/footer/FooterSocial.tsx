@@ -1,4 +1,3 @@
-// app/components/footer/FooterSocial.tsx
 import Link from "next/link";
 import Image from "next/image";
 import { FaInstagram, FaYoutube, FaTelegramPlane, FaLinkedin } from "react-icons/fa";
@@ -8,22 +7,22 @@ const socialLinks = [
   {
     name: "لینکدین",
     href: "https://www.linkedin.com/in/mraliarabshahi",
-    icon: <FaLinkedin size={24} color="#0A66C2" />, // LinkedIn blue
+    icon: <FaLinkedin className="text-[#0A66C2] text-2xl sm:text-[26px]" />,
   },
   {
     name: "یوتیوب",
     href: "https://youtube.com/HobocAcademy",
-    icon: <FaYoutube size={24} color="#FF0000" />, // YouTube red
+    icon: <FaYoutube className="text-[#FF0000] text-2xl sm:text-[26px]" />,
   },
   {
     name: "اینستاگرام",
     href: "https://instagram.co/hoboc_ir",
-    icon: <FaInstagram size={24} color="#E4405F" />, // Instagram pink-red
+    icon: <FaInstagram className="text-[#E4405F] text-2xl sm:text-[26px]" />,
   },
   {
     name: "تلگرام",
     href: "https://t.me/hoboc_ir",
-    icon: <FaTelegramPlane size={24} color="#0088cc" />, // Telegram blue
+    icon: <FaTelegramPlane className="text-[#0088cc] text-2xl sm:text-[26px]" />,
   },
 ];
 
@@ -36,17 +35,20 @@ export default function FooterSocial() {
         <Image
           src="/images/logo-icon.png"
           alt="لوگو"
-          width={100}
-          height={100}
+          width={80}
+          height={80}
+          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 transition-all duration-200"
           priority
         />
       </div>
 
       {/* Social title */}
-      <h6 className="footer-title text-lg font-bold">شبکه‌های اجتماعی</h6>
+      <h6 className="footer-title text-base sm:text-lg font-bold">
+        شبکه‌های اجتماعی
+      </h6>
 
       {/* Icon links */}
-      <div className="flex flex-row justify-center gap-x-6">
+      <div className="flex flex-row justify-center gap-x-4 sm:gap-x-6">
         {socialLinks.map((social, index) => (
           <Link
             key={index}

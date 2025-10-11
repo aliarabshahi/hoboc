@@ -34,6 +34,7 @@ export default function HeroMainContent({
             هوش مصنوعی
           </span>{" "}
           رو از نو بساز
+          <span className="text-gray-600">!</span>
         </h1>
 
         <p className="text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 max-w-3xl mx-auto">

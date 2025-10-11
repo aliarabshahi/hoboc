@@ -18,7 +18,7 @@ export default function HeroMainContent({
                      hover:ring-2 hover:ring-hoboc-dark"
         >
           <IoPlayCircleSharp
-            className="text-xl text-gray-500 transition-all duration-300 group-hover:text-hoboc-dark 
+            className="text-xl text-gray-500 transition-all duration-100 group-hover:text-[#f05757]
                          group-hover:scale-110"
           />
           <span>معرفی کوتاه ما</span>

@@ -16,7 +16,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({ title, description }) => {
         <div className="mb-3 md:mb-4 flex justify-center">
           <div className="w-14 md:w-20 h-1 bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-full opacity-80"></div>
         </div>
-        <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-2 md:mb-4 text-gray-800 tracking-tight">
+        <h1 className="text-2xl sm:text-2xl md:text-4xl font-bold mb-2 md:mb-4 text-gray-800 tracking-tight">
           {title}
         </h1>
         <p className="text-sm sm:text-[15px] md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">

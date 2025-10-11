@@ -19,7 +19,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ title, description }) => {
           <div className="w-14 md:w-20 h-1 bg-gradient-to-r from-[#1F9ECE] to-[#F477B8] rounded-full opacity-80"></div>
         </div>
 
-        <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-2 md:mb-4 text-gray-800 tracking-tight">
+        <h1 className="text-2xl sm:text-2xl md:text-4xl font-bold mb-2 md:mb-4 text-gray-800 tracking-tight">
           {title}
         </h1>
 

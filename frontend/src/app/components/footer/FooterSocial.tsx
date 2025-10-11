@@ -32,14 +32,16 @@ export default function FooterSocial() {
     <nav className="flex flex-col items-center space-y-2">
       {/* Logo */}
       <div className="pb-1">
-        <Image
-          src="/images/logo-icon.png"
-          alt="لوگو"
-          width={80}
-          height={80}
-          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 transition-all duration-200"
-          priority
-        />
+        <Link href="/" aria-label="صفحه اصلی">
+          <Image
+            src="/images/logo-icon.png"
+            alt="لوگو"
+            width={80}
+            height={80}
+            className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 transition-all duration-200"
+            priority
+          />
+        </Link>
       </div>
 
       {/* Social title */}

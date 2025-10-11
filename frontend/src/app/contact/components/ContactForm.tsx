@@ -33,7 +33,13 @@ export default function ContactForm() {
     const { error } = await postApiData("/contact-us/", contact);
     setLoading(false);
     setMessage(error ? error : "پیام شما با موفقیت ارسال شد");
-    if (!error) setContact({ full_name: "", email: "", phone_number: "", message: "" });
+    if (!error)
+      setContact({
+        full_name: "",
+        email: "",
+        phone_number: "",
+        message: "",
+      });
   };
 
   return (
@@ -56,10 +62,13 @@ export default function ContactForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6" method="post">
         {/* نام */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="full_name"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             نام کامل
           </label>
           <div className="relative">
@@ -67,6 +76,9 @@ export default function ContactForm() {
               <FaUser />
             </div>
             <input
+              id="full_name"
+              name="full_name"
+              autoComplete="name"
               type="text"
               placeholder="نام و نام خانوادگی"
               className="w-full bg-white/60 border border-[#1F9ECE]/20 
@@ -82,7 +94,10 @@ export default function ContactForm() {
 
         {/* ایمیل */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="email"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             ایمیل
           </label>
           <div className="relative">
@@ -90,6 +105,9 @@ export default function ContactForm() {
               <FaEnvelope />
             </div>
             <input
+              id="email"
+              name="email"
+              autoComplete="email"
               type="email"
               placeholder="ایمیل شما"
               className="w-full bg-white/60 border border-[#1F9ECE]/20 
@@ -105,7 +123,10 @@ export default function ContactForm() {
 
         {/* شماره تماس */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="phone_number"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             شماره تماس
           </label>
           <div className="relative">
@@ -113,6 +134,9 @@ export default function ContactForm() {
               <FaPhone />
             </div>
             <input
+              id="phone_number"
+              name="phone"
+              autoComplete="tel"
               type="tel"
               placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹"
               className="w-full bg-white/60 border border-[#1F9ECE]/20 
@@ -122,13 +146,18 @@ export default function ContactForm() {
               value={contact.phone_number}
               onChange={(e) => handleChange("phone_number", e.target.value)}
               required
+              pattern="^0.*$"
+              maxLength={12}
             />
           </div>
         </div>
 
         {/* پیام */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="message"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             پیام شما
           </label>
           <div className="relative">
@@ -136,6 +165,9 @@ export default function ContactForm() {
               <FaComment />
             </div>
             <textarea
+              id="message"
+              name="message"
+              autoComplete="off"
               placeholder="متن پیام..."
               className="w-full bg-white/60 border border-[#1F9ECE]/20 
                          text-[#393939] text-sm sm:text-base rounded-lg 

@@ -3,15 +3,29 @@ import { useState } from "react";
 import { ResumeSubmissionRequest } from "@/app/types/formsType";
 import { postApiDataWithFile } from "@/app/services/receive_data/apiClientPostDataWithFile";
 import {
-  FaUser, FaEnvelope, FaPhone, FaLinkedin, FaGithub,
-  FaFilePdf, FaFileUpload, FaFileAlt, FaCheckCircle, FaTimesCircle
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaLinkedin,
+  FaGithub,
+  FaFilePdf,
+  FaFileUpload,
+  FaFileAlt,
+  FaCheckCircle,
+  FaTimesCircle,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function JoinUsForm() {
-  const [resume, setResume] = useState<Omit<ResumeSubmissionRequest, "resume_file">>({
-    full_name: "", email: "", phone_number: "",
-    linkedin_profile: "", github_profile: "", cover_letter: "",
+  const [resume, setResume] = useState<
+    Omit<ResumeSubmissionRequest, "resume_file">
+  >({
+    full_name: "",
+    email: "",
+    phone_number: "",
+    linkedin_profile: "",
+    github_profile: "",
+    cover_letter: "",
   });
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
@@ -37,10 +51,20 @@ export default function JoinUsForm() {
     if (resumeFile) formData.append("resume_file", resumeFile);
 
     try {
-      const { error } = await postApiDataWithFile("/resume-submissions/", formData);
+      const { error } = await postApiDataWithFile(
+        "/resume-submissions/",
+        formData
+      );
       if (error) throw new Error(error);
       setMessage("رزومه با موفقیت ارسال شد");
-      setResume({ full_name: "", email: "", phone_number: "", linkedin_profile: "", github_profile: "", cover_letter: "" });
+      setResume({
+        full_name: "",
+        email: "",
+        phone_number: "",
+        linkedin_profile: "",
+        github_profile: "",
+        cover_letter: "",
+      });
       setResumeFile(null);
     } catch (err: any) {
       setMessage(err.message);
@@ -69,26 +93,70 @@ export default function JoinUsForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <FormField label="نام کامل" icon={<FaUser className="text-[#1F9ECE]" />} value={resume.full_name}
-          onChange={(v) => setResume({ ...resume, full_name: v })} placeholder="نام و نام خانوادگی" type="text" />
+      <form onSubmit={handleSubmit} className="space-y-6" method="post">
+        <FormField
+          label="نام کامل"
+          icon={<FaUser className="text-[#1F9ECE]" />}
+          value={resume.full_name}
+          onChange={(v) => setResume({ ...resume, full_name: v })}
+          placeholder="نام و نام خانوادگی"
+          type="text"
+          name="full_name"
+          autoComplete="name"
+        />
 
-        <FormField label="ایمیل" icon={<FaEnvelope className="text-[#1F9ECE]" />} value={resume.email}
-          onChange={(v) => setResume({ ...resume, email: v })} placeholder="ایمیل شما" type="email" />
+        <FormField
+          label="ایمیل"
+          icon={<FaEnvelope className="text-[#1F9ECE]" />}
+          value={resume.email}
+          onChange={(v) => setResume({ ...resume, email: v })}
+          placeholder="ایمیل شما"
+          type="email"
+          name="email"
+          autoComplete="email"
+        />
 
-        <FormField label="شماره تماس" icon={<FaPhone className="text-[#1F9ECE]" />} value={resume.phone_number}
-          onChange={(v) => setResume({ ...resume, phone_number: v })} placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹" type="tel"
-          pattern="^0.*$" customInvalidMessage="The Phone Number must start with 0 And in English Please" />
+        <FormField
+          label="شماره تماس"
+          icon={<FaPhone className="text-[#1F9ECE]" />}
+          value={resume.phone_number}
+          onChange={(v) => setResume({ ...resume, phone_number: v })}
+          placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹"
+          type="tel"
+          name="phone"
+          autoComplete="tel"
+          pattern="^0.*$"
+          customInvalidMessage="The Phone Number must start with 0 And in English Please"
+        />
 
-        <FormField label="لینکدین (اختیاری)" icon={<FaLinkedin className="text-[#1F9ECE]" />} value={resume.linkedin_profile ?? ""}
-          onChange={(v) => setResume({ ...resume, linkedin_profile: v })} placeholder="https://linkedin.com/in/your-profile" type="url" />
+        <FormField
+          label="لینکدین (اختیاری)"
+          icon={<FaLinkedin className="text-[#1F9ECE]" />}
+          value={resume.linkedin_profile ?? ""}
+          onChange={(v) => setResume({ ...resume, linkedin_profile: v })}
+          placeholder="https://linkedin.com/in/your-profile"
+          type="url"
+          name="linkedin_profile"
+          autoComplete="url"
+        />
 
-        <FormField label="گیت‌هاب (اختیاری)" icon={<FaGithub className="text-[#1F9ECE]" />} value={resume.github_profile ?? ""}
-          onChange={(v) => setResume({ ...resume, github_profile: v })} placeholder="https://github.com/your-username" type="url" />
+        <FormField
+          label="گیت‌هاب (اختیاری)"
+          icon={<FaGithub className="text-[#1F9ECE]" />}
+          value={resume.github_profile ?? ""}
+          onChange={(v) => setResume({ ...resume, github_profile: v })}
+          placeholder="https://github.com/your-username"
+          type="url"
+          name="github_profile"
+          autoComplete="url"
+        />
 
         {/* انگیزه نامه */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="cover_letter"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             انگیزه‌نامه (اختیاری)
           </label>
           <div className="relative">
@@ -96,22 +164,31 @@ export default function JoinUsForm() {
               <FaFileAlt />
             </div>
             <textarea
+              id="cover_letter"
+              name="cover_letter"
+              autoComplete="off"
               placeholder="دلایل خود برای همکاری با ما را بیان کنید"
               className="w-full bg-white/60 border border-[#1F9ECE]/20 text-[#393939]
                          text-sm sm:text-base rounded-lg focus:ring-2 focus:ring-[#1F9ECE]
                          focus:border-[#1F9ECE] p-3 pr-10 h-32 placeholder-gray-400 transition"
               value={resume.cover_letter}
-              onChange={(e) => setResume({ ...resume, cover_letter: e.target.value })}
+              onChange={(e) =>
+                setResume({ ...resume, cover_letter: e.target.value })
+              }
             />
           </div>
         </div>
 
         {/* فایل رزومه */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="resume_file"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             فایل رزومه (PDF - اختیاری)
           </label>
           <label
+            htmlFor="resume_file"
             className="flex flex-col items-center justify-center w-full h-32 
                        border-2 border-dashed border-[#1F9ECE]/25 rounded-lg cursor-pointer 
                        bg-white/60 hover:bg-[#E9D7EB]/30 transition"
@@ -119,13 +196,21 @@ export default function JoinUsForm() {
             <div className="flex flex-col items-center pt-5 pb-6 text-center">
               <FaFileUpload className="w-8 h-8 mb-3 text-[#1F9ECE]" />
               <p className="mb-2 text-xs sm:text-sm text-[#393939]/80">
-                <span className="font-semibold">برای آپلود کلیک کنید</span> یا فایل را بکشید
+                <span className="font-semibold">برای آپلود کلیک کنید</span> یا فایل را
+                بکشید
               </p>
               <p className="text-xs text-gray-500">
                 فقط PDF (حداکثر {MAX_SIZE_MB}MB)
               </p>
             </div>
-            <input type="file" accept=".pdf" className="hidden" onChange={handleFileChange} />
+            <input
+              id="resume_file"
+              name="resume_file"
+              type="file"
+              accept=".pdf"
+              className="hidden"
+              onChange={handleFileChange}
+            />
           </label>
 
           {resumeFile && (
@@ -150,7 +235,9 @@ export default function JoinUsForm() {
               <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               در حال ارسال...
             </>
-          ) : <>ارسال رزومه</>}
+          ) : (
+            <>ارسال رزومه</>
+          )}
         </button>
 
         {/* پیام وضعیت */}
@@ -159,7 +246,9 @@ export default function JoinUsForm() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className={`p-3 rounded-lg text-xs sm:text-sm flex items-center gap-2 ${
-              message.includes("موفق") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+              message.includes("موفق")
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
             }`}
           >
             {message.includes("موفق") ? <FaCheckCircle /> : <FaTimesCircle />}
@@ -173,14 +262,34 @@ export default function JoinUsForm() {
 
 /*------------------- Field Component -------------------*/
 function FormField({
-  label, icon, value, onChange, placeholder, type, pattern, customInvalidMessage
+  label,
+  icon,
+  value,
+  onChange,
+  placeholder,
+  type,
+  name,
+  autoComplete,
+  pattern,
+  customInvalidMessage,
 }: {
-  label: string; icon: React.ReactNode; value: string; onChange: (v: string) => void;
-  placeholder: string; type: string; pattern?: string; customInvalidMessage?: string;
+  label: string;
+  icon: React.ReactNode;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+  type: string;
+  name: string;
+  autoComplete?: string;
+  pattern?: string;
+  customInvalidMessage?: string;
 }) {
   return (
     <div>
-      <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+      <label
+        htmlFor={name}
+        className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+      >
         {label}
       </label>
       <div className="relative">
@@ -188,14 +297,22 @@ function FormField({
           {icon}
         </div>
         <input
+          id={name}
+          name={name}
+          autoComplete={autoComplete}
           type={type}
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={!label.includes("اختیاری")}
           pattern={pattern}
-          onInvalid={(e) => customInvalidMessage && (e.target as HTMLInputElement).setCustomValidity(customInvalidMessage!)}
-          onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
+          onInvalid={(e) =>
+            customInvalidMessage &&
+            (e.target as HTMLInputElement).setCustomValidity(customInvalidMessage)
+          }
+          onInput={(e) =>
+            (e.target as HTMLInputElement).setCustomValidity("")
+          }
           className="w-full bg-white/60 border border-[#1F9ECE]/20 text-[#393939]
                      text-sm sm:text-base rounded-lg focus:ring-2 focus:ring-[#1F9ECE]
                      focus:border-[#1F9ECE] p-3 pr-10 placeholder-gray-400 transition"

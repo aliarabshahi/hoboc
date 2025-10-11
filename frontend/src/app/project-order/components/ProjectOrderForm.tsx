@@ -94,33 +94,48 @@ export default function ProjectOrderForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <FormField label="نام کامل" icon={<FaUser className="text-[#1F9ECE]" />}
+      <form onSubmit={handleSubmit} className="space-y-6" method="post">
+        <FormField
+          label="نام کامل"
+          icon={<FaUser className="text-[#1F9ECE]" />}
           placeholder="نام و نام خانوادگی"
           value={projectOrder.full_name}
           onChange={(v) => setProjectOrder({ ...projectOrder, full_name: v })}
+          name="full_name"
+          autoComplete="name"
           required
         />
-        <FormField label="ایمیل" icon={<FaEnvelope className="text-[#1F9ECE]" />}
+        <FormField
+          label="ایمیل"
+          icon={<FaEnvelope className="text-[#1F9ECE]" />}
           placeholder="ایمیل شما"
           type="email"
           value={projectOrder.email}
           onChange={(v) => setProjectOrder({ ...projectOrder, email: v })}
+          name="email"
+          autoComplete="email"
           required
         />
-        <FormField label="شماره تماس" icon={<FaPhone className="text-[#1F9ECE]" />}
+        <FormField
+          label="شماره تماس"
+          icon={<FaPhone className="text-[#1F9ECE]" />}
           placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹"
           type="tel"
           pattern="^0.*$"
           customInvalidMessage="شماره باید با صفر شروع شود"
           value={projectOrder.phone_number}
           onChange={(v) => setProjectOrder({ ...projectOrder, phone_number: v })}
+          name="phone"
+          autoComplete="tel"
           required
         />
 
         {/* توضیحات پروژه */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="project_description"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             توضیحات پروژه
           </label>
           <div className="relative">
@@ -128,6 +143,9 @@ export default function ProjectOrderForm() {
               <FaFileAlt />
             </div>
             <textarea
+              id="project_description"
+              name="project_description"
+              autoComplete="off"
               className="w-full bg-white/60 border border-[#1F9ECE]/20 text-[#393939]
                          text-sm sm:text-base rounded-lg focus:ring-2 focus:ring-[#1F9ECE]
                          focus:border-[#1F9ECE] p-3 pr-10 h-32 placeholder-gray-400 transition"
@@ -141,37 +159,56 @@ export default function ProjectOrderForm() {
           </div>
         </div>
 
-        <FormField label="بودجه پیشنهادی (اختیاری)"
+        <FormField
+          label="بودجه پیشنهادی (اختیاری)"
           icon={<FaMoneyBillWave className="text-[#1F9ECE]" />}
           placeholder="مثلاً ۵,۰۰۰,۰۰۰ تومان"
           value={projectOrder.budget || ""}
           onChange={(v) => setProjectOrder({ ...projectOrder, budget: v })}
+          name="budget"
+          autoComplete="off"
         />
-        <FormField label="مهلت انجام (اختیاری)"
+        <FormField
+          label="مهلت انجام (اختیاری)"
           icon={<FaCalendarAlt className="text-[#1F9ECE]" />}
           placeholder="مثلاً ۲ هفته"
           value={projectOrder.deadline || ""}
           onChange={(v) => setProjectOrder({ ...projectOrder, deadline: v })}
+          name="deadline"
+          autoComplete="off"
         />
 
         {/* آپلود فایل */}
         <div>
-          <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+          <label
+            htmlFor="project_files"
+            className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+          >
             فایل‌های پروژه (اختیاری)
           </label>
-          <label className="flex flex-col items-center justify-center w-full h-32
-                             border-2 border-dashed border-[#1F9ECE]/25 rounded-lg
-                             cursor-pointer bg-white/60 hover:bg-[#E9D7EB]/30 transition">
+          <label
+            htmlFor="project_files"
+            className="flex flex-col items-center justify-center w-full h-32
+                       border-2 border-dashed border-[#1F9ECE]/25 rounded-lg
+                       cursor-pointer bg-white/60 hover:bg-[#E9D7EB]/30 transition"
+          >
             <div className="flex flex-col items-center pt-5 pb-6 text-center">
               <FaFileUpload className="w-8 h-8 mb-3 text-[#1F9ECE]" />
               <p className="mb-2 text-xs sm:text-sm text-[#393939]/80">
                 <span className="font-semibold">برای آپلود کلیک کنید</span> یا فایل‌ها را بکشید
               </p>
-              <p className="text-xs text-gray-500">فرمت مجاز و حداکثر {MAX_SIZE_MB}MB</p>
+              <p className="text-xs text-gray-500">
+                فرمت مجاز و حداکثر {MAX_SIZE_MB}MB
+              </p>
             </div>
             <input
-              type="file" multiple accept=".pdf,.docx,.txt,.csv,.json,.zip,.jpg,.png"
-              className="hidden" onChange={handleFileChange}
+              id="project_files"
+              name="files"
+              type="file"
+              multiple
+              accept=".pdf,.docx,.txt,.csv,.json,.zip,.jpg,.png"
+              className="hidden"
+              onChange={handleFileChange}
             />
           </label>
 
@@ -188,8 +225,11 @@ export default function ProjectOrderForm() {
                       {(file.size / 1024 / 1024).toFixed(2)}MB
                     </span>
                   </div>
-                  <button type="button" onClick={() => removeFile(i)}
-                    className="text-red-500 hover:text-red-700">
+                  <button
+                    type="button"
+                    onClick={() => removeFile(i)}
+                    className="text-red-500 hover:text-red-700"
+                  >
                     <FaTrash />
                   </button>
                 </div>
@@ -232,15 +272,20 @@ export default function ProjectOrderForm() {
 /*---------------- Input Field Component ----------------*/
 function FormField({
   label, icon, placeholder, value, onChange,
-  type = "text", required = false, pattern, customInvalidMessage,
+  type = "text", required = false, name, autoComplete,
+  pattern, customInvalidMessage,
 }: {
   label: string; icon: React.ReactNode; placeholder: string; value: string;
   onChange: (v: string) => void; type?: string; required?: boolean;
-  pattern?: string; customInvalidMessage?: string;
+  name: string; autoComplete?: string; pattern?: string;
+  customInvalidMessage?: string;
 }) {
   return (
     <div>
-      <label className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90">
+      <label
+        htmlFor={name}
+        className="block text-xs sm:text-sm font-medium mb-2 text-[#393939]/90"
+      >
         {label}
       </label>
       <div className="relative">
@@ -248,8 +293,14 @@ function FormField({
           {icon}
         </div>
         <input
-          type={type} placeholder={placeholder} value={value}
-          onChange={(e) => onChange(e.target.value)} required={required}
+          id={name}
+          name={name}
+          autoComplete={autoComplete}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          required={required}
           pattern={pattern}
           onInvalid={(e) => customInvalidMessage &&
             (e.target as HTMLInputElement).setCustomValidity(customInvalidMessage!)}

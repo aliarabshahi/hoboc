@@ -110,7 +110,7 @@ export default function NotificationForm() {
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6" method="post">
         {/* Full Name */}
         <FormField
           label="نام کامل (اختیاری)"
@@ -119,6 +119,8 @@ export default function NotificationForm() {
           value={notification.full_name}
           onChange={(v) => handleChange("full_name", v)}
           type="text"
+          name="full_name"
+          autoComplete="name"
         />
 
         {/* Email */}
@@ -129,6 +131,8 @@ export default function NotificationForm() {
           value={notification.email}
           onChange={(v) => handleChange("email", v)}
           type="email"
+          name="email"
+          autoComplete="email"
         />
 
         {/* Phone */}
@@ -139,6 +143,8 @@ export default function NotificationForm() {
           value={notification.phone_number}
           onChange={(v) => handleChange("phone_number", v)}
           type="tel"
+          name="phone"
+          autoComplete="tel"
           required
           pattern="^0.*$"
           maxLength={12}
@@ -223,6 +229,8 @@ function FormField({
   pattern,
   maxLength,
   customInvalidMessage,
+  name,
+  autoComplete,
 }: {
   label: string;
   icon: React.ReactNode;
@@ -234,10 +242,12 @@ function FormField({
   pattern?: string;
   maxLength?: number;
   customInvalidMessage?: string;
+  name?: string;
+  autoComplete?: string;
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2 text-gray-700 ">
+      <label htmlFor={name} className="block text-sm font-medium mb-2 text-gray-700 ">
         {label}
       </label>
       <div className="relative">
@@ -245,6 +255,9 @@ function FormField({
           {icon}
         </div>
         <input
+          id={name}
+          name={name}
+          autoComplete={autoComplete}
           type={type}
           placeholder={placeholder}
           className="w-full bg-gray-50  border border-gray-300  text-gray-900  text-sm rounded-lg focus:ring-2 focus:ring-hoboc focus:border-hoboc block p-3 pr-10 transition"

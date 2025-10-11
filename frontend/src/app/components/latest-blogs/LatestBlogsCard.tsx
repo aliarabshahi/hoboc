@@ -14,7 +14,7 @@ export default function LatestBlogsCard({ post }: { post: BlogPost }) {
                  overflow-hidden rounded-2xl bg-gray-900
                  px-4 sm:px-6 pb-5 sm:pb-6 pt-52 sm:pt-56 lg:pt-64
                  shadow-md hover:shadow-lg transition
-                 h-[280px] sm:h-[320px] md:h-[340px]"
+                 aspect-square"
     >
       {/* Cover image or fallback */}
       {post.cover_image ? (

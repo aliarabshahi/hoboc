@@ -261,6 +261,10 @@ POSTGRES_USER=
 POSTGRES_PASSWORD=
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
+EMAIL_HOST_USER=myhoboc@gmail.com  # https://myaccount.google.com/apppasswords
+EMAIL_HOST_PASSWORD="16 character"  # https://myaccount.google.com/apppasswords
+DEFAULT_FROM_EMAIL=HOBOC <myhoboc@gmail.com> 
+ADMIN_EMAIL=youremail@gmail.com
 
 ```
 ##### Configure the frontend .env

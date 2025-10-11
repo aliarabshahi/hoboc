@@ -24,6 +24,24 @@ from .models import (
     ResumeSubmissionModel, BlogWriterModel, BlogTopicModel, BlogTagModel, BlogPostModel,
     NotificationSubscription, RoadmapItem
 )
+import threading
+from django.core.mail import send_mail
+from django.conf import settings
+from rest_framework.permissions import AllowAny
+
+
+# ---------------------------------------------------------------------
+# Email Sender
+# ---------------------------------------------------------------------
+def send_email_async_safe(subject, message, from_email, recipient_list):
+    """Send email in background without raising errors."""
+    def _send():
+        try:
+            send_mail(subject, message, from_email, recipient_list, fail_silently=True)
+        except Exception as e:
+            logging.warning(f"[AsyncEmail] Sending failed: {e}")
+    threading.Thread(target=_send, daemon=True).start()
+# This is how you can use it: send_email_async_safe(subject, message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL])
 
 
 # ---------------------------------------------------------------------
@@ -193,18 +211,45 @@ class CoursesLessonViewSet(viewsets.ModelViewSet):
 
 
 class ContactUsViewSet(viewsets.ModelViewSet):
-    """Manage Contact Us messages."""
+    """Manage Contact Us messages (store + async email)."""
     queryset = ContactUsModel.objects.all()
     serializer_class = ContactUsSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['created_at']
     ordering = ['-created_at']
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.save()
+
+        subject = "پیام جدید از فرم تماس با ما هوبوک"
+        message = (
+            f"نام: {instance.full_name}\n"
+            f"ایمیل: {instance.email}\n"
+            f"تلفن: {instance.phone_number}\n"
+            "----------------------------------------\n\n"
+            f"پیام:\n{instance.message}\n"
+        )
+
+        # Send email asynchronously, without blocking or raising errors
+        send_email_async_safe(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+        )
+
+        # Return the normal success response (unchanged)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class ProjectOrderViewSet(viewsets.ModelViewSet):
-    """Manage Project Orders."""
+    """Manage Project Orders (store + async email)."""
     queryset = ProjectOrderModel.objects.all()
     serializer_class = ProjectOrderSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
@@ -218,9 +263,38 @@ class ProjectOrderViewSet(viewsets.ModelViewSet):
         context['request'] = self.request
         return context
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.save()
+
+        subject = "سفارش جدید پروژه در هوبوک"
+        message = (
+            f"نام: {instance.full_name}\n"
+            f"ایمیل: {instance.email}\n"
+            f"تلفن: {instance.phone_number}\n"
+            "----------------------------------------\n\n"
+            f"توضیحات پروژه:\n{instance.project_description}\n\n"
+            f"بودجه پیشنهادی: {instance.budget or 'ذکر نشده'}\n"
+            f"ددلاین تقریبی: {instance.deadline or 'ذکر نشده'}\n"
+        )
+
+        # Send email asynchronously, without blocking or raising errors
+        send_email_async_safe(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+        )
+
+        # Return the normal success response (unchanged)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class ResumeSubmissionViewSet(viewsets.ModelViewSet):
-    """Manage Resume Submissions."""
+    """Manage Resume Submissions (store + async email)."""
     queryset = ResumeSubmissionModel.objects.all()
     serializer_class = ResumeSubmissionSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
@@ -228,6 +302,43 @@ class ResumeSubmissionViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['created_at']
     ordering = ['-created_at']
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.save()
+
+        subject = "ارسال جدید رزومه در هوبوک"
+        message = (
+            f"نام: {instance.full_name}\n"
+            f"ایمیل: {instance.email}\n"
+            f"تلفن: {instance.phone_number}\n"
+            "----------------------------------------\n\n"
+            f"لینکدین: {instance.linkedin_profile or 'ثبت نشده'}\n"
+            f"گیت‌هاب: {instance.github_profile or 'ثبت نشده'}\n"
+            f"فایل رزومه: "
+            f"{instance.resume_file.url if instance.resume_file else 'آپلود نشده'}\n\n"
+            f"متن کاور لتر:\n{instance.cover_letter or '—'}\n"
+        )
+
+        # Send email asynchronously, without blocking or raising errors
+        send_email_async_safe(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+        )
+
+        # Return the normal success response (unchanged)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 
 # ---------------------------------------------------------------------
@@ -300,7 +411,7 @@ class BlogPostViewSet(viewsets.ModelViewSet):
 # Notifications
 # ---------------------------------------------------------------------
 class NotificationSubscriptionViewSet(viewsets.ModelViewSet):
-    """Manage Notification Subscriptions."""
+    """Manage Notification Subscriptions (store + async email)."""
     queryset = NotificationSubscription.objects.filter(is_active=True)
     serializer_class = NotificationSubscriptionSerializer
     permission_classes = [IsAuthenticated]
@@ -333,6 +444,25 @@ class NotificationSubscriptionViewSet(viewsets.ModelViewSet):
         existing_topics = subscription.topics.all()
         combined_topics = list(set(existing_topics) | set(new_topics))
         subscription.topics.set(combined_topics)
+
+        # Prepare and send notification email asynchronously
+        subject = "اشتراک جدید در اطلاع‌رسانی‌های هوبوک"
+        topic_titles = [t.title for t in subscription.topics.all()]
+        message = (
+            f"نام: {subscription.full_name or 'ثبت نشده'}\n"
+            f"موبایل: {subscription.mobile}\n"
+            f"ایمیل: {subscription.email or 'ثبت نشده'}\n"
+            "----------------------------------------\n\n"
+            f"موضوعات اشتراک:\n- " + "\n- ".join(topic_titles) + "\n\n"
+            f"وضعیت اشتراک: {'فعال' if subscription.is_active else 'غیرفعال'}\n"
+        )
+
+        send_email_async_safe(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+        )
 
 
 # ---------------------------------------------------------------------

@@ -45,15 +45,16 @@ export default function CourseCard({
         href={`/courses/${lesson.topic_slug}/lesson/${lesson.slug}`}
         className="h-36 sm:h-40 w-full mb-4 rounded-lg overflow-hidden block"
       >
-        {lesson.thumbnail ? (
+
+        {lesson.cover_image ? (
           <Image
-            src={lesson.thumbnail}
+            src={lesson.cover_image}
             alt={lesson.title}
             className="object-cover w-full h-full"
             width={480}
             height={160}
             loading="lazy"
-            unoptimized={lesson.thumbnail.startsWith("data:")}
+            unoptimized={lesson.cover_image.startsWith("data:")}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-xs sm:text-sm">

@@ -43,16 +43,17 @@ export default function LatestLessonsCard({ lesson }: { lesson: CoursesLesson })
       <div className="-mt-4 sm:-mt-5 -mx-4 sm:-mx-5 mb-3 sm:mb-4 h-36 sm:h-40 
                       overflow-hidden flex items-center justify-center 
                       rounded-t-xl bg-gray-100 relative">
-        {lesson.thumbnail ? (
+
+        {lesson.cover_image ? (
           <>
             <Image
-              src={lesson.thumbnail}
+              src={lesson.cover_image}
               alt={lesson.title}
               className="object-cover w-full h-full"
               width={400}
               height={160}
               loading="lazy"
-              unoptimized={lesson.thumbnail.startsWith("data:")}
+              unoptimized={lesson.cover_image.startsWith("data:")}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent pointer-events-none" />
           </>

@@ -31,7 +31,6 @@ export interface CoursesInstructor {
 }
 
 export interface CoursesLesson {
-  cover_image: any;
   id: number;
   topic: string | CoursesTopic;
   topic_slug: string | CoursesTopic;
@@ -44,6 +43,7 @@ export interface CoursesLesson {
   video_file: string | null;
   video_url: string | null;
   thumbnail: string | null;
+  cover_image: string | null;
   is_published: boolean;
   is_free: boolean;
   duration: number;

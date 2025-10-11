@@ -151,6 +151,9 @@ class CoursesLessonModel(models.Model):
     thumbnail = models.ImageField(
         upload_to='courses/lessons/thumbs/', blank=True, null=True
     )
+    cover_image = models.ImageField(
+        upload_to='courses/lessons/covers/', blank=True, null=True
+    )
 
     tags = models.ManyToManyField(CoursesTagModel, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
